@@ -19,15 +19,16 @@ Built by Euron.
 ## Repository layout
 
 ```
-auralis-site/                    Landing page (Netlify)
-  index.html                     Self-contained, no build step
-  netlify.toml                   Security headers
+auralis-site/              Landing page (Netlify)
+  index.html               Self-contained, no build step
+  netlify.toml             Security headers
 
-product_developement_zip_17tG/   Earlier design pass (pre-rename)
-  product developement/
-    EURON_NEXUS_*.docx           Prior PRD, architecture, screen design
-    uxpilot-export-*/            17 built HTML screens
-    product.txt                  Original brief + design theme spec
+docs/
+  legacy/                  First design pass, pre-rename from Euron Nexus
+    EURON_NEXUS_*.docx     Prior PRD, architecture, screen design
+    original-brief.txt     Original brief + design theme spec
+    diagrams/              5 exported architecture diagrams
+    screens/               17 built HTML screens (UX Pilot)
 ```
 
 ## Specification documents
