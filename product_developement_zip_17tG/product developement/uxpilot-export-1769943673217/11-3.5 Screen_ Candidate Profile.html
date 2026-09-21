@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Profile</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-bg-surface">
+
+<div id="candidate-profile-page" class="flex h-screen overflow-hidden">
+    
+    <aside id="sidebar" class="w-64 bg-card-surface border-r border-border-color flex flex-col">
+        <div class="p-6 border-b border-border-color">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-primary-blue rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-shield-halved text-white text-lg"></i>
+                </div>
+                <div>
+                    <div class="text-primary-text text-xl font-bold">Euron</div>
+                    <div class="text-secondary-text text-xs">ATS Platform</div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="flex-1 p-4 space-y-1 overflow-y-auto">
+            <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text transition-all duration-150">
+                <i class="fa-solid fa-house text-sm w-5"></i>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text transition-all duration-150">
+                <i class="fa-solid fa-briefcase text-sm w-5"></i>
+                <span class="text-sm font-medium">Jobs</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg bg-blue-50 text-primary-blue transition-all duration-150">
+                <i class="fa-solid fa-users text-sm w-5"></i>
+                <span class="text-sm font-semibold">Candidates</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text transition-all duration-150">
+                <i class="fa-solid fa-calendar text-sm w-5"></i>
+                <span class="text-sm font-medium">Interviews</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text transition-all duration-150">
+                <i class="fa-solid fa-chart-line text-sm w-5"></i>
+                <span class="text-sm font-medium">Analytics</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text transition-all duration-150">
+                <i class="fa-solid fa-gear text-sm w-5"></i>
+                <span class="text-sm font-medium">Settings</span>
+            </a>
+        </nav>
+        
+        <div class="p-4 border-t border-border-color">
+            <div class="flex items-center space-x-3 px-3 py-2">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Admin" class="w-9 h-9 rounded-full">
+                <div class="flex-1 min-w-0">
+                    <div class="text-sm font-semibold text-primary-text truncate">John Admin</div>
+                    <div class="text-xs text-secondary-text truncate">Super Admin</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <main id="main-content" class="flex-1 flex flex-col overflow-hidden">
+        
+        <header id="header" class="bg-card-surface border-b border-border-color px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <button class="text-secondary-text hover:text-primary-text">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h1 class="text-xl font-bold text-primary-text">Candidate Profile</h1>
+                        <div class="flex items-center space-x-2 mt-1">
+                            <span class="text-sm text-secondary-text">Applied for:</span>
+                            <span class="text-sm font-semibold text-primary-blue">Senior Software Engineer</span>
+                            <span class="text-xs text-secondary-text">• 5 days ago</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button class="h-10 px-4 bg-transparent text-primary-blue text-sm font-semibold border border-primary-blue rounded-full hover:bg-primary-blue hover:bg-opacity-8 transition-all duration-150">
+                        <i class="fa-solid fa-share-nodes mr-2"></i>Share Profile
+                    </button>
+                    <button class="h-10 px-4 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150">
+                        <i class="fa-solid fa-calendar-check mr-2"></i>Schedule Interview
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <div id="content-area" class="flex-1 overflow-y-auto">
+            <div class="max-w-[1600px] mx-auto p-8">
+                
+                <div id="profile-header" class="bg-card-surface border border-border-color rounded-lg p-8 mb-6">
+                    <div class="flex items-start justify-between">
+                        <div class="flex items-start space-x-6">
+                            <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Sarah Chen" class="w-20 h-20 rounded-full border-2 border-border-color">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-2">
+                                    <h2 class="text-2xl font-bold text-primary-text">Sarah Chen</h2>
+                                    <span class="px-3 py-1 bg-green-100 text-success text-xs font-semibold rounded-full">Active Candidate</span>
+                                    <span class="px-3 py-1 bg-blue-100 text-primary-blue text-xs font-semibold rounded-full">Interview Stage</span>
+                                </div>
+                                <p class="text-base text-secondary-text mb-3">Senior Software Engineer at TechCorp Inc.</p>
+                                <div class="flex items-center space-x-6 text-sm text-secondary-text">
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-location-dot text-primary-blue"></i>
+                                        <span>San Francisco, CA</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-briefcase text-primary-blue"></i>
+                                        <span>8 years experience</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-graduation-cap text-primary-blue"></i>
+                                        <span>M.S. Computer Science, Stanford</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-3 mt-4">
+                                    <button class="w-10 h-10 bg-bg-surface border border-border-color rounded-full flex items-center justify-center text-secondary-text hover:text-primary-blue hover:border-primary-blue transition-all duration-150">
+                                        <i class="fa-solid fa-envelope"></i>
+                                    </button>
+                                    <button class="w-10 h-10 bg-bg-surface border border-border-color rounded-full flex items-center justify-center text-secondary-text hover:text-primary-blue hover:border-primary-blue transition-all duration-150">
+                                        <i class="fa-solid fa-phone"></i>
+                                    </button>
+                                    <button class="w-10 h-10 bg-bg-surface border border-border-color rounded-full flex items-center justify-center text-secondary-text hover:text-primary-blue hover:border-primary-blue transition-all duration-150">
+                                        <i class="fa-brands fa-linkedin"></i>
+                                    </button>
+                                    <button class="w-10 h-10 bg-bg-surface border border-border-color rounded-full flex items-center justify-center text-secondary-text hover:text-primary-blue hover:border-primary-blue transition-all duration-150">
+                                        <i class="fa-solid fa-globe"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <div class="w-32 h-32 rounded-full border-8 border-success flex flex-col items-center justify-center bg-green-50 mb-3">
+                                <div class="text-4xl font-bold text-success">92</div>
+                                <div class="text-xs text-secondary-text font-semibold uppercase">ATS Score</div>
+                            </div>
+                            <div class="text-xs text-center text-secondary-text">Excellent Match</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="profile-tabs" class="bg-card-surface border border-border-color rounded-lg mb-6">
+                    <div class="border-b border-border-color px-6">
+                        <div class="flex space-x-1">
+                            <button class="px-4 py-3 text-sm font-semibold text-secondary-text hover:text-primary-text border-b-2 border-transparent hover:border-border-color transition-all duration-150" onclick="switchTab('profile')">
+                                <i class="fa-solid fa-user mr-2"></i>Profile
+                            </button>
+                            <button class="px-4 py-3 text-sm font-semibold text-primary-blue border-b-2 border-primary-blue transition-all duration-150" onclick="switchTab('ai-analysis')">
+                                <i class="fa-solid fa-brain mr-2"></i>AI Analysis
+                            </button>
+                            <button class="px-4 py-3 text-sm font-semibold text-secondary-text hover:text-primary-text border-b-2 border-transparent hover:border-border-color transition-all duration-150" onclick="switchTab('interviews')">
+                                <i class="fa-solid fa-video mr-2"></i>Interview Results
+                            </button>
+                            <button class="px-4 py-3 text-sm font-semibold text-secondary-text hover:text-primary-text border-b-2 border-transparent hover:border-border-color transition-all duration-150" onclick="switchTab('documents')">
+                                <i class="fa-solid fa-file-lines mr-2"></i>Documents
+                            </button>
+                            <button class="px-4 py-3 text-sm font-semibold text-secondary-text hover:text-primary-text border-b-2 border-transparent hover:border-border-color transition-all duration-150" onclick="switchTab('activity')">
+                                <i class="fa-solid fa-clock-rotate-left mr-2"></i>Activity
+                            </button>
+                            <button class="px-4 py-3 text-sm font-semibold text-secondary-text hover:text-primary-text border-b-2 border-transparent hover:border-border-color transition-all duration-150" onclick="switchTab('notes')">
+                                <i class="fa-solid fa-note-sticky mr-2"></i>Notes
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="tab-content" class="p-6">
+                        
+                        <div id="ai-analysis-tab">
+                            <div class="grid grid-cols-3 gap-6">
+                                
+                                <div class="col-span-2 space-y-6">
+                                    
+                                    <div id="overall-score-section" class="bg-gradient-to-br from-blue-50 to-green-50 border border-blue-200 rounded-lg p-6">
+                                        <div class="flex items-start justify-between mb-6">
+                                            <div>
+                                                <h3 class="text-lg font-bold text-primary-text mb-2">Overall AI Assessment</h3>
+                                                <p class="text-sm text-secondary-text">Comprehensive analysis based on resume, experience, and job requirements</p>
+                                            </div>
+                                            <div class="flex items-center space-x-2 bg-white px-3 py-1.5 rounded-full border border-blue-200">
+                                                <i class="fa-solid fa-sparkles text-primary-blue"></i>
+                                                <span class="text-xs font-semibold text-primary-blue">AI Powered</span>
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-4 gap-4">
+                                            <div class="bg-white rounded-lg p-4 border border-blue-100">
+                                                <div class="text-3xl font-bold text-success mb-1">92</div>
+                                                <div class="text-xs text-secondary-text font-medium">Overall Score</div>
+                                            </div>
+                                            <div class="bg-white rounded-lg p-4 border border-blue-100">
+                                                <div class="text-3xl font-bold text-primary-blue mb-1">95</div>
+                                                <div class="text-xs text-secondary-text font-medium">Skills Match</div>
+                                            </div>
+                                            <div class="bg-white rounded-lg p-4 border border-blue-100">
+                                                <div class="text-3xl font-bold text-primary-blue mb-1">88</div>
+                                                <div class="text-xs text-secondary-text font-medium">Experience</div>
+                                            </div>
+                                            <div class="bg-white rounded-lg p-4 border border-blue-100">
+                                                <div class="text-3xl font-bold text-primary-blue mb-1">91</div>
+                                                <div class="text-xs text-secondary-text font-medium">Culture Fit</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="strengths-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                                        <div class="flex items-center space-x-2 mb-4">
+                                            <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                                                <i class="fa-solid fa-thumbs-up text-success"></i>
+                                            </div>
+                                            <h3 class="text-lg font-bold text-primary-text">Key Strengths</h3>
+                                        </div>
+                                        <div class="space-y-4">
+                                            <div class="flex items-start space-x-3 p-4 bg-green-50 border border-green-200 rounded-lg">
+                                                <div class="w-6 h-6 bg-success rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                    <i class="fa-solid fa-check text-white text-xs"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-semibold text-primary-text mb-1">Exceptional Technical Expertise</div>
+                                                    <div class="text-sm text-secondary-text">8+ years of full-stack development with React, Node.js, and AWS. Led architecture for 3 major enterprise applications serving 1M+ users.</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start space-x-3 p-4 bg-green-50 border border-green-200 rounded-lg">
+                                                <div class="w-6 h-6 bg-success rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                    <i class="fa-solid fa-check text-white text-xs"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-semibold text-primary-text mb-1">Proven Leadership Track Record</div>
+                                                    <div class="text-sm text-secondary-text">Successfully managed teams of 5-8 engineers, mentored junior developers, and delivered projects 20% ahead of schedule on average.</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start space-x-3 p-4 bg-green-50 border border-green-200 rounded-lg">
+                                                <div class="w-6 h-6 bg-success rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                    <i class="fa-solid fa-check text-white text-xs"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-semibold text-primary-text mb-1">Strong Educational Background</div>
+                                                    <div class="text-sm text-secondary-text">M.S. in Computer Science from Stanford University with focus on distributed systems and machine learning. Published 3 research papers.</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start space-x-3 p-4 bg-green-50 border border-green-200 rounded-lg">
+                                                <div class="w-6 h-6 bg-success rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                    <i class="fa-solid fa-check text-white text-xs"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-semibold text-primary-text mb-1">Industry Recognition</div>
+                                                    <div class="text-sm text-secondary-text">Open source contributor with 2.5K GitHub stars. Speaker at React Summit 2023 and AWS re:Invent 2022.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="concerns-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                                        <div class="flex items-center space-x-2 mb-4">
+                                            <div class="w-8 h-8 bg-amber-100 rounded-lg flex items-center justify-center">
+                                                <i class="fa-solid fa-triangle-exclamation text-warning"></i>
+                                            </div>
+                                            <h3 class="text-lg font-bold text-primary-text">Areas to Explore</h3>
+                                        </div>
+                                        <div class="space-y-4">
+                                            <div class="flex items-start space-x-3 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                                                <div class="w-6 h-6 bg-warning rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                    <i class="fa-solid fa-question text-white text-xs"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-semibold text-primary-text mb-1">Limited Mobile Development Experience</div>
+                                                    <div class="text-sm text-secondary-text">While strong in web development, mobile (iOS/Android) experience is minimal. May need training if mobile projects are in scope.</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-start space-x-3 p-4 bg-amber-50 border border-amber-200 rounded-lg">
+                                                <div class="w-6 h-6 bg-warning rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                    <i class="fa-solid fa-question text-white text-xs"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-semibold text-primary-text mb-1">Short Tenure at Recent Position</div>
+                                                    <div class="text-sm text-secondary-text">Current role at TechCorp is only 14 months. Worth discussing career goals and reasons for seeking new opportunities.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="skills-match-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                                        <div class="flex items-center justify-between mb-6">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                                                    <i class="fa-solid fa-chart-bar text-primary-blue"></i>
+                                                </div>
+                                                <h3 class="text-lg font-bold text-primary-text">Skills Comparison</h3>
+                                            </div>
+                                            <div class="text-sm text-secondary-text">Required vs. Candidate Skills</div>
+                                        </div>
+                                        <div class="space-y-4">
+                                            <div>
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm font-semibold text-primary-text">React.js</span>
+                                                    <span class="text-sm font-semibold text-success">Expert • 95%</span>
+                                                </div>
+                                                <div class="h-2 bg-bg-surface rounded-full overflow-hidden">
+                                                    <div class="h-full bg-success rounded-full" style="width: 95%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm font-semibold text-primary-text">Node.js</span>
+                                                    <span class="text-sm font-semibold text-success">Expert • 92%</span>
+                                                </div>
+                                                <div class="h-2 bg-bg-surface rounded-full overflow-hidden">
+                                                    <div class="h-full bg-success rounded-full" style="width: 92%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm font-semibold text-primary-text">AWS Cloud Services</span>
+                                                    <span class="text-sm font-semibold text-success">Advanced • 88%</span>
+                                                </div>
+                                                <div class="h-2 bg-bg-surface rounded-full overflow-hidden">
+                                                    <div class="h-full bg-success rounded-full" style="width: 88%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm font-semibold text-primary-text">TypeScript</span>
+                                                    <span class="text-sm font-semibold text-success">Advanced • 90%</span>
+                                                </div>
+                                                <div class="h-2 bg-bg-surface rounded-full overflow-hidden">
+                                                    <div class="h-full bg-success rounded-full" style="width: 90%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm font-semibold text-primary-text">Docker & Kubernetes</span>
+                                                    <span class="text-sm font-semibold text-primary-blue">Intermediate • 75%</span>
+                                                </div>
+                                                <div class="h-2 bg-bg-surface rounded-full overflow-hidden">
+                                                    <div class="h-full bg-primary-blue rounded-full" style="width: 75%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm font-semibold text-primary-text">GraphQL</span>
+                                                    <span class="text-sm font-semibold text-primary-blue">Intermediate • 70%</span>
+                                                </div>
+                                                <div class="h-2 bg-bg-surface rounded-full overflow-hidden">
+                                                    <div class="h-full bg-primary-blue rounded-full" style="width: 70%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm font-semibold text-primary-text">Mobile Development</span>
+                                                    <span class="text-sm font-semibold text-warning">Basic • 45%</span>
+                                                </div>
+                                                <div class="h-2 bg-bg-surface rounded-full overflow-hidden">
+                                                    <div class="h-full bg-warning rounded-full" style="width: 45%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="experience-relevance-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                                        <div class="flex items-center space-x-2 mb-4">
+                                            <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                                                <i class="fa-solid fa-briefcase text-purple-600"></i>
+                                            </div>
+                                            <h3 class="text-lg font-bold text-primary-text">Experience Relevance Analysis</h3>
+                                        </div>
+                                        <div class="flex items-center justify-between p-4 bg-purple-50 border border-purple-200 rounded-lg mb-4">
+                                            <div>
+                                                <div class="text-2xl font-bold text-purple-600 mb-1">88/100</div>
+                                                <div class="text-sm text-secondary-text">Highly Relevant Experience</div>
+                                            </div>
+                                            <div class="w-20 h-20 rounded-full border-8 border-purple-600 flex items-center justify-center bg-white">
+                                                <span class="text-xl font-bold text-purple-600">88</span>
+                                            </div>
+                                        </div>
+                                        <div class="text-sm text-secondary-text leading-relaxed">
+                                            Sarah's 8 years of experience align exceptionally well with the role requirements. Her work on enterprise-scale applications, cloud infrastructure, and team leadership directly matches the key responsibilities. Notable achievements include architecting systems that handle millions of requests daily and implementing CI/CD pipelines that reduced deployment time by 60%.
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="recommended-questions-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                                        <div class="flex items-center space-x-2 mb-4">
+                                            <div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+                                                <i class="fa-solid fa-lightbulb text-indigo-600"></i>
+                                            </div>
+                                            <h3 class="text-lg font-bold text-primary-text">AI-Recommended Interview Questions</h3>
+                                        </div>
+                                        <div class="space-y-3">
+                                            <div class="p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                                                <div class="flex items-start space-x-3">
+                                                    <div class="w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <span class="text-white text-xs font-bold">1</span>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <div class="text-sm font-semibold text-primary-text mb-1">Can you walk us through your experience architecting the TechCorp platform that serves 1M+ users?</div>
+                                                        <div class="text-xs text-secondary-text">Focus: Technical architecture, scalability, decision-making</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                                                <div class="flex items-start space-x-3">
+                                                    <div class="w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <span class="text-white text-xs font-bold">2</span>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <div class="text-sm font-semibold text-primary-text mb-1">You've been at TechCorp for 14 months. What motivated you to explore new opportunities at this stage?</div>
+                                                        <div class="text-xs text-secondary-text">Focus: Career goals, cultural fit, long-term commitment</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                                                <div class="flex items-start space-x-3">
+                                                    <div class="w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <span class="text-white text-xs font-bold">3</span>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <div class="text-sm font-semibold text-primary-text mb-1">How do you approach mentoring junior developers and building high-performing teams?</div>
+                                                        <div class="text-xs text-secondary-text">Focus: Leadership style, team development, communication</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                                                <div class="flex items-start space-x-3">
+                                                    <div class="w-6 h-6 bg-indigo-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                        <span class="text-white text-xs font-bold">4</span>
+                                                    </div>
+                                                    <div class="flex-1">
+                                                        <div class="text-sm font-semibold text-primary-text mb-1">Given your limited mobile development experience, how would you approach learning our mobile stack?</div>
+                                                        <div class="text-xs text-secondary-text">Focus: Learning agility, adaptability, growth mindset</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="space-y-6">
+                                    
+                                    <div id="culture-fit-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                                        <div class="flex items-center space-x-2 mb-4">
+                                            <div class="w-8 h-8 bg-teal-100 rounded-lg flex items-center justify-center">
+                                                <i class="fa-solid fa-users text-teal-600"></i>
+                                            </div>
+                                            <h3 class="text-base font-bold text-primary-text">Culture Fit Indicators</h3>
+                                        </div>
+                                        <div class="space-y-4">
+                                            <div>
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm text-primary-text">Collaboration</span>
+                                                    <span class="text-sm font-semibold text-success">High</span>
+                                                </div>
+                                                <div class="h-2 bg-bg-surface rounded-full overflow-hidden">
+                                                    <div class="h-full bg-success rounded-full" style="width: 90%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm text-primary-text">Innovation</span>
+                                                    <span class="text-sm font-semibold text-success">High</span>
+                                                </div>
+                                                <div class="h-2 bg-bg-surface rounded-full overflow-hidden">
+                                                    <div class="h-full bg-success rounded-full" style="width: 92%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm text-primary-text">Ownership</span>
+                                                    <span class="text-sm font-semibold text-success">High</span>
+                                                </div>
+                                                <div class="h-2 bg-bg-surface rounded-full overflow-hidden">
+                                                    <div class="h-full bg-success rounded-full" style="width: 88%"></div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <div class="flex items-center justify-between mb-2">
+                                                    <span class="text-sm text-primary-text">Communication</span>
+                                                    <span class="text-sm font-semibold text-primary-blue">Medium-High</span>
+                                                </div>
+                                                <div class="h-2 bg-bg-surface rounded-full overflow-hidden">
+                                                    <div class="h-full bg-primary-blue rounded-full" style="width: 75%"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4 p-3 bg-teal-50 border border-teal-200 rounded-lg">
+                                            <div class="text-xs text-secondary-text leading-relaxed">
+                                                Based on resume analysis and writing style, Sarah demonstrates strong alignment with collaborative, innovation-driven cultures. Her open source contributions and conference speaking indicate good communication skills.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="quick-stats-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                                        <h3 class="text-base font-bold text-primary-text mb-4">Quick Stats</h3>
+                                        <div class="space-y-3">
+                                            <div class="flex items-center justify-between p-3 bg-bg-surface rounded-lg">
+                                                <div class="flex items-center space-x-2">
+                                                    <i class="fa-solid fa-code text-primary-blue"></i>
+                                                    <span class="text-sm text-primary-text">Programming Languages</span>
+                                                </div>
+                                                <span class="text-sm font-semibold text-primary-text">8</span>
+                                            </div>
+                                            <div class="flex items-center justify-between p-3 bg-bg-surface rounded-lg">
+                                                <div class="flex items-center space-x-2">
+                                                    <i class="fa-solid fa-trophy text-warning"></i>
+                                                    <span class="text-sm text-primary-text">Certifications</span>
+                                                </div>
+                                                <span class="text-sm font-semibold text-primary-text">5</span>
+                                            </div>
+                                            <div class="flex items-center justify-between p-3 bg-bg-surface rounded-lg">
+                                                <div class="flex items-center space-x-2">
+                                                    <i class="fa-solid fa-rocket text-success"></i>
+                                                    <span class="text-sm text-primary-text">Projects Led</span>
+                                                </div>
+                                                <span class="text-sm font-semibold text-primary-text">12+</span>
+                                            </div>
+                                            <div class="flex items-center justify-between p-3 bg-bg-surface rounded-lg">
+                                                <div class="flex items-center space-x-2">
+                                                    <i class="fa-brands fa-github text-primary-text"></i>
+                                                    <span class="text-sm text-primary-text">GitHub Stars</span>
+                                                </div>
+                                                <span class="text-sm font-semibold text-primary-text">2.5K</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="similar-candidates-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                                        <div class="flex items-center justify-between mb-4">
+                                            <h3 class="text-base font-bold text-primary-text">Similar Candidates</h3>
+                                            <button class="text-xs text-primary-blue font-semibold hover:text-hover-blue">View All</button>
+                                        </div>
+                                        <div class="space-y-3">
+                                            <div class="flex items-center space-x-3 p-3 bg-bg-surface rounded-lg hover:bg-blue-50 cursor-pointer transition-all duration-150">
+                                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-4.jpg" alt="Michael Zhang" class="w-10 h-10 rounded-full">
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="text-sm font-semibold text-primary-text truncate">Michael Zhang</div>
+                                                    <div class="text-xs text-secondary-text truncate">Senior Engineer • Score: 89</div>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-right text-secondary-text text-xs"></i>
+                                            </div>
+                                            <div class="flex items-center space-x-3 p-3 bg-bg-surface rounded-lg hover:bg-blue-50 cursor-pointer transition-all duration-150">
+                                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Emily Rodriguez" class="w-10 h-10 rounded-full">
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="text-sm font-semibold text-primary-text truncate">Emily Rodriguez</div>
+                                                    <div class="text-xs text-secondary-text truncate">Tech Lead • Score: 87</div>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-right text-secondary-text text-xs"></i>
+                                            </div>
+                                            <div class="flex items-center space-x-3 p-3 bg-bg-surface rounded-lg hover:bg-blue-50 cursor-pointer transition-all duration-150">
+                                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="David Kim" class="w-10 h-10 rounded-full">
+                                                <div class="flex-1 min-w-0">
+                                                    <div class="text-sm font-semibold text-primary-text truncate">David Kim</div>
+                                                    <div class="text-xs text-secondary-text truncate">Full Stack Dev • Score: 86</div>
+                                                </div>
+                                                <i class="fa-solid fa-chevron-right text-secondary-text text-xs"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="ai-confidence-section" class="bg-gradient-to-br from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
+                                        <div class="flex items-center space-x-2 mb-3">
+                                            <i class="fa-solid fa-robot text-purple-600 text-lg"></i>
+                                            <h3 class="text-base font-bold text-primary-text">AI Confidence Level</h3>
+                                        </div>
+                                        <div class="flex items-center justify-between mb-3">
+                                            <span class="text-sm text-secondary-text">Analysis Accuracy</span>
+                                            <span class="text-sm font-bold text-purple-600">94%</span>
+                                        </div>
+                                        <div class="h-2 bg-white rounded-full overflow-hidden mb-3">
+                                            <div class="h-full bg-gradient-to-r from-purple-600 to-pink-600 rounded-full" style="width: 94%"></div>
+                                        </div>
+                                        <div class="text-xs text-secondary-text leading-relaxed">
+                                            High confidence based on comprehensive resume parsing, skills extraction, and pattern matching against 10,000+ successful hires.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+function switchTab(tabName) {
+    console.log('Switching to tab:', tabName);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-bg-surface">
+
+<div id="dashboard-layout" class="flex h-screen w-screen overflow-hidden">
+    
+    <aside id="sidebar" class="w-64 bg-card-surface border-r border-border-color flex flex-col">
+        
+        <div id="sidebar-header" class="h-16 border-b border-border-color px-6 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-primary-blue rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-shield-halved text-white text-sm"></i>
+                </div>
+                <div>
+                    <div class="text-primary-text text-sm font-bold">Euron</div>
+                    <div class="text-secondary-text text-xs">Client Portal</div>
+                </div>
+            </div>
+        </div>
+        
+        <nav id="sidebar-nav" class="flex-1 overflow-y-auto py-4 px-3">
+            <div class="space-y-1">
+                <a href="/dashboard" id="nav-dashboard" class="flex items-center justify-between px-3 py-2.5 rounded-lg bg-blue-50 text-primary-blue font-medium text-sm group transition-all duration-150">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-home text-sm"></i>
+                        <span>Dashboard</span>
+                    </div>
+                </a>
+                
+                <a href="/jobs" id="nav-jobs" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm group transition-all duration-150">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-briefcase text-sm"></i>
+                        <span>Jobs</span>
+                    </div>
+                    <span class="px-2 py-0.5 bg-primary-blue text-white text-xs font-semibold rounded-full">12</span>
+                </a>
+                
+                <a href="/candidates" id="nav-candidates" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm group transition-all duration-150">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-users text-sm"></i>
+                        <span>Candidates</span>
+                    </div>
+                    <span class="px-2 py-0.5 bg-success text-white text-xs font-semibold rounded-full">28</span>
+                </a>
+                
+                <a href="/interviews" id="nav-interviews" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm group transition-all duration-150">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-video text-sm"></i>
+                        <span>Interviews</span>
+                    </div>
+                    <span class="px-2 py-0.5 bg-warning text-white text-xs font-semibold rounded-full">8</span>
+                </a>
+                
+                <a href="/calendar" id="nav-calendar" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm group transition-all duration-150">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-calendar text-sm"></i>
+                        <span>Calendar</span>
+                    </div>
+                </a>
+                
+                <a href="/analytics" id="nav-analytics" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm group transition-all duration-150">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-chart-bar text-sm"></i>
+                        <span>Analytics</span>
+                    </div>
+                </a>
+                
+                <a href="/team" id="nav-team" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm group transition-all duration-150">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-user-plus text-sm"></i>
+                        <span>Team</span>
+                    </div>
+                </a>
+                
+                <a href="/templates" id="nav-templates" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm group transition-all duration-150">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-file-text text-sm"></i>
+                        <span>Templates</span>
+                    </div>
+                </a>
+                
+                <a href="/integrations" id="nav-integrations" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm group transition-all duration-150">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-puzzle-piece text-sm"></i>
+                        <span>Integrations</span>
+                    </div>
+                </a>
+                
+                <div class="my-3 border-t border-border-color"></div>
+                
+                <a href="/settings" id="nav-settings" class="flex items-center justify-between px-3 py-2.5 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm group transition-all duration-150">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-cog text-sm"></i>
+                        <span>Settings</span>
+                    </div>
+                </a>
+            </div>
+        </nav>
+        
+        <div id="sidebar-footer" class="border-t border-border-color p-4">
+            <div class="bg-bg-surface rounded-lg p-3 mb-3">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs text-secondary-text font-medium">AI Interviews</span>
+                    <span class="text-xs text-primary-text font-semibold">892 / 1000</span>
+                </div>
+                <div class="w-full bg-white rounded-full h-2 overflow-hidden">
+                    <div class="bg-primary-blue h-2 rounded-full" style="width: 89.2%"></div>
+                </div>
+                <div class="mt-2 text-xs text-secondary-text">108 remaining this month</div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="User" class="w-10 h-10 rounded-full border-2 border-border-color">
+                <div class="flex-1 min-w-0">
+                    <div class="text-sm text-primary-text font-semibold truncate">John Mitchell</div>
+                    <div class="text-xs text-secondary-text truncate">Admin</div>
+                </div>
+                <button class="text-secondary-text hover:text-primary-text transition-colors duration-150">
+                    <i class="fa-solid fa-ellipsis-vertical text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+    
+    <main id="main-content" class="flex-1 flex flex-col overflow-hidden">
+        
+        <header id="header" class="h-16 bg-card-surface border-b border-border-color px-8 flex items-center justify-between">
+            <div>
+                <h1 class="text-primary-text text-xl font-bold">Dashboard</h1>
+                <p class="text-secondary-text text-sm">Welcome back, John</p>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        placeholder="Search candidates, jobs..." 
+                        class="w-80 h-10 bg-bg-surface border border-border-color rounded-full pl-10 pr-4 text-sm text-primary-text placeholder-secondary-text focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150"
+                    />
+                    <i class="fa-solid fa-search text-secondary-text text-sm absolute left-4 top-1/2 transform -translate-y-1/2"></i>
+                </div>
+                
+                <button class="relative w-10 h-10 bg-bg-surface rounded-full flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                    <i class="fa-solid fa-bell text-sm"></i>
+                    <span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+                </button>
+                
+                <button class="w-10 h-10 bg-bg-surface rounded-full flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                    <i class="fa-solid fa-question-circle text-sm"></i>
+                </button>
+            </div>
+        </header>
+        
+        <div id="dashboard-content" class="flex-1 overflow-y-auto">
+            <div class="p-8">
+                
+                <div id="overview-cards" class="grid grid-cols-6 gap-6 mb-8">
+                    
+                    <div id="card-open-positions" class="col-span-2 bg-card-surface border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-150">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-briefcase text-primary-blue text-xl"></i>
+                            </div>
+                            <span class="px-2.5 py-1 bg-green-50 text-success text-xs font-semibold rounded-full">+3 this week</span>
+                        </div>
+                        <div class="text-3xl font-bold text-primary-text mb-1">12</div>
+                        <div class="text-sm text-secondary-text mb-3">Open Positions</div>
+                        <div class="text-xs text-success font-medium">Active Jobs</div>
+                    </div>
+                    
+                    <div id="card-total-candidates" class="col-span-2 bg-card-surface border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-150">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-12 h-12 bg-purple-50 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-users text-purple-600 text-xl"></i>
+                            </div>
+                            <span class="px-2.5 py-1 bg-purple-50 text-purple-600 text-xs font-semibold rounded-full">+28 today</span>
+                        </div>
+                        <div class="text-3xl font-bold text-primary-text mb-1">456</div>
+                        <div class="text-sm text-secondary-text mb-3">Total Candidates</div>
+                        <div class="text-xs text-purple-600 font-medium">In Pipeline</div>
+                    </div>
+                    
+                    <div id="card-interviews-today" class="col-span-2 bg-card-surface border border-border-color rounded-lg p-6 hover:shadow-lg transition-shadow duration-150">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-12 h-12 bg-orange-50 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-video text-warning text-xl"></i>
+                            </div>
+                            <span class="px-2.5 py-1 bg-orange-50 text-warning text-xs font-semibold rounded-full">2 completed</span>
+                        </div>
+                        <div class="text-3xl font-bold text-primary-text mb-1">8</div>
+                        <div class="text-sm text-secondary-text mb-3">Interviews Today</div>
+                        <div class="text-xs text-warning font-medium">6 upcoming</div>
+                    </div>
+                </div>
+                
+                <div id="metrics-cards" class="grid grid-cols-3 gap-6 mb-8">
+                    
+                    <div id="card-time-to-hire" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-clock text-success text-lg"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-primary-text">18</div>
+                                    <div class="text-xs text-secondary-text">Days</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs text-secondary-text mb-1">Avg. Time to Hire</div>
+                                <div class="flex items-center space-x-1 text-success text-xs font-semibold">
+                                    <i class="fa-solid fa-arrow-down text-xs"></i>
+                                    <span>3 days vs last month</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full bg-bg-surface rounded-full h-2 overflow-hidden">
+                            <div class="bg-success h-2 rounded-full" style="width: 72%"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="card-offer-acceptance" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-handshake text-primary-blue text-lg"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold text-primary-text">78%</div>
+                                    <div class="text-xs text-secondary-text">Rate</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs text-secondary-text mb-1">Offer Acceptance</div>
+                                <div class="flex items-center space-x-1 text-success text-xs font-semibold">
+                                    <i class="fa-solid fa-arrow-up text-xs"></i>
+                                    <span>5% vs last month</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full bg-bg-surface rounded-full h-2 overflow-hidden">
+                            <div class="bg-primary-blue h-2 rounded-full" style="width: 78%"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="card-ai-interviews" class="bg-gradient-to-br from-primary-blue to-hover-blue border border-primary-blue rounded-lg p-6 text-white">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-robot text-white text-lg"></i>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-bold">892</div>
+                                    <div class="text-xs text-blue-100">Used</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs text-blue-100 mb-1">AI Interviews</div>
+                                <div class="text-xs font-semibold">108 remaining</div>
+                            </div>
+                        </div>
+                        <div class="w-full bg-white bg-opacity-20 rounded-full h-2 overflow-hidden">
+                            <div class="bg-white h-2 rounded-full" style="width: 89.2%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="main-grid" class="grid grid-cols-3 gap-6">
+                    
+                    <div id="today-schedule-section" class="col-span-2 space-y-6">
+                        
+                        <div id="today-schedule" class="bg-card-surface border border-border-color rounded-lg">
+                            <div class="px-6 py-4 border-b border-border-color">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fa-solid fa-calendar-day text-primary-blue text-lg"></i>
+                                        <h2 class="text-lg font-semibold text-primary-text">Today's Schedule</h2>
+                                    </div>
+                                    <button class="text-primary-blue text-sm font-medium hover:text-hover-blue transition-colors duration-150">View All</button>
+                                </div>
+                            </div>
+                            
+                            <div class="p-6 space-y-4">
+                                
+                                <div id="schedule-item-1" class="flex items-start space-x-4 pb-4 border-b border-border-color last:border-b-0 last:pb-0">
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-sm font-semibold text-primary-text">09:00</div>
+                                        <div class="text-xs text-secondary-text">AM</div>
+                                        <div class="w-px h-12 bg-border-color mt-2"></div>
+                                    </div>
+                                    <div class="flex-1 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-1.jpg" alt="Candidate" class="w-10 h-10 rounded-full">
+                                                <div>
+                                                    <div class="text-sm font-semibold text-primary-text">Sarah Johnson</div>
+                                                    <div class="text-xs text-secondary-text">Senior Frontend Developer</div>
+                                                </div>
+                                            </div>
+                                            <span class="px-2 py-1 bg-primary-blue text-white text-xs font-semibold rounded-full">Upcoming</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4 text-xs text-secondary-text">
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-video"></i>
+                                                <span>Video Interview</span>
+                                            </div>
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-clock"></i>
+                                                <span>45 minutes</span>
+                                            </div>
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-user"></i>
+                                                <span>John Mitchell</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 flex items-center space-x-2">
+                                            <button class="px-3 py-1.5 bg-primary-blue text-white text-xs font-semibold rounded-full hover:bg-hover-blue transition-colors duration-150">Join Interview</button>
+                                            <button class="px-3 py-1.5 bg-white text-primary-text text-xs font-semibold rounded-full border border-border-color hover:bg-bg-surface transition-colors duration-150">View Profile</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="schedule-item-2" class="flex items-start space-x-4 pb-4 border-b border-border-color last:border-b-0 last:pb-0">
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-sm font-semibold text-primary-text">11:30</div>
+                                        <div class="text-xs text-secondary-text">AM</div>
+                                        <div class="w-px h-12 bg-border-color mt-2"></div>
+                                    </div>
+                                    <div class="flex-1 bg-green-50 border border-green-200 rounded-lg p-4">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Candidate" class="w-10 h-10 rounded-full">
+                                                <div>
+                                                    <div class="text-sm font-semibold text-primary-text">Michael Chen</div>
+                                                    <div class="text-xs text-secondary-text">Product Manager</div>
+                                                </div>
+                                            </div>
+                                            <span class="px-2 py-1 bg-success text-white text-xs font-semibold rounded-full">Completed</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4 text-xs text-secondary-text">
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-robot"></i>
+                                                <span>AI Interview</span>
+                                            </div>
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-clock"></i>
+                                                <span>30 minutes</span>
+                                            </div>
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-star text-warning"></i>
+                                                <span>Score: 8.5/10</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 flex items-center space-x-2">
+                                            <button class="px-3 py-1.5 bg-success text-white text-xs font-semibold rounded-full hover:bg-green-700 transition-colors duration-150">View Results</button>
+                                            <button class="px-3 py-1.5 bg-white text-primary-text text-xs font-semibold rounded-full border border-border-color hover:bg-bg-surface transition-colors duration-150">Schedule Next Round</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="schedule-item-3" class="flex items-start space-x-4 pb-4 border-b border-border-color last:border-b-0 last:pb-0">
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-sm font-semibold text-primary-text">02:00</div>
+                                        <div class="text-xs text-secondary-text">PM</div>
+                                        <div class="w-px h-12 bg-border-color mt-2"></div>
+                                    </div>
+                                    <div class="flex-1 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Candidate" class="w-10 h-10 rounded-full">
+                                                <div>
+                                                    <div class="text-sm font-semibold text-primary-text">Emily Rodriguez</div>
+                                                    <div class="text-xs text-secondary-text">UX Designer</div>
+                                                </div>
+                                            </div>
+                                            <span class="px-2 py-1 bg-primary-blue text-white text-xs font-semibold rounded-full">Upcoming</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4 text-xs text-secondary-text">
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-video"></i>
+                                                <span>Technical Round</span>
+                                            </div>
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-clock"></i>
+                                                <span>60 minutes</span>
+                                            </div>
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-users"></i>
+                                                <span>Panel Interview</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 flex items-center space-x-2">
+                                            <button class="px-3 py-1.5 bg-primary-blue text-white text-xs font-semibold rounded-full hover:bg-hover-blue transition-colors duration-150">Join Interview</button>
+                                            <button class="px-3 py-1.5 bg-white text-primary-text text-xs font-semibold rounded-full border border-border-color hover:bg-bg-surface transition-colors duration-150">View Profile</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div id="schedule-item-4" class="flex items-start space-x-4">
+                                    <div class="flex flex-col items-center">
+                                        <div class="text-sm font-semibold text-primary-text">04:30</div>
+                                        <div class="text-xs text-secondary-text">PM</div>
+                                    </div>
+                                    <div class="flex-1 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="flex items-center space-x-3">
+                                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="Candidate" class="w-10 h-10 rounded-full">
+                                                <div>
+                                                    <div class="text-sm font-semibold text-primary-text">David Park</div>
+                                                    <div class="text-xs text-secondary-text">Backend Engineer</div>
+                                                </div>
+                                            </div>
+                                            <span class="px-2 py-1 bg-primary-blue text-white text-xs font-semibold rounded-full">Upcoming</span>
+                                        </div>
+                                        <div class="flex items-center space-x-4 text-xs text-secondary-text">
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-phone"></i>
+                                                <span>Phone Screen</span>
+                                            </div>
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-clock"></i>
+                                                <span>30 minutes</span>
+                                            </div>
+                                            <div class="flex items-center space-x-1">
+                                                <i class="fa-solid fa-user"></i>
+                                                <span>Lisa Anderson</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 flex items-center space-x-2">
+                                            <button class="px-3 py-1.5 bg-primary-blue text-white text-xs font-semibold rounded-full hover:bg-hover-blue transition-colors duration-150">Start Call</button>
+                                            <button class="px-3 py-1.5 bg-white text-primary-text text-xs font-semibold rounded-full border border-border-color hover:bg-bg-surface transition-colors duration-150">View Profile</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="pipeline-overview" class="bg-card-surface border border-border-color rounded-lg">
+                            <div class="px-6 py-4 border-b border-border-color">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fa-solid fa-filter text-primary-blue text-lg"></i>
+                                        <h2 class="text-lg font-semibold text-primary-text">Pipeline Overview</h2>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <button class="px-3 py-1.5 bg-bg-surface text-secondary-text text-xs font-medium rounded-full hover:bg-border-color transition-colors duration-150">This Week</button>
+                                        <button class="px-3 py-1.5 bg-primary-blue text-white text-xs font-semibold rounded-full">This Month</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="p-6">
+                                <div id="pipeline-chart" style="height: 300px"></div>
+                            </div>
+                            
+                            <div class="px-6 pb-6">
+                                <div class="grid grid-cols-5 gap-4">
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-primary-text mb-1">456</div>
+                                        <div class="text-xs text-secondary-text mb-2">Applied</div>
+                                        <div class="w-full bg-bg-surface rounded-full h-1.5 overflow-hidden">
+                                            <div class="bg-blue-500 h-1.5 rounded-full" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-primary-text mb-1">284</div>
+                                        <div class="text-xs text-secondary-text mb-2">Screening</div>
+                                        <div class="w-full bg-bg-surface rounded-full h-1.5 overflow-hidden">
+                                            <div class="bg-purple-500 h-1.5 rounded-full" style="width: 62%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-primary-text mb-1">128</div>
+                                        <div class="text-xs text-secondary-text mb-2">Interview</div>
+                                        <div class="w-full bg-bg-surface rounded-full h-1.5 overflow-hidden">
+                                            <div class="bg-warning h-1.5 rounded-full" style="width: 28%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-primary-text mb-1">42</div>
+                                        <div class="text-xs text-secondary-text mb-2">Offer</div>
+                                        <div class="w-full bg-bg-surface rounded-full h-1.5 overflow-hidden">
+                                            <div class="bg-green-500 h-1.5 rounded-full" style="width: 9%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <div class="text-2xl font-bold text-primary-text mb-1">18</div>
+                                        <div class="text-xs text-secondary-text mb-2">Hired</div>
+                                        <div class="w-full bg-bg-surface rounded-full h-1.5 overflow-hidden">
+                                            <div class="bg-success h-1.5 rounded-full" style="width: 4%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="sidebar-sections" class="space-y-6">
+                        
+                        <div id="quick-actions" class="bg-card-surface border border-border-color rounded-lg p-6">
+                            <h3 class="text-base font-semibold text-primary-text mb-4 flex items-center space-x-2">
+                                <i class="fa-solid fa-bolt text-warning"></i>
+                                <span>Quick Actions</span>
+                            </h3>
+                            <div class="space-y-3">
+                                <button class="w-full h-11 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150 flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-plus"></i>
+                                    <span>Post New Job</span>
+                                </button>
+                                <button class="w-full h-11 bg-white text-primary-blue text-sm font-semibold rounded-full border border-primary-blue hover:bg-blue-50 transition-all duration-150 flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-calendar-plus"></i>
+                                    <span>Schedule Interview</span>
+                                </button>
+                                <button class="w-full h-11 bg-white text-primary-text text-sm font-semibold rounded-full border border-border-color hover:bg-bg-surface transition-all duration-150 flex items-center justify-center space-x-2">
+                                    <i class="fa-solid fa-user-check"></i>
+                                    <span>Review Candidates</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div id="pending-actions" class="bg-card-surface border border-border-color rounded-lg">
+                            <div class="px-6 py-4 border-b border-border-color">
+                                <h3 class="text-base font-semibold text-primary-text flex items-center justify-between">
+                                    <span class="flex items-center space-x-2">
+                                        <i class="fa-solid fa-exclamation-circle text-warning"></i>
+                                        <span>Pending Actions</span>
+                                    </span>
+                                    <span class="px-2 py-0.5 bg-warning text-white text-xs font-semibold rounded-full">7</span>
+                                </h3>
+                            </div>
+                            <div class="p-4 space-y-3">
+                                <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div class="text-sm font-semibold text-primary-text">Review Applications</div>
+                                        <span class="px-2 py-0.5 bg-error text-white text-xs font-semibold rounded-full">Urgent</span>
+                                    </div>
+                                    <div class="text-xs text-secondary-text mb-3">12 new applications need review</div>
+                                    <button class="text-xs text-error font-semibold hover:underline">Review Now →</button>
+                                </div>
+                                
+                                <div class="bg-orange-50 border border-orange-200 rounded-lg p-3">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div class="text-sm font-semibold text-primary-text">Interview Feedback</div>
+                                        <span class="px-2 py-0.5 bg-warning text-white text-xs font-semibold rounded-full">3</span>
+                                    </div>
+                                    <div class="text-xs text-secondary-text mb-3">Provide feedback for completed interviews</div>
+                                    <button class="text-xs text-warning font-semibold hover:underline">Add Feedback →</button>
+                                </div>
+                                
+                                <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <div class="text-sm font-semibold text-primary-text">Approve Offers</div>
+                                        <span class="px-2 py-0.5 bg-primary-blue text-white text-xs font-semibold rounded-full">2</span>
+                                    </div>
+                                    <div class="text-xs text-secondary-text mb-3">2 offer letters awaiting approval</div>
+                                    <button class="text-xs text-primary-blue font-semibold hover:underline">Review Offers →</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="recent-activity" class="bg-card-surface border border-border-color rounded-lg">
+                            <div class="px-6 py-4 border-b border-border-color">
+                                <h3 class="text-base font-semibold text-primary-text flex items-center space-x-2">
+                                    <i class="fa-solid fa-clock-rotate-left text-primary-blue"></i>
+                                    <span>Recent Activity</span>
+                                </h3>
+                            </div>
+                            <div class="p-4 space-y-4">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-green-50 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <i class="fa-solid fa-user-plus text-success text-xs"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="text-sm text-primary-text font-medium">New candidate applied</div>
+                                        <div class="text-xs text-secondary-text">Sarah Johnson for Frontend Developer</div>
+                                        <div class="text-xs text-secondary-text mt-1">2 minutes ago</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <i class="fa-solid fa-video text-primary-blue text-xs"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="text-sm text-primary-text font-medium">Interview completed</div>
+                                        <div class="text-xs text-secondary-text">Michael Chen - Product Manager</div>
+                                        <div class="text-xs text-secondary-text mt-1">1 hour ago</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-purple-50 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <i class="fa-solid fa-briefcase text-purple-600 text-xs"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="text-sm text-primary-text font-medium">New job posted</div>
+                                        <div class="text-xs text-secondary-text">Senior UX Designer position</div>
+                                        <div class="text-xs text-secondary-text mt-1">3 hours ago</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-orange-50 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <i class="fa-solid fa-handshake text-warning text-xs"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="text-sm text-primary-text font-medium">Offer accepted</div>
+                                        <div class="text-xs text-secondary-text">Emily Rodriguez - UX Designer</div>
+                                        <div class="text-xs text-secondary-text mt-1">5 hours ago</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-red-50 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <i class="fa-solid fa-calendar-xmark text-error text-xs"></i>
+                                    </div>
+                                    <div class="flex-1 min-w-0">
+                                        <div class="text-sm text-primary-text font-medium">Interview rescheduled</div>
+                                        <div class="text-xs text-secondary-text">David Park - Backend Engineer</div>
+                                        <div class="text-xs text-secondary-text mt-1">Yesterday</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-6 py-3 border-t border-border-color">
+                                <button class="text-xs text-primary-blue font-semibold hover:text-hover-blue transition-colors duration-150 w-full text-center">View All Activity →</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+window.addEventListener('load', function() {
+    try {
+        const data = [{
+            type: 'funnel',
+            y: ['Applied', 'Screening', 'Interview', 'Offer', 'Hired'],
+            x: [456, 284, 128, 42, 18],
+            textinfo: 'value+percent initial',
+            marker: {
+                colors: ['#3B82F6', '#A855F7', '#F59E0B', '#10B981', '#057642']
+            },
+            connector: {
+                line: {
+                    color: '#E5E7EB',
+                    width: 2
+                }
+            }
+        }];
+
+        const layout = {
+            margin: { t: 20, r: 20, b: 20, l: 20 },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false,
+            font: {
+                family: 'Inter, sans-serif',
+                size: 12,
+                color: '#111827'
+            }
+        };
+
+        const config = {
+            responsive: true,
+            displayModeBar: false,
+            displaylogo: false
+        };
+
+        Plotly.newPlot('pipeline-chart', data, layout, config);
+    } catch(e) {
+        document.getElementById('pipeline-chart').innerHTML = '<div class="flex items-center justify-center h-full text-secondary-text text-sm">Chart loading error</div>';
+    }
+});
+</script>
+
+</body>
+</html>

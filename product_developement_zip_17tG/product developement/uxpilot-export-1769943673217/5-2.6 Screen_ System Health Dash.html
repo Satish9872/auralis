@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Health Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-bg-surface">
+
+<div id="header" class="bg-card-surface border-b border-border-color sticky top-0 z-50">
+    <div class="flex items-center justify-between px-8 h-16">
+        <div class="flex items-center space-x-8">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-primary-blue rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-shield-halved text-white text-lg"></i>
+                </div>
+                <div>
+                    <div class="text-primary-text text-lg font-bold">Euron</div>
+                    <div class="text-secondary-text text-xs">Super Admin</div>
+                </div>
+            </div>
+            <nav class="flex items-center space-x-1">
+                <a href="#" class="px-4 py-2 text-sm font-medium text-secondary-text hover:text-primary-text hover:bg-bg-surface rounded-lg transition-all duration-150">
+                    <i class="fa-solid fa-gauge mr-2"></i>Dashboard
+                </a>
+                <a href="#" class="px-4 py-2 text-sm font-medium text-secondary-text hover:text-primary-text hover:bg-bg-surface rounded-lg transition-all duration-150">
+                    <i class="fa-solid fa-users mr-2"></i>Clients
+                </a>
+                <a href="#" class="px-4 py-2 text-sm font-medium text-primary-blue bg-blue-50 rounded-lg transition-all duration-150">
+                    <i class="fa-solid fa-heart-pulse mr-2"></i>System Health
+                </a>
+                <a href="#" class="px-4 py-2 text-sm font-medium text-secondary-text hover:text-primary-text hover:bg-bg-surface rounded-lg transition-all duration-150">
+                    <i class="fa-solid fa-dollar-sign mr-2"></i>Billing
+                </a>
+                <a href="#" class="px-4 py-2 text-sm font-medium text-secondary-text hover:text-primary-text hover:bg-bg-surface rounded-lg transition-all duration-150">
+                    <i class="fa-solid fa-sliders mr-2"></i>Settings
+                </a>
+            </nav>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button class="w-10 h-10 flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-bg-surface rounded-lg transition-all duration-150">
+                <i class="fa-solid fa-bell"></i>
+            </button>
+            <div class="flex items-center space-x-3 pl-4 border-l border-border-color">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Admin" class="w-9 h-9 rounded-full">
+                <div>
+                    <div class="text-sm font-semibold text-primary-text">Admin User</div>
+                    <div class="text-xs text-secondary-text">Super Admin</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="status-bar" class="bg-success text-white">
+    <div class="flex items-center justify-between px-8 h-12">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                <i class="fa-solid fa-circle-check text-lg"></i>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span class="text-base font-bold">All Systems Operational</span>
+                <span class="px-2 py-0.5 bg-white bg-opacity-20 rounded text-xs font-semibold">100% Uptime</span>
+            </div>
+        </div>
+        <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-2 text-sm">
+                <i class="fa-solid fa-clock text-xs"></i>
+                <span>Last checked: <span class="font-semibold">2 seconds ago</span></span>
+            </div>
+            <button class="px-4 py-1.5 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full text-sm font-semibold transition-all duration-150 flex items-center space-x-2">
+                <i class="fa-solid fa-rotate text-xs"></i>
+                <span>Refresh</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="main-content" class="px-8 py-8">
+    
+    <div id="page-header" class="mb-8">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-primary-text text-3xl font-bold mb-2">System Health Dashboard</h1>
+                <p class="text-secondary-text text-base">Real-time monitoring of all platform services and infrastructure</p>
+            </div>
+            <div class="flex items-center space-x-3">
+                <button class="px-5 py-2.5 bg-card-surface border border-border-color text-primary-text text-sm font-semibold rounded-full hover:bg-bg-surface transition-all duration-150">
+                    <i class="fa-solid fa-download mr-2"></i>Export Report
+                </button>
+                <button class="px-5 py-2.5 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150">
+                    <i class="fa-solid fa-gear mr-2"></i>Configure Alerts
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="overview-metrics" class="grid grid-cols-5 gap-6 mb-8">
+        <div class="bg-card-surface border border-border-color rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-server text-success text-xl"></i>
+                </div>
+                <span class="px-2 py-1 bg-green-100 text-success text-xs font-semibold rounded">Healthy</span>
+            </div>
+            <div class="text-3xl font-bold text-primary-text mb-1">8/8</div>
+            <div class="text-sm text-secondary-text">Services Online</div>
+        </div>
+
+        <div class="bg-card-surface border border-border-color rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-gauge-high text-primary-blue text-xl"></i>
+                </div>
+                <span class="px-2 py-1 bg-blue-100 text-primary-blue text-xs font-semibold rounded">Optimal</span>
+            </div>
+            <div class="text-3xl font-bold text-primary-text mb-1">99.9%</div>
+            <div class="text-sm text-secondary-text">System Uptime</div>
+        </div>
+
+        <div class="bg-card-surface border border-border-color rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-bolt text-purple-600 text-xl"></i>
+                </div>
+                <span class="px-2 py-1 bg-purple-100 text-purple-600 text-xs font-semibold rounded">Fast</span>
+            </div>
+            <div class="text-3xl font-bold text-primary-text mb-1">142ms</div>
+            <div class="text-sm text-secondary-text">Avg Response Time</div>
+        </div>
+
+        <div class="bg-card-surface border border-border-color rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-chart-line text-warning text-xl"></i>
+                </div>
+                <span class="px-2 py-1 bg-orange-100 text-warning text-xs font-semibold rounded">Active</span>
+            </div>
+            <div class="text-3xl font-bold text-primary-text mb-1">12.4K</div>
+            <div class="text-sm text-secondary-text">Requests/min</div>
+        </div>
+
+        <div class="bg-card-surface border border-border-color rounded-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-triangle-exclamation text-error text-xl"></i>
+                </div>
+                <span class="px-2 py-1 bg-red-100 text-error text-xs font-semibold rounded">Low</span>
+            </div>
+            <div class="text-3xl font-bold text-primary-text mb-1">0.02%</div>
+            <div class="text-sm text-secondary-text">Error Rate</div>
+        </div>
+    </div>
+
+    <div id="service-status-grid" class="grid grid-cols-2 gap-6 mb-8">
+        
+        <div id="api-gateway-card" class="bg-card-surface border border-border-color rounded-lg">
+            <div class="p-6 border-b border-border-color">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-network-wired text-success text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-primary-text">API Gateway</h3>
+                            <p class="text-sm text-secondary-text">Core API infrastructure</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                        <span class="text-sm font-semibold text-success">Operational</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Response Time</div>
+                        <div class="text-2xl font-bold text-primary-text">128ms</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-down text-success text-xs"></i>
+                            <span class="text-xs text-success font-semibold">-12ms</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Error Rate</div>
+                        <div class="text-2xl font-bold text-primary-text">0.01%</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-down text-success text-xs"></i>
+                            <span class="text-xs text-success font-semibold">-0.03%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Requests/sec</div>
+                        <div class="text-2xl font-bold text-primary-text">4.2K</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-up text-primary-blue text-xs"></i>
+                            <span class="text-xs text-primary-blue font-semibold">+340</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="api-gateway-chart" style="height: 200px;"></div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Endpoints</div>
+                        <div class="text-sm font-semibold text-primary-text">247 active</div>
+                    </div>
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Cache Hit Rate</div>
+                        <div class="text-sm font-semibold text-primary-text">94.3%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="interview-engine-card" class="bg-card-surface border border-border-color rounded-lg">
+            <div class="p-6 border-b border-border-color">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-comments text-success text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-primary-text">Interview Engine</h3>
+                            <p class="text-sm text-secondary-text">AI-powered interviews</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                        <span class="text-sm font-semibold text-success">Operational</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Active Sessions</div>
+                        <div class="text-2xl font-bold text-primary-text">1,847</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-up text-primary-blue text-xs"></i>
+                            <span class="text-xs text-primary-blue font-semibold">+124</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Queue Depth</div>
+                        <div class="text-2xl font-bold text-primary-text">23</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-minus text-secondary-text text-xs"></i>
+                            <span class="text-xs text-secondary-text font-semibold">Stable</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Processing Time</div>
+                        <div class="text-2xl font-bold text-primary-text">2.4s</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-down text-success text-xs"></i>
+                            <span class="text-xs text-success font-semibold">-0.3s</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="interview-engine-chart" style="height: 200px;"></div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Completed Today</div>
+                        <div class="text-sm font-semibold text-primary-text">12,847</div>
+                    </div>
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Avg Quality Score</div>
+                        <div class="text-sm font-semibold text-primary-text">9.2/10</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="database-card" class="bg-card-surface border border-border-color rounded-lg">
+            <div class="p-6 border-b border-border-color">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-database text-success text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-primary-text">Database (Aurora)</h3>
+                            <p class="text-sm text-secondary-text">Primary data store</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                        <span class="text-sm font-semibold text-success">Operational</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Connections</div>
+                        <div class="text-2xl font-bold text-primary-text">847</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <span class="text-xs text-secondary-text">of 2000 max</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">CPU Usage</div>
+                        <div class="text-2xl font-bold text-primary-text">34%</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-down text-success text-xs"></i>
+                            <span class="text-xs text-success font-semibold">-8%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Storage Used</div>
+                        <div class="text-2xl font-bold text-primary-text">2.4TB</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <span class="text-xs text-secondary-text">of 10TB</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="database-chart" style="height: 200px;"></div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Read IOPS</div>
+                        <div class="text-sm font-semibold text-primary-text">8,400/sec</div>
+                    </div>
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Write IOPS</div>
+                        <div class="text-sm font-semibold text-primary-text">2,100/sec</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="redis-cache-card" class="bg-card-surface border border-border-color rounded-lg">
+            <div class="p-6 border-b border-border-color">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-bolt text-success text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-primary-text">Redis Cache</h3>
+                            <p class="text-sm text-secondary-text">In-memory data store</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                        <span class="text-sm font-semibold text-success">Operational</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Hit Rate</div>
+                        <div class="text-2xl font-bold text-primary-text">96.8%</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-up text-success text-xs"></i>
+                            <span class="text-xs text-success font-semibold">+1.2%</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Memory Used</div>
+                        <div class="text-2xl font-bold text-primary-text">12.4GB</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <span class="text-xs text-secondary-text">of 32GB</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Connected Clients</div>
+                        <div class="text-2xl font-bold text-primary-text">1,247</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-minus text-secondary-text text-xs"></i>
+                            <span class="text-xs text-secondary-text font-semibold">Stable</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="redis-cache-chart" style="height: 200px;"></div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Ops/sec</div>
+                        <div class="text-sm font-semibold text-primary-text">24,700</div>
+                    </div>
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Evicted Keys</div>
+                        <div class="text-sm font-semibold text-primary-text">142</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="ai-services-card" class="bg-card-surface border border-border-color rounded-lg">
+            <div class="p-6 border-b border-border-color">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-brain text-success text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-primary-text">AI Services</h3>
+                            <p class="text-sm text-secondary-text">AWS Bedrock integration</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                        <span class="text-sm font-semibold text-success">Operational</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Bedrock Latency</div>
+                        <div class="text-2xl font-bold text-primary-text">847ms</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-down text-success text-xs"></i>
+                            <span class="text-xs text-success font-semibold">-52ms</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Token Usage</div>
+                        <div class="text-2xl font-bold text-primary-text">2.4M</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <span class="text-xs text-secondary-text">today</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Error Rate</div>
+                        <div class="text-2xl font-bold text-primary-text">0.03%</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-down text-success text-xs"></i>
+                            <span class="text-xs text-success font-semibold">-0.01%</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="ai-services-chart" style="height: 200px;"></div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Active Models</div>
+                        <div class="text-sm font-semibold text-primary-text">4 deployed</div>
+                    </div>
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Requests/min</div>
+                        <div class="text-sm font-semibold text-primary-text">1,847</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="video-chime-card" class="bg-card-surface border border-border-color rounded-lg">
+            <div class="p-6 border-b border-border-color">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-video text-success text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-primary-text">Video (Chime)</h3>
+                            <p class="text-sm text-secondary-text">Video conferencing</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                        <span class="text-sm font-semibold text-success">Operational</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Active Meetings</div>
+                        <div class="text-2xl font-bold text-primary-text">347</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-up text-primary-blue text-xs"></i>
+                            <span class="text-xs text-primary-blue font-semibold">+24</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Bandwidth</div>
+                        <div class="text-2xl font-bold text-primary-text">8.4Gbps</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-minus text-secondary-text text-xs"></i>
+                            <span class="text-xs text-secondary-text font-semibold">Normal</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Quality Score</div>
+                        <div class="text-2xl font-bold text-primary-text">9.4/10</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-up text-success text-xs"></i>
+                            <span class="text-xs text-success font-semibold">+0.2</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="video-chime-chart" style="height: 200px;"></div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Participants</div>
+                        <div class="text-sm font-semibold text-primary-text">1,247 active</div>
+                    </div>
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Avg Duration</div>
+                        <div class="text-sm font-semibold text-primary-text">42 minutes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="storage-s3-card" class="bg-card-surface border border-border-color rounded-lg">
+            <div class="p-6 border-b border-border-color">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-cloud text-success text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-primary-text">Storage (S3)</h3>
+                            <p class="text-sm text-secondary-text">Object storage</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                        <span class="text-sm font-semibold text-success">Operational</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Objects Count</div>
+                        <div class="text-2xl font-bold text-primary-text">8.4M</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-up text-primary-blue text-xs"></i>
+                            <span class="text-xs text-primary-blue font-semibold">+12K</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Total Size</div>
+                        <div class="text-2xl font-bold text-primary-text">14.7TB</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-up text-primary-blue text-xs"></i>
+                            <span class="text-xs text-primary-blue font-semibold">+340GB</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Request Rate</div>
+                        <div class="text-2xl font-bold text-primary-text">2.4K/s</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-minus text-secondary-text text-xs"></i>
+                            <span class="text-xs text-secondary-text font-semibold">Stable</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="storage-s3-chart" style="height: 200px;"></div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">GET Requests</div>
+                        <div class="text-sm font-semibold text-primary-text">1.8K/sec</div>
+                    </div>
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">PUT Requests</div>
+                        <div class="text-sm font-semibold text-primary-text">600/sec</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="worker-queues-card" class="bg-card-surface border border-border-color rounded-lg">
+            <div class="p-6 border-b border-border-color">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-list-check text-success text-lg"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-primary-text">Worker Queues</h3>
+                            <p class="text-sm text-secondary-text">Background job processing</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                        <span class="text-sm font-semibold text-success">Operational</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Jobs Pending</div>
+                        <div class="text-2xl font-bold text-primary-text">1,247</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-down text-success text-xs"></i>
+                            <span class="text-xs text-success font-semibold">-84</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Processing Rate</div>
+                        <div class="text-2xl font-bold text-primary-text">840/min</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-up text-success text-xs"></i>
+                            <span class="text-xs text-success font-semibold">+47/min</span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-xs text-secondary-text mb-1">Failed Jobs</div>
+                        <div class="text-2xl font-bold text-primary-text">12</div>
+                        <div class="flex items-center space-x-1 mt-1">
+                            <i class="fa-solid fa-arrow-down text-success text-xs"></i>
+                            <span class="text-xs text-success font-semibold">-3</span>
+                        </div>
+                    </div>
+                </div>
+                <div id="worker-queues-chart" style="height: 200px;"></div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Active Workers</div>
+                        <div class="text-sm font-semibold text-primary-text">42 running</div>
+                    </div>
+                    <div class="bg-bg-surface rounded-lg p-3">
+                        <div class="text-xs text-secondary-text mb-1">Avg Wait Time</div>
+                        <div class="text-sm font-semibold text-primary-text">1.2 seconds</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="system-alerts" class="bg-card-surface border border-border-color rounded-lg p-6 mb-8">
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-bell text-primary-blue text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-primary-text">Recent Alerts & Events</h3>
+                    <p class="text-sm text-secondary-text">Last 24 hours activity log</p>
+                </div>
+            </div>
+            <button class="px-4 py-2 bg-bg-surface text-primary-text text-sm font-semibold rounded-full hover:bg-border-color transition-all duration-150">
+                View All
+            </button>
+        </div>
+        <div class="space-y-3">
+            <div class="flex items-start space-x-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div class="w-8 h-8 bg-success rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-check text-white text-sm"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-1">
+                        <div class="text-sm font-semibold text-primary-text">Database backup completed successfully</div>
+                        <span class="text-xs text-secondary-text">2 hours ago</span>
+                    </div>
+                    <p class="text-sm text-secondary-text">Full system backup completed. Size: 2.4TB, Duration: 47 minutes</p>
+                </div>
+            </div>
+            <div class="flex items-start space-x-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div class="w-8 h-8 bg-primary-blue rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-info text-white text-sm"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-1">
+                        <div class="text-sm font-semibold text-primary-text">Auto-scaling event triggered</div>
+                        <span class="text-xs text-secondary-text">5 hours ago</span>
+                    </div>
+                    <p class="text-sm text-secondary-text">API Gateway scaled up to 12 instances due to increased load</p>
+                </div>
+            </div>
+            <div class="flex items-start space-x-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                <div class="w-8 h-8 bg-warning rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-triangle-exclamation text-white text-sm"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-1">
+                        <div class="text-sm font-semibold text-primary-text">High memory usage detected on Redis cluster</div>
+                        <span class="text-xs text-secondary-text">8 hours ago</span>
+                    </div>
+                    <p class="text-sm text-secondary-text">Memory usage reached 85%. Cache eviction policies activated. Resolved automatically.</p>
+                </div>
+            </div>
+            <div class="flex items-start space-x-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+                <div class="w-8 h-8 bg-success rounded-full flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-check text-white text-sm"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center justify-between mb-1">
+                        <div class="text-sm font-semibold text-primary-text">SSL certificates renewed successfully</div>
+                        <span class="text-xs text-secondary-text">12 hours ago</span>
+                    </div>
+                    <p class="text-sm text-secondary-text">All SSL/TLS certificates renewed. Valid until March 2025</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="performance-trends" class="grid grid-cols-2 gap-6 mb-8">
+        <div class="bg-card-surface border border-border-color rounded-lg p-6">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-primary-text">Response Time Trends</h3>
+                    <p class="text-sm text-secondary-text">Last 7 days average</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="px-3 py-1.5 bg-primary-blue text-white text-xs font-semibold rounded-full">7 Days</button>
+                    <button class="px-3 py-1.5 bg-bg-surface text-secondary-text text-xs font-semibold rounded-full hover:bg-border-color transition-all duration-150">30 Days</button>
+                </div>
+            </div>
+            <div id="response-time-trend-chart" style="height: 300px;"></div>
+        </div>
+
+        <div class="bg-card-surface border border-border-color rounded-lg p-6">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-lg font-semibold text-primary-text">Traffic Distribution</h3>
+                    <p class="text-sm text-secondary-text">Requests by service</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <span class="px-3 py-1.5 bg-green-100 text-success text-xs font-semibold rounded-full">Real-time</span>
+                </div>
+            </div>
+            <div id="traffic-distribution-chart" style="height: 300px;"></div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+window.addEventListener('load', function() {
+    try {
+        Plotly.newPlot('api-gateway-chart', [{
+            type: 'scatter',
+            mode: 'lines',
+            x: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '23:59'],
+            y: [140, 135, 128, 142, 138, 125, 128],
+            line: { color: '#0A66C2', width: 2 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(10, 102, 194, 0.1)'
+        }], {
+            margin: { t: 10, r: 10, b: 30, l: 40 },
+            xaxis: { title: '', showgrid: false },
+            yaxis: { title: 'ms', showgrid: true, gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false
+        }, {responsive: true, displayModeBar: false, displaylogo: false});
+
+        Plotly.newPlot('interview-engine-chart', [{
+            type: 'scatter',
+            mode: 'lines',
+            x: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '23:59'],
+            y: [1200, 1100, 1400, 1700, 1850, 1920, 1847],
+            line: { color: '#057642', width: 2 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(5, 118, 66, 0.1)'
+        }], {
+            margin: { t: 10, r: 10, b: 30, l: 40 },
+            xaxis: { title: '', showgrid: false },
+            yaxis: { title: 'Sessions', showgrid: true, gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false
+        }, {responsive: true, displayModeBar: false, displaylogo: false});
+
+        Plotly.newPlot('database-chart', [{
+            type: 'scatter',
+            mode: 'lines',
+            x: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '23:59'],
+            y: [28, 32, 38, 42, 39, 35, 34],
+            line: { color: '#9333EA', width: 2 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(147, 51, 234, 0.1)'
+        }], {
+            margin: { t: 10, r: 10, b: 30, l: 40 },
+            xaxis: { title: '', showgrid: false },
+            yaxis: { title: 'CPU %', showgrid: true, gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false
+        }, {responsive: true, displayModeBar: false, displaylogo: false});
+
+        Plotly.newPlot('redis-cache-chart', [{
+            type: 'scatter',
+            mode: 'lines',
+            x: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '23:59'],
+            y: [94.2, 95.1, 95.8, 96.4, 96.9, 97.1, 96.8],
+            line: { color: '#DC2626', width: 2 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(220, 38, 38, 0.1)'
+        }], {
+            margin: { t: 10, r: 10, b: 30, l: 40 },
+            xaxis: { title: '', showgrid: false },
+            yaxis: { title: 'Hit Rate %', showgrid: true, gridcolor: '#E5E7EB', range: [90, 100] },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false
+        }, {responsive: true, displayModeBar: false, displaylogo: false});
+
+        Plotly.newPlot('ai-services-chart', [{
+            type: 'scatter',
+            mode: 'lines',
+            x: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '23:59'],
+            y: [920, 880, 850, 870, 840, 835, 847],
+            line: { color: '#EA580C', width: 2 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(234, 88, 12, 0.1)'
+        }], {
+            margin: { t: 10, r: 10, b: 30, l: 40 },
+            xaxis: { title: '', showgrid: false },
+            yaxis: { title: 'Latency (ms)', showgrid: true, gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false
+        }, {responsive: true, displayModeBar: false, displaylogo: false});
+
+        Plotly.newPlot('video-chime-chart', [{
+            type: 'scatter',
+            mode: 'lines',
+            x: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '23:59'],
+            y: [180, 150, 220, 280, 320, 360, 347],
+            line: { color: '#0891B2', width: 2 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(8, 145, 178, 0.1)'
+        }], {
+            margin: { t: 10, r: 10, b: 30, l: 40 },
+            xaxis: { title: '', showgrid: false },
+            yaxis: { title: 'Meetings', showgrid: true, gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false
+        }, {responsive: true, displayModeBar: false, displaylogo: false});
+
+        Plotly.newPlot('storage-s3-chart', [{
+            type: 'scatter',
+            mode: 'lines',
+            x: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '23:59'],
+            y: [1.8, 2.0, 2.2, 2.5, 2.6, 2.5, 2.4],
+            line: { color: '#059669', width: 2 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(5, 150, 105, 0.1)'
+        }], {
+            margin: { t: 10, r: 10, b: 30, l: 40 },
+            xaxis: { title: '', showgrid: false },
+            yaxis: { title: 'Requests (K/s)', showgrid: true, gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false
+        }, {responsive: true, displayModeBar: false, displaylogo: false});
+
+        Plotly.newPlot('worker-queues-chart', [{
+            type: 'scatter',
+            mode: 'lines',
+            x: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '23:59'],
+            y: [1400, 1350, 1280, 1320, 1290, 1260, 1247],
+            line: { color: '#7C3AED', width: 2 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(124, 58, 237, 0.1)'
+        }], {
+            margin: { t: 10, r: 10, b: 30, l: 40 },
+            xaxis: { title: '', showgrid: false },
+            yaxis: { title: 'Pending Jobs', showgrid: true, gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false
+        }, {responsive: true, displayModeBar: false, displaylogo: false});
+
+        Plotly.newPlot('response-time-trend-chart', [{
+            type: 'scatter',
+            mode: 'lines',
+            name: 'API Gateway',
+            x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            y: [145, 138, 142, 135, 132, 128, 130],
+            line: { color: '#0A66C2', width: 2 }
+        }, {
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Database',
+            x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            y: [85, 82, 88, 84, 80, 78, 79],
+            line: { color: '#9333EA', width: 2 }
+        }, {
+            type: 'scatter',
+            mode: 'lines',
+            name: 'AI Services',
+            x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            y: [920, 880, 900, 870, 850, 840, 847],
+            line: { color: '#EA580C', width: 2 }
+        }], {
+            margin: { t: 20, r: 20, b: 40, l: 50 },
+            xaxis: { title: '', showgrid: false },
+            yaxis: { title: 'Response Time (ms)', showgrid: true, gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: true,
+            legend: { orientation: 'h', y: -0.2 }
+        }, {responsive: true, displayModeBar: false, displaylogo: false});
+
+        Plotly.newPlot('traffic-distribution-chart', [{
+            type: 'pie',
+            labels: ['API Gateway', 'Interview Engine', 'AI Services', 'Video (Chime)', 'Storage (S3)', 'Worker Queues'],
+            values: [4200, 1847, 1847, 347, 2400, 840],
+            marker: {
+                colors: ['#0A66C2', '#057642', '#EA580C', '#0891B2', '#059669', '#7C3AED']
+            },
+            textinfo: 'label+percent',
+            textposition: 'outside',
+            hole: 0.4
+        }], {
+            margin: { t: 20, r: 20, b: 20, l: 20 },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false
+        }, {responsive: true, displayModeBar: false, displaylogo: false});
+
+    } catch(e) {
+        console.error('Chart rendering error:', e);
+    }
+});
+</script>
+
+</body>
+</html>

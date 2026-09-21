@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Scheduling</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-bg-surface">
+
+<div id="interview-scheduling-page" class="flex h-screen w-screen overflow-hidden">
+    
+    <div id="candidate-info-panel" class="w-[40%] bg-card-surface border-r border-border-color overflow-y-auto">
+        <div class="sticky top-0 bg-card-surface border-b border-border-color z-10 p-8">
+            <div class="flex items-center space-x-3 mb-6">
+                <button class="w-10 h-10 rounded-full bg-bg-surface border border-border-color flex items-center justify-center hover:bg-gray-100 transition-colors duration-150">
+                    <i class="fa-solid fa-arrow-left text-primary-text"></i>
+                </button>
+                <div>
+                    <div class="text-xs text-secondary-text uppercase tracking-wider font-medium">Interview Scheduling</div>
+                    <h1 class="text-xl font-bold text-primary-text">Schedule Interview</h1>
+                </div>
+            </div>
+        </div>
+
+        <div id="candidate-profile" class="p-8">
+            <div class="flex items-start space-x-4 mb-8">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Candidate" class="w-20 h-20 rounded-xl object-cover border-2 border-border-color"/>
+                <div class="flex-1">
+                    <h2 class="text-2xl font-bold text-primary-text mb-1">Sarah Anderson</h2>
+                    <p class="text-base text-secondary-text mb-3">Senior Frontend Developer</p>
+                    <div class="flex items-center space-x-2 mb-2">
+                        <span class="px-3 py-1 bg-blue-100 text-primary-blue text-xs font-semibold rounded-full">Active Candidate</span>
+                        <span class="px-3 py-1 bg-green-100 text-success text-xs font-semibold rounded-full">Stage 2</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="candidate-details" class="space-y-6 mb-8">
+                <div class="bg-bg-surface rounded-lg p-5 border border-border-color">
+                    <div class="text-xs text-secondary-text uppercase tracking-wider font-medium mb-4">Contact Information</div>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-card-surface border border-border-color flex items-center justify-center">
+                                <i class="fa-solid fa-envelope text-primary-blue text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-secondary-text">Email</div>
+                                <div class="text-sm text-primary-text font-medium">sarah.anderson@email.com</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-card-surface border border-border-color flex items-center justify-center">
+                                <i class="fa-solid fa-phone text-primary-blue text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-secondary-text">Phone</div>
+                                <div class="text-sm text-primary-text font-medium">+1 (555) 123-4567</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-lg bg-card-surface border border-border-color flex items-center justify-center">
+                                <i class="fa-solid fa-location-dot text-primary-blue text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-secondary-text">Location</div>
+                                <div class="text-sm text-primary-text font-medium">San Francisco, CA</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface rounded-lg p-5 border border-border-color">
+                    <div class="text-xs text-secondary-text uppercase tracking-wider font-medium mb-4">Application Details</div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-secondary-text">Position Applied</span>
+                            <span class="text-sm text-primary-text font-semibold">Senior Frontend Dev</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-secondary-text">Applied Date</span>
+                            <span class="text-sm text-primary-text font-semibold">Dec 18, 2024</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-secondary-text">Experience</span>
+                            <span class="text-sm text-primary-text font-semibold">8 years</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-secondary-text">Current Stage</span>
+                            <span class="text-sm text-success font-semibold">Technical Round</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-bg-surface rounded-lg p-5 border border-border-color">
+                    <div class="text-xs text-secondary-text uppercase tracking-wider font-medium mb-4">Skills & Expertise</div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 bg-card-surface border border-border-color rounded-full text-xs text-primary-text font-medium">React</span>
+                        <span class="px-3 py-1.5 bg-card-surface border border-border-color rounded-full text-xs text-primary-text font-medium">TypeScript</span>
+                        <span class="px-3 py-1.5 bg-card-surface border border-border-color rounded-full text-xs text-primary-text font-medium">Next.js</span>
+                        <span class="px-3 py-1.5 bg-card-surface border border-border-color rounded-full text-xs text-primary-text font-medium">Tailwind CSS</span>
+                        <span class="px-3 py-1.5 bg-card-surface border border-border-color rounded-full text-xs text-primary-text font-medium">Node.js</span>
+                        <span class="px-3 py-1.5 bg-card-surface border border-border-color rounded-full text-xs text-primary-text font-medium">GraphQL</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="interview-history" class="mb-8">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-base font-semibold text-primary-text">Interview History</h3>
+                    <span class="text-xs text-secondary-text">2 completed</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="bg-card-surface border border-border-color rounded-lg p-4">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
+                                    <i class="fa-solid fa-check text-success"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-primary-text">AI Interview</div>
+                                    <div class="text-xs text-secondary-text">Dec 20, 2024 • 45 min</div>
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 bg-green-100 text-success text-xs font-semibold rounded">Passed</span>
+                        </div>
+                        <div class="flex items-center space-x-4 text-xs text-secondary-text">
+                            <div class="flex items-center space-x-1">
+                                <i class="fa-solid fa-star text-warning"></i>
+                                <span>4.5/5.0</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fa-solid fa-user"></i>
+                                <span>AI Interviewer</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-card-surface border border-border-color rounded-lg p-4">
+                        <div class="flex items-start justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
+                                    <i class="fa-solid fa-check text-success"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold text-primary-text">Phone Screening</div>
+                                    <div class="text-xs text-secondary-text">Dec 15, 2024 • 30 min</div>
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 bg-green-100 text-success text-xs font-semibold rounded">Passed</span>
+                        </div>
+                        <div class="flex items-center space-x-4 text-xs text-secondary-text">
+                            <div class="flex items-center space-x-1">
+                                <i class="fa-solid fa-star text-warning"></i>
+                                <span>4.8/5.0</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <i class="fa-solid fa-user"></i>
+                                <span>John Smith</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="candidate-notes" class="bg-amber-50 border border-amber-200 rounded-lg p-5">
+                <div class="flex items-start space-x-3">
+                    <i class="fa-solid fa-note-sticky text-warning text-lg mt-0.5"></i>
+                    <div>
+                        <div class="text-sm font-semibold text-primary-text mb-2">Recruiter Notes</div>
+                        <p class="text-sm text-secondary-text leading-relaxed mb-3">Strong technical background with excellent communication skills. Previously worked at Google and Meta. Looking for remote opportunities. Available for interviews Monday-Friday, 9 AM - 5 PM PST.</p>
+                        <div class="text-xs text-secondary-text">Added by Michael Chen • 2 days ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="scheduling-panel" class="w-[60%] bg-bg-surface overflow-y-auto">
+        <div class="p-8">
+            <div id="schedule-form-header" class="mb-8">
+                <h2 class="text-2xl font-bold text-primary-text mb-2">Schedule Interview</h2>
+                <p class="text-sm text-secondary-text">Configure interview details and select an available time slot</p>
+            </div>
+
+            <form id="schedule-form" class="space-y-6">
+                
+                <div id="interview-type-section" class="bg-card-surface rounded-lg p-6 border border-border-color">
+                    <div class="flex items-center space-x-2 mb-5">
+                        <div class="w-8 h-8 rounded-lg bg-primary-blue bg-opacity-10 flex items-center justify-center">
+                            <i class="fa-solid fa-clipboard-question text-primary-blue"></i>
+                        </div>
+                        <h3 class="text-base font-semibold text-primary-text">Interview Configuration</h3>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-5 mb-5">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-primary-text">Interview Type</label>
+                            <div class="relative">
+                                <select class="w-full h-11 bg-card-surface border border-border-color rounded-md px-4 pr-10 text-sm text-primary-text appearance-none focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150 cursor-pointer">
+                                    <option>AI Interview</option>
+                                    <option selected>Technical Interview</option>
+                                    <option>Behavioral Interview</option>
+                                    <option>Final Interview</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-secondary-text text-xs pointer-events-none"></i>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-sm font-medium text-primary-text">Duration</label>
+                            <div class="relative">
+                                <select class="w-full h-11 bg-card-surface border border-border-color rounded-md px-4 pr-10 text-sm text-primary-text appearance-none focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150 cursor-pointer">
+                                    <option>30 minutes</option>
+                                    <option>45 minutes</option>
+                                    <option selected>60 minutes</option>
+                                    <option>90 minutes</option>
+                                </select>
+                                <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-secondary-text text-xs pointer-events-none"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-primary-text">Interview Template</label>
+                        <div class="relative">
+                            <select class="w-full h-11 bg-card-surface border border-border-color rounded-md px-4 pr-10 text-sm text-primary-text appearance-none focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150 cursor-pointer">
+                                <option>Select a template...</option>
+                                <option selected>Frontend Developer - Technical</option>
+                                <option>Senior Engineer - System Design</option>
+                                <option>Leadership - Behavioral</option>
+                                <option>Cultural Fit Assessment</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-secondary-text text-xs pointer-events-none"></i>
+                        </div>
+                        <p class="text-xs text-secondary-text flex items-center space-x-1">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>This template includes React, TypeScript, and system design questions</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div id="date-time-section" class="bg-card-surface rounded-lg p-6 border border-border-color">
+                    <div class="flex items-center space-x-2 mb-5">
+                        <div class="w-8 h-8 rounded-lg bg-primary-blue bg-opacity-10 flex items-center justify-center">
+                            <i class="fa-solid fa-calendar-days text-primary-blue"></i>
+                        </div>
+                        <h3 class="text-base font-semibold text-primary-text">Date & Time Selection</h3>
+                    </div>
+
+                    <div id="calendar-component" class="mb-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <button type="button" class="w-9 h-9 rounded-lg bg-bg-surface border border-border-color flex items-center justify-center hover:bg-gray-100 transition-colors duration-150">
+                                <i class="fa-solid fa-chevron-left text-primary-text text-sm"></i>
+                            </button>
+                            <h4 class="text-base font-semibold text-primary-text">January 2025</h4>
+                            <button type="button" class="w-9 h-9 rounded-lg bg-bg-surface border border-border-color flex items-center justify-center hover:bg-gray-100 transition-colors duration-150">
+                                <i class="fa-solid fa-chevron-right text-primary-text text-sm"></i>
+                            </button>
+                        </div>
+
+                        <div class="grid grid-cols-7 gap-2 mb-2">
+                            <div class="text-center text-xs font-semibold text-secondary-text py-2">Sun</div>
+                            <div class="text-center text-xs font-semibold text-secondary-text py-2">Mon</div>
+                            <div class="text-center text-xs font-semibold text-secondary-text py-2">Tue</div>
+                            <div class="text-center text-xs font-semibold text-secondary-text py-2">Wed</div>
+                            <div class="text-center text-xs font-semibold text-secondary-text py-2">Thu</div>
+                            <div class="text-center text-xs font-semibold text-secondary-text py-2">Fri</div>
+                            <div class="text-center text-xs font-semibold text-secondary-text py-2">Sat</div>
+                        </div>
+
+                        <div class="grid grid-cols-7 gap-2">
+                            <div class="aspect-square"></div>
+                            <div class="aspect-square"></div>
+                            <div class="aspect-square"></div>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-secondary-text hover:bg-bg-surface transition-colors duration-150 relative opacity-50 cursor-not-allowed">1</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-secondary-text hover:bg-bg-surface transition-colors duration-150 relative opacity-50 cursor-not-allowed">2</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-secondary-text hover:bg-bg-surface transition-colors duration-150 relative opacity-50 cursor-not-allowed">3</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-secondary-text hover:bg-bg-surface transition-colors duration-150 relative opacity-50 cursor-not-allowed">4</button>
+                            
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-secondary-text hover:bg-bg-surface transition-colors duration-150 relative opacity-50 cursor-not-allowed">5</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">6<div class="absolute bottom-1 w-1 h-1 rounded-full bg-primary-blue"></div></button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">7</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">8<div class="absolute bottom-1 w-1 h-1 rounded-full bg-primary-blue"></div></button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">9</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">10</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-secondary-text hover:bg-bg-surface transition-colors duration-150 relative opacity-50 cursor-not-allowed">11</button>
+                            
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-secondary-text hover:bg-bg-surface transition-colors duration-150 relative opacity-50 cursor-not-allowed">12</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">13</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">14<div class="absolute bottom-1 w-1 h-1 rounded-full bg-primary-blue"></div></button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text bg-primary-blue text-white font-semibold">15</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">16</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">17</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-secondary-text hover:bg-bg-surface transition-colors duration-150 relative opacity-50 cursor-not-allowed">18</button>
+                            
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-secondary-text hover:bg-bg-surface transition-colors duration-150 relative opacity-50 cursor-not-allowed">19</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">20<div class="absolute bottom-1 w-1 h-1 rounded-full bg-primary-blue"></div></button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">21</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative border-2 border-primary-blue">22</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">23</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">24</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-secondary-text hover:bg-bg-surface transition-colors duration-150 relative opacity-50 cursor-not-allowed">25</button>
+                            
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-secondary-text hover:bg-bg-surface transition-colors duration-150 relative opacity-50 cursor-not-allowed">26</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">27</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">28<div class="absolute bottom-1 w-1 h-1 rounded-full bg-primary-blue"></div></button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">29</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">30</button>
+                            <button type="button" class="aspect-square rounded-full flex items-center justify-center text-sm text-primary-text hover:bg-bg-surface transition-colors duration-150 relative">31</button>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-3 mb-5 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                        <i class="fa-solid fa-circle-info text-primary-blue"></i>
+                        <div class="text-sm text-primary-text">
+                            <span class="font-semibold">Selected:</span> Wednesday, January 15, 2025
+                        </div>
+                    </div>
+
+                    <div class="space-y-2 mb-5">
+                        <label class="block text-sm font-medium text-primary-text">Available Time Slots</label>
+                        <div class="grid grid-cols-4 gap-3">
+                            <button type="button" class="h-11 rounded-lg border border-border-color bg-card-surface text-sm text-primary-text font-medium hover:border-primary-blue hover:bg-primary-blue hover:bg-opacity-5 transition-all duration-150">9:00 AM</button>
+                            <button type="button" class="h-11 rounded-lg border border-border-color bg-card-surface text-sm text-primary-text font-medium hover:border-primary-blue hover:bg-primary-blue hover:bg-opacity-5 transition-all duration-150">10:00 AM</button>
+                            <button type="button" class="h-11 rounded-lg border-2 border-primary-blue bg-primary-blue bg-opacity-10 text-sm text-primary-blue font-semibold">11:00 AM</button>
+                            <button type="button" class="h-11 rounded-lg border border-border-color bg-card-surface text-sm text-primary-text font-medium hover:border-primary-blue hover:bg-primary-blue hover:bg-opacity-5 transition-all duration-150">1:00 PM</button>
+                            <button type="button" class="h-11 rounded-lg border border-border-color bg-card-surface text-sm text-primary-text font-medium hover:border-primary-blue hover:bg-primary-blue hover:bg-opacity-5 transition-all duration-150">2:00 PM</button>
+                            <button type="button" class="h-11 rounded-lg border border-border-color bg-card-surface text-sm text-primary-text font-medium hover:border-primary-blue hover:bg-primary-blue hover:bg-opacity-5 transition-all duration-150">3:00 PM</button>
+                            <button type="button" class="h-11 rounded-lg border border-border-color bg-card-surface text-sm text-primary-text font-medium hover:border-primary-blue hover:bg-primary-blue hover:bg-opacity-5 transition-all duration-150">4:00 PM</button>
+                            <button type="button" class="h-11 rounded-lg border border-border-color bg-gray-100 text-sm text-secondary-text opacity-50 cursor-not-allowed">5:00 PM</button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-primary-text">Timezone</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <i class="fa-solid fa-globe text-secondary-text text-sm"></i>
+                            </div>
+                            <select class="w-full h-11 bg-card-surface border border-border-color rounded-md pl-11 pr-10 text-sm text-primary-text appearance-none focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150 cursor-pointer">
+                                <option selected>Pacific Time (PT) - UTC-8</option>
+                                <option>Eastern Time (ET) - UTC-5</option>
+                                <option>Central Time (CT) - UTC-6</option>
+                                <option>Mountain Time (MT) - UTC-7</option>
+                            </select>
+                            <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-secondary-text text-xs pointer-events-none"></i>
+                        </div>
+                        <p class="text-xs text-secondary-text flex items-center space-x-1">
+                            <i class="fa-solid fa-circle-check text-success"></i>
+                            <span>Auto-detected from candidate's location</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div id="interviewer-section" class="bg-card-surface rounded-lg p-6 border border-border-color">
+                    <div class="flex items-center space-x-2 mb-5">
+                        <div class="w-8 h-8 rounded-lg bg-primary-blue bg-opacity-10 flex items-center justify-center">
+                            <i class="fa-solid fa-user-tie text-primary-blue"></i>
+                        </div>
+                        <h3 class="text-base font-semibold text-primary-text">Interviewer Assignment</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 border-2 border-primary-blue bg-primary-blue bg-opacity-5 rounded-lg">
+                            <div class="flex items-center space-x-3">
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Interviewer" class="w-12 h-12 rounded-full object-cover border-2 border-primary-blue"/>
+                                <div>
+                                    <div class="text-sm font-semibold text-primary-text">David Martinez</div>
+                                    <div class="text-xs text-secondary-text">Senior Engineering Manager</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-1 bg-green-100 text-success text-xs font-semibold rounded">Available</span>
+                                <i class="fa-solid fa-circle-check text-primary-blue text-lg"></i>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 border border-border-color bg-card-surface rounded-lg hover:border-primary-blue transition-colors duration-150 cursor-pointer">
+                            <div class="flex items-center space-x-3">
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="Interviewer" class="w-12 h-12 rounded-full object-cover border-2 border-border-color"/>
+                                <div>
+                                    <div class="text-sm font-semibold text-primary-text">Robert Chen</div>
+                                    <div class="text-xs text-secondary-text">Lead Frontend Developer</div>
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 bg-green-100 text-success text-xs font-semibold rounded">Available</span>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 border border-border-color bg-card-surface rounded-lg opacity-60">
+                            <div class="flex items-center space-x-3">
+                                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Interviewer" class="w-12 h-12 rounded-full object-cover border-2 border-border-color"/>
+                                <div>
+                                    <div class="text-sm font-semibold text-primary-text">James Wilson</div>
+                                    <div class="text-xs text-secondary-text">Principal Engineer</div>
+                                </div>
+                            </div>
+                            <span class="px-2 py-1 bg-gray-200 text-secondary-text text-xs font-semibold rounded">Busy</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="notification-section" class="bg-card-surface rounded-lg p-6 border border-border-color">
+                    <div class="flex items-center space-x-2 mb-5">
+                        <div class="w-8 h-8 rounded-lg bg-primary-blue bg-opacity-10 flex items-center justify-center">
+                            <i class="fa-solid fa-bell text-primary-blue"></i>
+                        </div>
+                        <h3 class="text-base font-semibold text-primary-text">Notifications & Invitations</h3>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-bg-surface rounded-lg border border-border-color">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-envelope text-primary-blue text-lg"></i>
+                                <div>
+                                    <div class="text-sm font-semibold text-primary-text">Send Calendar Invite</div>
+                                    <div class="text-xs text-secondary-text">Automatically send meeting invite to candidate</div>
+                                </div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-blue peer-focus:ring-opacity-20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                            </label>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-bg-surface rounded-lg border border-border-color">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-bell text-primary-blue text-lg"></i>
+                                <div>
+                                    <div class="text-sm font-semibold text-primary-text">Email Reminder</div>
+                                    <div class="text-xs text-secondary-text">Send reminder 24 hours before interview</div>
+                                </div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer" checked>
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-blue peer-focus:ring-opacity-20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                            </label>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 bg-bg-surface rounded-lg border border-border-color">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-mobile-screen text-primary-blue text-lg"></i>
+                                <div>
+                                    <div class="text-sm font-semibold text-primary-text">SMS Notification</div>
+                                    <div class="text-xs text-secondary-text">Send text message confirmation</div>
+                                </div>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" class="sr-only peer">
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-blue peer-focus:ring-opacity-20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="custom-message-section" class="bg-card-surface rounded-lg p-6 border border-border-color">
+                    <div class="flex items-center space-x-2 mb-5">
+                        <div class="w-8 h-8 rounded-lg bg-primary-blue bg-opacity-10 flex items-center justify-center">
+                            <i class="fa-solid fa-message text-primary-blue"></i>
+                        </div>
+                        <h3 class="text-base font-semibold text-primary-text">Custom Message (Optional)</h3>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block text-sm font-medium text-primary-text">Additional Instructions</label>
+                        <textarea 
+                            rows="4" 
+                            class="w-full bg-card-surface border border-border-color rounded-md p-4 text-sm text-primary-text placeholder-secondary-text focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150 resize-none"
+                            placeholder="Add any special instructions or preparation materials for the candidate..."
+                        ></textarea>
+                        <p class="text-xs text-secondary-text">This message will be included in the interview invitation email</p>
+                    </div>
+                </div>
+
+                <div id="meeting-details-section" class="bg-card-surface rounded-lg p-6 border border-border-color">
+                    <div class="flex items-center space-x-2 mb-5">
+                        <div class="w-8 h-8 rounded-lg bg-primary-blue bg-opacity-10 flex items-center justify-center">
+                            <i class="fa-solid fa-video text-primary-blue"></i>
+                        </div>
+                        <h3 class="text-base font-semibold text-primary-text">Meeting Platform</h3>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4">
+                        <button type="button" class="p-4 border-2 border-primary-blue bg-primary-blue bg-opacity-5 rounded-lg hover:bg-opacity-10 transition-all duration-150">
+                            <i class="fa-solid fa-video text-primary-blue text-2xl mb-2"></i>
+                            <div class="text-sm font-semibold text-primary-text">Zoom</div>
+                            <div class="text-xs text-secondary-text mt-1">Auto-generated link</div>
+                        </button>
+                        
+                        <button type="button" class="p-4 border border-border-color bg-card-surface rounded-lg hover:border-primary-blue transition-all duration-150">
+                            <i class="fa-brands fa-microsoft text-2xl mb-2" style="color: #0078D4;"></i>
+                            <div class="text-sm font-semibold text-primary-text">Teams</div>
+                            <div class="text-xs text-secondary-text mt-1">Microsoft Teams</div>
+                        </button>
+                        
+                        <button type="button" class="p-4 border border-border-color bg-card-surface rounded-lg hover:border-primary-blue transition-all duration-150">
+                            <i class="fa-brands fa-google text-2xl mb-2" style="color: #4285F4;"></i>
+                            <div class="text-sm font-semibold text-primary-text">Meet</div>
+                            <div class="text-xs text-secondary-text mt-1">Google Meet</div>
+                        </button>
+                    </div>
+
+                    <div class="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-link text-primary-blue mt-0.5"></i>
+                            <div>
+                                <div class="text-sm font-semibold text-primary-text mb-1">Meeting Link</div>
+                                <div class="text-xs text-secondary-text font-mono bg-white p-2 rounded border border-blue-200 mb-2">https://zoom.us/j/123456789?pwd=abc123</div>
+                                <button type="button" class="text-xs text-primary-blue font-semibold hover:text-hover-blue transition-colors duration-150">
+                                    <i class="fa-solid fa-copy mr-1"></i>Copy Link
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="form-actions" class="flex items-center justify-between pt-6 border-t border-border-color">
+                    <button type="button" class="h-11 px-6 bg-transparent text-primary-blue text-sm font-semibold border border-primary-blue rounded-full hover:bg-primary-blue hover:bg-opacity-8 transition-all duration-150">
+                        <i class="fa-solid fa-floppy-disk mr-2"></i>Save as Draft
+                    </button>
+                    
+                    <div class="flex items-center space-x-3">
+                        <button type="button" class="h-11 px-6 bg-transparent text-secondary-text text-sm font-semibold border border-border-color rounded-full hover:bg-bg-surface transition-all duration-150">
+                            Cancel
+                        </button>
+                        <button type="submit" class="h-11 px-8 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue focus:outline-none focus:ring-4 focus:ring-primary-blue focus:ring-opacity-20 transition-all duration-150 shadow-sm hover:shadow-md">
+                            <i class="fa-solid fa-calendar-check mr-2"></i>Schedule Interview
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div id="scheduling-summary" class="mt-8 bg-gradient-to-br from-primary-blue to-hover-blue rounded-lg p-6 text-white">
+                <div class="flex items-start justify-between mb-4">
+                    <div>
+                        <h3 class="text-lg font-bold mb-1">Interview Summary</h3>
+                        <p class="text-blue-100 text-sm">Review details before scheduling</p>
+                    </div>
+                    <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-clipboard-check text-2xl"></i>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white bg-opacity-10 rounded-lg p-4 backdrop-blur-sm">
+                        <div class="text-blue-100 text-xs mb-1">Candidate</div>
+                        <div class="font-semibold">Sarah Anderson</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-lg p-4 backdrop-blur-sm">
+                        <div class="text-blue-100 text-xs mb-1">Interview Type</div>
+                        <div class="font-semibold">Technical Interview</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-lg p-4 backdrop-blur-sm">
+                        <div class="text-blue-100 text-xs mb-1">Date & Time</div>
+                        <div class="font-semibold">Jan 15, 11:00 AM PST</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-lg p-4 backdrop-blur-sm">
+                        <div class="text-blue-100 text-xs mb-1">Duration</div>
+                        <div class="font-semibold">60 minutes</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-lg p-4 backdrop-blur-sm">
+                        <div class="text-blue-100 text-xs mb-1">Interviewer</div>
+                        <div class="font-semibold">David Martinez</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 rounded-lg p-4 backdrop-blur-sm">
+                        <div class="text-blue-100 text-xs mb-1">Platform</div>
+                        <div class="font-semibold">Zoom Meeting</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('schedule-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    console.log('Interview scheduled');
+});
+</script>
+
+</body>
+</html>

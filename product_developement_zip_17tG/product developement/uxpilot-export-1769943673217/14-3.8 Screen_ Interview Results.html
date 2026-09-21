@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-bg-surface">
+
+<div id="interview-results-page" class="min-h-screen">
+    
+    <header id="header" class="bg-card-surface border-b border-border-color sticky top-0 z-50">
+        <div class="max-w-[1872px] mx-auto px-8 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-primary-blue rounded-xl flex items-center justify-center">
+                            <i class="fa-solid fa-shield-halved text-white text-lg"></i>
+                        </div>
+                        <div>
+                            <div class="text-primary-text text-xl font-bold">Euron</div>
+                            <div class="text-xs text-secondary-text">Interview Platform</div>
+                        </div>
+                    </div>
+                    <div class="h-8 w-px bg-border-color"></div>
+                    <nav class="flex items-center space-x-1">
+                        <a href="#" class="px-4 py-2 text-sm text-secondary-text hover:text-primary-blue hover:bg-bg-surface rounded-lg transition-all duration-150">Dashboard</a>
+                        <a href="#" class="px-4 py-2 text-sm text-primary-blue bg-blue-50 rounded-lg font-medium">Interviews</a>
+                        <a href="#" class="px-4 py-2 text-sm text-secondary-text hover:text-primary-blue hover:bg-bg-surface rounded-lg transition-all duration-150">Candidates</a>
+                        <a href="#" class="px-4 py-2 text-sm text-secondary-text hover:text-primary-blue hover:bg-bg-surface rounded-lg transition-all duration-150">Analytics</a>
+                    </nav>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="w-10 h-10 flex items-center justify-center text-secondary-text hover:text-primary-blue hover:bg-bg-surface rounded-lg transition-all duration-150">
+                        <i class="fa-solid fa-bell"></i>
+                    </button>
+                    <div class="h-8 w-px bg-border-color"></div>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Admin" class="w-9 h-9 rounded-full border-2 border-border-color">
+                        <div class="text-left">
+                            <div class="text-sm font-semibold text-primary-text">Sarah Chen</div>
+                            <div class="text-xs text-secondary-text">HR Manager</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="page-header" class="bg-card-surface border-b border-border-color">
+        <div class="max-w-[1872px] mx-auto px-8 py-8">
+            <div class="flex items-start justify-between">
+                <div class="flex items-start space-x-6">
+                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="Michael Rodriguez" class="w-20 h-20 rounded-xl border-2 border-border-color">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-2">
+                            <h1 class="text-2xl font-bold text-primary-text">Michael Rodriguez</h1>
+                            <span class="px-3 py-1 bg-blue-50 text-primary-blue text-xs font-semibold rounded-full">Senior Developer</span>
+                        </div>
+                        <div class="flex items-center space-x-6 text-sm text-secondary-text mb-3">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-video text-primary-blue"></i>
+                                <span>AI Interview - Technical</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-calendar"></i>
+                                <span>Feb 1, 2026</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-clock"></i>
+                                <span>45 minutes</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="flex items-center space-x-1">
+                                <i class="fa-solid fa-envelope text-secondary-text text-xs"></i>
+                                <span class="text-sm text-secondary-text">michael.rodriguez@email.com</span>
+                            </div>
+                            <span class="text-border-color">•</span>
+                            <div class="flex items-center space-x-1">
+                                <i class="fa-solid fa-phone text-secondary-text text-xs"></i>
+                                <span class="text-sm text-secondary-text">+1 (555) 234-5678</span>
+                            </div>
+                            <span class="text-border-color">•</span>
+                            <div class="flex items-center space-x-1">
+                                <i class="fa-brands fa-linkedin text-secondary-text text-xs"></i>
+                                <span class="text-sm text-secondary-text">/in/mrodriguez</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button class="px-5 py-2.5 bg-transparent text-primary-blue text-sm font-semibold border border-primary-blue rounded-full hover:bg-blue-50 transition-all duration-150 flex items-center space-x-2">
+                        <i class="fa-solid fa-share-nodes"></i>
+                        <span>Share</span>
+                    </button>
+                    <button class="px-5 py-2.5 bg-transparent text-primary-blue text-sm font-semibold border border-primary-blue rounded-full hover:bg-blue-50 transition-all duration-150 flex items-center space-x-2">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Download Report</span>
+                    </button>
+                    <button class="px-5 py-2.5 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150 flex items-center space-x-2">
+                        <i class="fa-solid fa-calendar-plus"></i>
+                        <span>Schedule Next Round</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main id="main-content" class="max-w-[1872px] mx-auto px-8 py-8">
+        
+        <div id="results-overview" class="grid grid-cols-12 gap-6 mb-8">
+            
+            <div id="overall-score-card" class="col-span-3 bg-card-surface rounded-xl border border-border-color p-8">
+                <div class="text-center">
+                    <div class="text-sm font-semibold text-secondary-text uppercase tracking-wider mb-4">Overall Score</div>
+                    <div class="relative inline-flex items-center justify-center mb-6">
+                        <svg class="w-40 h-40 transform -rotate-90">
+                            <circle cx="80" cy="80" r="70" stroke="#E5E7EB" stroke-width="12" fill="none"/>
+                            <circle cx="80" cy="80" r="70" stroke="#057642" stroke-width="12" fill="none" stroke-dasharray="440" stroke-dashoffset="66" stroke-linecap="round"/>
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <div class="text-5xl font-bold text-success">85</div>
+                            <div class="text-sm text-secondary-text">out of 100</div>
+                        </div>
+                    </div>
+                    <div class="inline-flex items-center space-x-2 px-4 py-2 bg-green-50 rounded-full mb-4">
+                        <i class="fa-solid fa-check-circle text-success"></i>
+                        <span class="text-sm font-semibold text-success">Strong Candidate</span>
+                    </div>
+                    <p class="text-xs text-secondary-text leading-relaxed">Candidate demonstrates excellent technical skills and problem-solving abilities with strong communication.</p>
+                </div>
+            </div>
+
+            <div id="score-breakdown" class="col-span-9 grid grid-cols-2 gap-6">
+                
+                <div id="technical-score-card" class="bg-card-surface rounded-xl border border-border-color p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h3 class="text-base font-semibold text-primary-text mb-1">Technical Score</h3>
+                            <p class="text-xs text-secondary-text">Algorithm & Data Structures</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold text-primary-blue">88</div>
+                            <div class="text-xs text-secondary-text">/ 100</div>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">Algorithms</span>
+                                <span class="font-semibold text-primary-text">92%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-success h-2 rounded-full" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">Data Structures</span>
+                                <span class="font-semibold text-primary-text">86%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-success h-2 rounded-full" style="width: 86%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">System Design</span>
+                                <span class="font-semibold text-primary-text">84%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-primary-blue h-2 rounded-full" style="width: 84%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">Code Quality</span>
+                                <span class="font-semibold text-primary-text">90%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-success h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="communication-score-card" class="bg-card-surface rounded-xl border border-border-color p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h3 class="text-base font-semibold text-primary-text mb-1">Communication Score</h3>
+                            <p class="text-xs text-secondary-text">Clarity & Articulation</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold text-success">82</div>
+                            <div class="text-xs text-secondary-text">/ 100</div>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">Clarity</span>
+                                <span class="font-semibold text-primary-text">85%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-success h-2 rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">Articulation</span>
+                                <span class="font-semibold text-primary-text">80%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-primary-blue h-2 rounded-full" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">Confidence</span>
+                                <span class="font-semibold text-primary-text">78%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-primary-blue h-2 rounded-full" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">Technical Vocabulary</span>
+                                <span class="font-semibold text-primary-text">86%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-success h-2 rounded-full" style="width: 86%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="problem-solving-card" class="bg-card-surface rounded-xl border border-border-color p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h3 class="text-base font-semibold text-primary-text mb-1">Problem Solving</h3>
+                            <p class="text-xs text-secondary-text">Approach & Methodology</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold text-success">87</div>
+                            <div class="text-xs text-secondary-text">/ 100</div>
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">Approach</span>
+                                <span class="font-semibold text-primary-text">90%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-success h-2 rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">Methodology</span>
+                                <span class="font-semibold text-primary-text">88%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-success h-2 rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">Accuracy</span>
+                                <span class="font-semibold text-primary-text">84%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-primary-blue h-2 rounded-full" style="width: 84%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex items-center justify-between text-xs mb-1">
+                                <span class="text-secondary-text">Edge Cases</span>
+                                <span class="font-semibold text-primary-text">86%</span>
+                            </div>
+                            <div class="w-full bg-bg-surface rounded-full h-2">
+                                <div class="bg-success h-2 rounded-full" style="width: 86%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="proctoring-score-card" class="bg-card-surface rounded-xl border border-border-color p-6">
+                    <div class="flex items-start justify-between mb-4">
+                        <div>
+                            <h3 class="text-base font-semibold text-primary-text mb-1">Proctoring Score</h3>
+                            <p class="text-xs text-secondary-text">Trust & Integrity</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold text-success">95</div>
+                            <div class="text-xs text-secondary-text">/ 100</div>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-shield-check text-success"></i>
+                                <span class="text-sm font-medium text-primary-text">No Issues Detected</span>
+                            </div>
+                            <i class="fa-solid fa-check text-success"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-secondary-text">Face Detection</span>
+                                <span class="text-success font-semibold">100%</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-secondary-text">Tab Switches</span>
+                                <span class="text-success font-semibold">0 incidents</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-secondary-text">Multiple Faces</span>
+                                <span class="text-success font-semibold">0 incidents</span>
+                            </div>
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-secondary-text">Audio Anomalies</span>
+                                <span class="text-success font-semibold">0 incidents</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="ai-recommendation-section" class="mb-8">
+            <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border-2 border-success p-8">
+                <div class="flex items-start justify-between">
+                    <div class="flex items-start space-x-6">
+                        <div class="w-16 h-16 bg-success rounded-xl flex items-center justify-center flex-shrink-0">
+                            <i class="fa-solid fa-robot text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center space-x-3 mb-3">
+                                <h2 class="text-xl font-bold text-primary-text">AI Recommendation</h2>
+                                <span class="px-3 py-1 bg-success text-white text-xs font-semibold rounded-full uppercase tracking-wider">Hire</span>
+                            </div>
+                            <p class="text-base text-primary-text mb-4 leading-relaxed max-w-3xl">
+                                Based on comprehensive analysis of technical skills, problem-solving abilities, communication quality, and behavioral assessment, this candidate demonstrates strong competency for the Senior Developer position. The candidate shows exceptional algorithmic thinking, clean code practices, and effective communication of complex technical concepts.
+                            </p>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="bg-white rounded-lg p-4 border border-green-200">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <i class="fa-solid fa-thumbs-up text-success"></i>
+                                        <span class="text-sm font-semibold text-primary-text">Key Strengths</span>
+                                    </div>
+                                    <ul class="text-xs text-secondary-text space-y-1">
+                                        <li>• Strong algorithmic knowledge</li>
+                                        <li>• Clean code practices</li>
+                                        <li>• Excellent problem breakdown</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <i class="fa-solid fa-lightbulb text-primary-blue"></i>
+                                        <span class="text-sm font-semibold text-primary-text">Growth Areas</span>
+                                    </div>
+                                    <ul class="text-xs text-secondary-text space-y-1">
+                                        <li>• System design depth</li>
+                                        <li>• Presentation confidence</li>
+                                        <li>• Edge case consideration</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white rounded-lg p-4 border border-green-200">
+                                    <div class="flex items-center space-x-2 mb-2">
+                                        <i class="fa-solid fa-chart-line text-success"></i>
+                                        <span class="text-sm font-semibold text-primary-text">Confidence Level</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 mb-1">
+                                        <div class="flex-1 bg-bg-surface rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 89%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-success">89%</span>
+                                    </div>
+                                    <p class="text-xs text-secondary-text">High confidence in recommendation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="question-analysis-section">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-xl font-bold text-primary-text mb-1">Question-by-Question Analysis</h2>
+                    <p class="text-sm text-secondary-text">Detailed breakdown of each interview question and response</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button class="px-4 py-2 text-sm text-secondary-text hover:text-primary-blue hover:bg-bg-surface rounded-lg transition-all duration-150 flex items-center space-x-2">
+                        <i class="fa-solid fa-filter"></i>
+                        <span>Filter</span>
+                    </button>
+                    <button class="px-4 py-2 text-sm text-secondary-text hover:text-primary-blue hover:bg-bg-surface rounded-lg transition-all duration-150 flex items-center space-x-2">
+                        <i class="fa-solid fa-download"></i>
+                        <span>Export All</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="questions-accordion" class="space-y-4">
+                
+                <div id="question-1" class="bg-card-surface rounded-xl border border-border-color overflow-hidden">
+                    <button onclick="toggleAccordion('q1')" class="w-full px-6 py-5 flex items-center justify-between hover:bg-bg-surface transition-all duration-150">
+                        <div class="flex items-start space-x-4 text-left flex-1">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <span class="text-sm font-bold text-primary-blue">Q1</span>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-base font-semibold text-primary-text mb-2">Implement a function to reverse a linked list. Explain your approach and analyze time complexity.</h3>
+                                <div class="flex items-center space-x-4 text-xs text-secondary-text">
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <span>Data Structures</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <span>Medium Difficulty</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-clock"></i>
+                                        <span>8 min 32 sec</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 ml-4">
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-success">92</div>
+                                <div class="text-xs text-secondary-text">Score</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-secondary-text transition-transform duration-200" id="q1-icon"></i>
+                        </div>
+                    </button>
+                    <div id="q1-content" class="hidden border-t border-border-color">
+                        <div class="p-6 space-y-6">
+                            <div id="response-summary" class="bg-blue-50 rounded-lg p-5">
+                                <div class="flex items-start space-x-3 mb-3">
+                                    <i class="fa-solid fa-sparkles text-primary-blue mt-1"></i>
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-semibold text-primary-text mb-2">AI-Generated Summary</h4>
+                                        <p class="text-sm text-secondary-text leading-relaxed">
+                                            Candidate provided a clear and concise solution using the iterative three-pointer approach. Demonstrated strong understanding of linked list manipulation and correctly identified the O(n) time complexity and O(1) space complexity. Explained the logic step-by-step with good clarity.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="score-breakdown-q1" class="grid grid-cols-4 gap-4">
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Correctness</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 95%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">95%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Efficiency</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">90%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Clarity</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 92%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">92%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Code Quality</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 91%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">91%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="playback-section" class="flex items-center space-x-3">
+                                <button class="px-5 py-2.5 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150 flex items-center space-x-2">
+                                    <i class="fa-solid fa-play"></i>
+                                    <span>Play Response</span>
+                                </button>
+                                <button class="px-5 py-2.5 bg-transparent text-primary-blue text-sm font-semibold border border-primary-blue rounded-full hover:bg-blue-50 transition-all duration-150 flex items-center space-x-2">
+                                    <i class="fa-solid fa-file-lines"></i>
+                                    <span>View Code</span>
+                                </button>
+                                <div class="flex-1"></div>
+                                <div class="flex items-center space-x-2 text-sm text-secondary-text">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <span>Duration: 8:32</span>
+                                </div>
+                            </div>
+
+                            <div id="transcript-section">
+                                <button onclick="toggleTranscript('q1')" class="flex items-center space-x-2 text-sm font-semibold text-primary-blue hover:text-hover-blue transition-colors duration-150 mb-3">
+                                    <i class="fa-solid fa-chevron-right transition-transform duration-200" id="q1-transcript-icon"></i>
+                                    <span>Show Full Transcript</span>
+                                </button>
+                                <div id="q1-transcript" class="hidden bg-bg-surface rounded-lg p-5">
+                                    <div class="space-y-3 text-sm text-primary-text leading-relaxed">
+                                        <p><span class="font-semibold text-primary-blue">[00:00]</span> "Okay, so to reverse a linked list, I'll use an iterative approach with three pointers. Let me explain my thought process first..."</p>
+                                        <p><span class="font-semibold text-primary-blue">[00:15]</span> "I'll initialize three pointers: previous as null, current pointing to the head, and next as null. The idea is to traverse the list and reverse the links as we go..."</p>
+                                        <p><span class="font-semibold text-primary-blue">[00:45]</span> "In each iteration, I'll save the next node, reverse the current node's pointer to point to previous, then move previous and current one step forward..."</p>
+                                        <p><span class="font-semibold text-primary-blue">[02:30]</span> "Let me write the code now. [Starts coding] The time complexity is O(n) since we traverse the list once, and space complexity is O(1) as we only use three pointers..."</p>
+                                        <p><span class="font-semibold text-primary-blue">[06:15]</span> "For edge cases, if the list is empty or has only one node, we can return the head as is. Let me add that check at the beginning..."</p>
+                                        <p><span class="font-semibold text-primary-blue">[08:00]</span> "And that's the complete solution. The reversed list's new head will be the previous pointer when current becomes null."</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="ai-feedback-section" class="bg-green-50 rounded-lg p-5 border border-green-200">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-success rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-robot text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-semibold text-primary-text mb-3">AI Feedback</h4>
+                                        <div class="space-y-3 text-sm">
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Excellent approach:</span> Used optimal iterative solution with O(n) time and O(1) space complexity</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Clear explanation:</span> Articulated the algorithm step-by-step before coding</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Edge cases covered:</span> Properly handled empty list and single-node scenarios</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-lightbulb text-primary-blue mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Minor improvement:</span> Could have discussed the recursive approach as an alternative</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="question-2" class="bg-card-surface rounded-xl border border-border-color overflow-hidden">
+                    <button onclick="toggleAccordion('q2')" class="w-full px-6 py-5 flex items-center justify-between hover:bg-bg-surface transition-all duration-150">
+                        <div class="flex items-start space-x-4 text-left flex-1">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <span class="text-sm font-bold text-primary-blue">Q2</span>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-base font-semibold text-primary-text mb-2">Design a rate limiter for an API. Discuss different approaches and their trade-offs.</h3>
+                                <div class="flex items-center space-x-4 text-xs text-secondary-text">
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <span>System Design</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <span>Hard Difficulty</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-clock"></i>
+                                        <span>12 min 45 sec</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 ml-4">
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-primary-blue">84</div>
+                                <div class="text-xs text-secondary-text">Score</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-secondary-text transition-transform duration-200" id="q2-icon"></i>
+                        </div>
+                    </button>
+                    <div id="q2-content" class="hidden border-t border-border-color">
+                        <div class="p-6 space-y-6">
+                            <div id="response-summary-q2" class="bg-blue-50 rounded-lg p-5">
+                                <div class="flex items-start space-x-3 mb-3">
+                                    <i class="fa-solid fa-sparkles text-primary-blue mt-1"></i>
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-semibold text-primary-text mb-2">AI-Generated Summary</h4>
+                                        <p class="text-sm text-secondary-text leading-relaxed">
+                                            Candidate discussed multiple rate limiting algorithms including token bucket, leaky bucket, and sliding window. Showed good understanding of distributed systems challenges. Implementation focused on token bucket with Redis. Could have elaborated more on handling edge cases in distributed scenarios.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="score-breakdown-q2" class="grid grid-cols-4 gap-4">
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Design Quality</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-primary-blue h-2 rounded-full" style="width: 86%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">86%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Scalability</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-primary-blue h-2 rounded-full" style="width: 82%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">82%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Trade-offs</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-primary-blue h-2 rounded-full" style="width: 80%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">80%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Communication</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 88%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">88%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="playback-section-q2" class="flex items-center space-x-3">
+                                <button class="px-5 py-2.5 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150 flex items-center space-x-2">
+                                    <i class="fa-solid fa-play"></i>
+                                    <span>Play Response</span>
+                                </button>
+                                <button class="px-5 py-2.5 bg-transparent text-primary-blue text-sm font-semibold border border-primary-blue rounded-full hover:bg-blue-50 transition-all duration-150 flex items-center space-x-2">
+                                    <i class="fa-solid fa-diagram-project"></i>
+                                    <span>View Diagram</span>
+                                </button>
+                                <div class="flex-1"></div>
+                                <div class="flex items-center space-x-2 text-sm text-secondary-text">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <span>Duration: 12:45</span>
+                                </div>
+                            </div>
+
+                            <div id="ai-feedback-section-q2" class="bg-blue-50 rounded-lg p-5 border border-blue-200">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-primary-blue rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-robot text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-semibold text-primary-text mb-3">AI Feedback</h4>
+                                        <div class="space-y-3 text-sm">
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Strong overview:</span> Covered multiple algorithms and their use cases effectively</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Practical implementation:</span> Chose token bucket with Redis, a production-ready approach</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-lightbulb text-primary-blue mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Room for improvement:</span> Could discuss more about handling distributed race conditions</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-lightbulb text-primary-blue mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Enhancement:</span> Would benefit from discussing monitoring and alerting strategies</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="question-3" class="bg-card-surface rounded-xl border border-border-color overflow-hidden">
+                    <button onclick="toggleAccordion('q3')" class="w-full px-6 py-5 flex items-center justify-between hover:bg-bg-surface transition-all duration-150">
+                        <div class="flex items-start space-x-4 text-left flex-1">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <span class="text-sm font-bold text-primary-blue">Q3</span>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-base font-semibold text-primary-text mb-2">Find the longest palindromic substring in a given string. Optimize for time complexity.</h3>
+                                <div class="flex items-center space-x-4 text-xs text-secondary-text">
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <span>Algorithms</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <span>Medium Difficulty</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-clock"></i>
+                                        <span>10 min 18 sec</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 ml-4">
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-success">88</div>
+                                <div class="text-xs text-secondary-text">Score</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-secondary-text transition-transform duration-200" id="q3-icon"></i>
+                        </div>
+                    </button>
+                    <div id="q3-content" class="hidden border-t border-border-color">
+                        <div class="p-6 space-y-6">
+                            <div id="response-summary-q3" class="bg-blue-50 rounded-lg p-5">
+                                <div class="flex items-start space-x-3 mb-3">
+                                    <i class="fa-solid fa-sparkles text-primary-blue mt-1"></i>
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-semibold text-primary-text mb-2">AI-Generated Summary</h4>
+                                        <p class="text-sm text-secondary-text leading-relaxed">
+                                            Candidate implemented the expand-around-center approach achieving O(n²) time complexity. Correctly handled both odd and even length palindromes. Code was clean and well-structured. Mentioned dynamic programming as an alternative but didn't implement it due to time constraints.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="score-breakdown-q3" class="grid grid-cols-4 gap-4">
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Correctness</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 90%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">90%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Optimization</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 88%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">88%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Code Quality</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 86%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">86%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Explanation</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 87%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">87%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="playback-section-q3" class="flex items-center space-x-3">
+                                <button class="px-5 py-2.5 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150 flex items-center space-x-2">
+                                    <i class="fa-solid fa-play"></i>
+                                    <span>Play Response</span>
+                                </button>
+                                <button class="px-5 py-2.5 bg-transparent text-primary-blue text-sm font-semibold border border-primary-blue rounded-full hover:bg-blue-50 transition-all duration-150 flex items-center space-x-2">
+                                    <i class="fa-solid fa-file-code"></i>
+                                    <span>View Code</span>
+                                </button>
+                                <div class="flex-1"></div>
+                                <div class="flex items-center space-x-2 text-sm text-secondary-text">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <span>Duration: 10:18</span>
+                                </div>
+                            </div>
+
+                            <div id="ai-feedback-section-q3" class="bg-green-50 rounded-lg p-5 border border-green-200">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-success rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-robot text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-semibold text-primary-text mb-3">AI Feedback</h4>
+                                        <div class="space-y-3 text-sm">
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Solid implementation:</span> Expand-around-center approach was well-executed</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Edge cases handled:</span> Properly addressed both odd and even length palindromes</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Clean code:</span> Well-structured and readable implementation</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-lightbulb text-primary-blue mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Bonus:</span> Awareness of Manacher's algorithm for O(n) solution shows depth of knowledge</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="question-4" class="bg-card-surface rounded-xl border border-border-color overflow-hidden">
+                    <button onclick="toggleAccordion('q4')" class="w-full px-6 py-5 flex items-center justify-between hover:bg-bg-surface transition-all duration-150">
+                        <div class="flex items-start space-x-4 text-left flex-1">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <span class="text-sm font-bold text-primary-blue">Q4</span>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-base font-semibold text-primary-text mb-2">Explain the differences between SQL and NoSQL databases. When would you choose one over the other?</h3>
+                                <div class="flex items-center space-x-4 text-xs text-secondary-text">
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <span>Database Design</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <span>Medium Difficulty</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-clock"></i>
+                                        <span>7 min 52 sec</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 ml-4">
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-success">86</div>
+                                <div class="text-xs text-secondary-text">Score</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-secondary-text transition-transform duration-200" id="q4-icon"></i>
+                        </div>
+                    </button>
+                    <div id="q4-content" class="hidden border-t border-border-color">
+                        <div class="p-6 space-y-6">
+                            <div id="response-summary-q4" class="bg-blue-50 rounded-lg p-5">
+                                <div class="flex items-start space-x-3 mb-3">
+                                    <i class="fa-solid fa-sparkles text-primary-blue mt-1"></i>
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-semibold text-primary-text mb-2">AI-Generated Summary</h4>
+                                        <p class="text-sm text-secondary-text leading-relaxed">
+                                            Candidate provided a comprehensive comparison covering schema flexibility, scalability, ACID properties, and use cases. Used real-world examples to illustrate when to choose each type. Demonstrated good understanding of CAP theorem and eventual consistency. Response was well-structured and clear.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="score-breakdown-q4" class="grid grid-cols-4 gap-4">
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Knowledge</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 88%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">88%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Depth</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-primary-blue h-2 rounded-full" style="width: 84%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">84%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Examples</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 87%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">87%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Clarity</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">85%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="playback-section-q4" class="flex items-center space-x-3">
+                                <button class="px-5 py-2.5 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150 flex items-center space-x-2">
+                                    <i class="fa-solid fa-play"></i>
+                                    <span>Play Response</span>
+                                </button>
+                                <div class="flex-1"></div>
+                                <div class="flex items-center space-x-2 text-sm text-secondary-text">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <span>Duration: 7:52</span>
+                                </div>
+                            </div>
+
+                            <div id="ai-feedback-section-q4" class="bg-green-50 rounded-lg p-5 border border-green-200">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-success rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-robot text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-semibold text-primary-text mb-3">AI Feedback</h4>
+                                        <div class="space-y-3 text-sm">
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Comprehensive coverage:</span> Addressed key differences and practical use cases</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Real-world examples:</span> Used concrete scenarios to illustrate concepts</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Advanced concepts:</span> Mentioned CAP theorem and consistency models</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="question-5" class="bg-card-surface rounded-xl border border-border-color overflow-hidden">
+                    <button onclick="toggleAccordion('q5')" class="w-full px-6 py-5 flex items-center justify-between hover:bg-bg-surface transition-all duration-150">
+                        <div class="flex items-start space-x-4 text-left flex-1">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <span class="text-sm font-bold text-primary-blue">Q5</span>
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-base font-semibold text-primary-text mb-2">Implement a LRU (Least Recently Used) cache with O(1) operations. Explain your data structure choice.</h3>
+                                <div class="flex items-center space-x-4 text-xs text-secondary-text">
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-tag"></i>
+                                        <span>Data Structures</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-signal"></i>
+                                        <span>Hard Difficulty</span>
+                                    </div>
+                                    <div class="flex items-center space-x-1">
+                                        <i class="fa-solid fa-clock"></i>
+                                        <span>14 min 05 sec</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 ml-4">
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-primary-blue">81</div>
+                                <div class="text-xs text-secondary-text">Score</div>
+                            </div>
+                            <i class="fa-solid fa-chevron-down text-secondary-text transition-transform duration-200" id="q5-icon"></i>
+                        </div>
+                    </button>
+                    <div id="q5-content" class="hidden border-t border-border-color">
+                        <div class="p-6 space-y-6">
+                            <div id="response-summary-q5" class="bg-blue-50 rounded-lg p-5">
+                                <div class="flex items-start space-x-3 mb-3">
+                                    <i class="fa-solid fa-sparkles text-primary-blue mt-1"></i>
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-semibold text-primary-text mb-2">AI-Generated Summary</h4>
+                                        <p class="text-sm text-secondary-text leading-relaxed">
+                                            Candidate correctly identified the need for HashMap + Doubly Linked List combination. Implementation was mostly correct but had a minor bug in the remove operation. Explained the rationale for data structure choice well. Took slightly longer to complete due to debugging the edge case.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="score-breakdown-q5" class="grid grid-cols-4 gap-4">
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Correctness</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-primary-blue h-2 rounded-full" style="width: 82%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">82%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Efficiency</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-primary-blue h-2 rounded-full" style="width: 85%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">85%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Design Choice</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-success h-2 rounded-full" style="width: 88%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">88%</span>
+                                    </div>
+                                </div>
+                                <div class="bg-bg-surface rounded-lg p-4">
+                                    <div class="text-xs text-secondary-text mb-1">Debugging</div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="flex-1 bg-white rounded-full h-2">
+                                            <div class="bg-warning h-2 rounded-full" style="width: 72%"></div>
+                                        </div>
+                                        <span class="text-sm font-bold text-primary-text">72%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="playback-section-q5" class="flex items-center space-x-3">
+                                <button class="px-5 py-2.5 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150 flex items-center space-x-2">
+                                    <i class="fa-solid fa-play"></i>
+                                    <span>Play Response</span>
+                                </button>
+                                <button class="px-5 py-2.5 bg-transparent text-primary-blue text-sm font-semibold border border-primary-blue rounded-full hover:bg-blue-50 transition-all duration-150 flex items-center space-x-2">
+                                    <i class="fa-solid fa-file-code"></i>
+                                    <span>View Code</span>
+                                </button>
+                                <div class="flex-1"></div>
+                                <div class="flex items-center space-x-2 text-sm text-secondary-text">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <span>Duration: 14:05</span>
+                                </div>
+                            </div>
+
+                            <div id="ai-feedback-section-q5" class="bg-blue-50 rounded-lg p-5 border border-blue-200">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-primary-blue rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <i class="fa-solid fa-robot text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h4 class="text-sm font-semibold text-primary-text mb-3">AI Feedback</h4>
+                                        <div class="space-y-3 text-sm">
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Correct approach:</span> HashMap + Doubly Linked List was the right choice</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-check-circle text-success mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Good explanation:</span> Clearly articulated why this data structure achieves O(1)</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-exclamation-triangle text-warning mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Minor bug:</span> Edge case in remove operation needed correction</p>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <i class="fa-solid fa-lightbulb text-primary-blue mt-0.5"></i>
+                                                <p class="text-secondary-text"><span class="font-semibold text-primary-text">Improvement:</span> Could have caught the bug earlier with test cases</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="additional-insights" class="mt-8 grid grid-cols-2 gap-6">
+            <div id="time-analysis-card" class="bg-card-surface rounded-xl border border-border-color p-6">
+                <h3 class="text-lg font-semibold text-primary-text mb-5">Time Analysis</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-clock text-primary-blue"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-semibold text-primary-text">Total Duration</div>
+                                <div class="text-xs text-secondary-text">Interview length</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold text-primary-text">45:12</div>
+                            <div class="text-xs text-secondary-text">minutes</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-code text-success"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-semibold text-primary-text">Coding Time</div>
+                                <div class="text-xs text-secondary-text">Active coding</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold text-primary-text">28:45</div>
+                            <div class="text-xs text-secondary-text">63.6%</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-amber-50 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-comments text-warning"></i>
+                            </div>
+                            <div>
+                                <div class="text-sm font-semibold text-primary-text">Explanation Time</div>
+                                <div class="text-xs text-secondary-text">Verbal explanation</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold text-primary-text">16:27</div>
+                            <div class="text-xs text-secondary-text">36.4%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="behavioral-insights-card" class="bg-card-surface rounded-xl border border-border-color p-6">
+                <h3 class="text-lg font-semibold text-primary-text mb-5">Behavioral Insights</h3>
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-3 p-3 bg-green-50 rounded-lg">
+                        <i class="fa-solid fa-lightbulb text-success mt-0.5"></i>
+                        <div class="flex-1">
+                            <div class="text-sm font-semibold text-primary-text mb-1">Problem-Solving Approach</div>
+                            <div class="text-xs text-secondary-text">Consistently broke down complex problems before coding. Strong analytical thinking.</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg">
+                        <i class="fa-solid fa-comments text-primary-blue mt-0.5"></i>
+                        <div class="flex-1">
+                            <div class="text-sm font-semibold text-primary-text mb-1">Communication Style</div>
+                            <div class="text-xs text-secondary-text">Clear articulation of thoughts. Explained reasoning before implementation.</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 p-3 bg-amber-50 rounded-lg">
+                        <i class="fa-solid fa-bug text-warning mt-0.5"></i>
+                        <div class="flex-1">
+                            <div class="text-sm font-semibold text-primary-text mb-1">Debugging Skills</div>
+                            <div class="text-xs text-secondary-text">Systematic approach to finding bugs. Could improve speed in edge case handling.</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3 p-3 bg-green-50 rounded-lg">
+                        <i class="fa-solid fa-shield-check text-success mt-0.5"></i>
+                        <div class="flex-1">
+                            <div class="text-sm font-semibold text-primary-text mb-1">Code Quality</div>
+                            <div class="text-xs text-secondary-text">Well-structured, readable code with meaningful variable names.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer" class="bg-card-surface border-t border-border-color mt-12">
+        <div class="max-w-[1872px] mx-auto px-8 py-6">
+            <div class="flex items-center justify-between text-sm text-secondary-text">
+                <div>© 2024 Euron Platform. All rights reserved.</div>
+                <div class="flex items-center space-x-6">
+                    <a href="#" class="hover:text-primary-blue transition-colors duration-150">Privacy Policy</a>
+                    <a href="#" class="hover:text-primary-blue transition-colors duration-150">Terms of Service</a>
+                    <a href="#" class="hover:text-primary-blue transition-colors duration-150">Support</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script>
+function toggleAccordion(id) {
+    const content = document.getElementById(id + '-content');
+    const icon = document.getElementById(id + '-icon');
+    
+    if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.style.transform = 'rotate(180deg)';
+    } else {
+        content.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+    }
+}
+
+function toggleTranscript(id) {
+    const transcript = document.getElementById(id + '-transcript');
+    const icon = document.getElementById(id + '-transcript-icon');
+    const button = icon.parentElement;
+    
+    if (transcript.classList.contains('hidden')) {
+        transcript.classList.remove('hidden');
+        icon.style.transform = 'rotate(90deg)';
+        button.querySelector('span').textContent = 'Hide Full Transcript';
+    } else {
+        transcript.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+        button.querySelector('span').textContent = 'Show Full Transcript';
+    }
+}
+</script>
+
+</body>
+</html>

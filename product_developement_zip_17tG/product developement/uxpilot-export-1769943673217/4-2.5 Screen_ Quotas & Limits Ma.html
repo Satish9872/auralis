@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotas & Limits</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-bg-surface">
+
+<div id="super-admin-dashboard" class="flex h-screen w-screen overflow-hidden">
+    
+    <aside id="sidebar" class="w-64 bg-card-surface border-r border-border-color flex flex-col">
+        <div id="sidebar-header" class="p-6 border-b border-border-color">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 bg-primary-blue rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-shield-halved text-white text-lg"></i>
+                </div>
+                <div>
+                    <div class="text-primary-text text-lg font-bold">Euron</div>
+                    <div class="text-secondary-text text-xs">Super Admin</div>
+                </div>
+            </div>
+            <div class="bg-bg-surface rounded-lg p-3">
+                <div class="flex items-center space-x-2 mb-1">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-primary-blue to-hover-blue flex items-center justify-center text-white text-xs font-semibold">
+                        SA
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <div class="text-primary-text text-sm font-semibold truncate">Super Admin</div>
+                        <div class="text-secondary-text text-xs truncate">admin@euron.one</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav id="sidebar-nav" class="flex-1 overflow-y-auto py-4">
+            <div class="px-3 mb-4">
+                <div class="text-secondary-text text-xs font-semibold uppercase tracking-wider px-3 mb-2">Main</div>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 text-secondary-text hover:bg-bg-surface hover:text-primary-text rounded-lg transition-all duration-150 group">
+                    <i class="fa-solid fa-chart-line text-base group-hover:text-primary-blue transition-colors duration-150"></i>
+                    <span class="text-sm font-medium">Dashboard</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 text-secondary-text hover:bg-bg-surface hover:text-primary-text rounded-lg transition-all duration-150 group">
+                    <i class="fa-solid fa-building text-base group-hover:text-primary-blue transition-colors duration-150"></i>
+                    <span class="text-sm font-medium">Organizations</span>
+                </a>
+            </div>
+            
+            <div class="px-3 mb-4">
+                <div class="text-secondary-text text-xs font-semibold uppercase tracking-wider px-3 mb-2">Management</div>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 bg-blue-50 text-primary-blue rounded-lg transition-all duration-150 group">
+                    <i class="fa-solid fa-gauge-high text-base"></i>
+                    <span class="text-sm font-semibold">Quotas & Limits</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 text-secondary-text hover:bg-bg-surface hover:text-primary-text rounded-lg transition-all duration-150 group">
+                    <i class="fa-solid fa-puzzle-piece text-base group-hover:text-primary-blue transition-colors duration-150"></i>
+                    <span class="text-sm font-medium">Features</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 text-secondary-text hover:bg-bg-surface hover:text-primary-text rounded-lg transition-all duration-150 group">
+                    <i class="fa-solid fa-credit-card text-base group-hover:text-primary-blue transition-colors duration-150"></i>
+                    <span class="text-sm font-medium">Billing</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 text-secondary-text hover:bg-bg-surface hover:text-primary-text rounded-lg transition-all duration-150 group">
+                    <i class="fa-solid fa-users text-base group-hover:text-primary-blue transition-colors duration-150"></i>
+                    <span class="text-sm font-medium">Users</span>
+                </a>
+            </div>
+            
+            <div class="px-3 mb-4">
+                <div class="text-secondary-text text-xs font-semibold uppercase tracking-wider px-3 mb-2">System</div>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 text-secondary-text hover:bg-bg-surface hover:text-primary-text rounded-lg transition-all duration-150 group">
+                    <i class="fa-solid fa-heart-pulse text-base group-hover:text-primary-blue transition-colors duration-150"></i>
+                    <span class="text-sm font-medium">System Health</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 text-secondary-text hover:bg-bg-surface hover:text-primary-text rounded-lg transition-all duration-150 group">
+                    <i class="fa-solid fa-bell text-base group-hover:text-primary-blue transition-colors duration-150"></i>
+                    <span class="text-sm font-medium">Notifications</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 text-secondary-text hover:bg-bg-surface hover:text-primary-text rounded-lg transition-all duration-150 group">
+                    <i class="fa-solid fa-file-lines text-base group-hover:text-primary-blue transition-colors duration-150"></i>
+                    <span class="text-sm font-medium">Audit Logs</span>
+                </a>
+                <a href="#" class="flex items-center space-x-3 px-3 py-2.5 text-secondary-text hover:bg-bg-surface hover:text-primary-text rounded-lg transition-all duration-150 group">
+                    <i class="fa-solid fa-cog text-base group-hover:text-primary-blue transition-colors duration-150"></i>
+                    <span class="text-sm font-medium">Settings</span>
+                </a>
+            </div>
+        </nav>
+        
+        <div id="sidebar-footer" class="p-4 border-t border-border-color">
+            <div class="bg-blue-50 rounded-lg p-3 mb-3">
+                <div class="flex items-center space-x-2 mb-2">
+                    <i class="fa-solid fa-circle text-success text-xs"></i>
+                    <span class="text-primary-text text-xs font-semibold">System Status</span>
+                </div>
+                <div class="text-secondary-text text-xs">All systems operational</div>
+            </div>
+            <button class="w-full flex items-center justify-center space-x-2 px-4 py-2.5 text-error hover:bg-red-50 rounded-lg transition-all duration-150">
+                <i class="fa-solid fa-right-from-bracket text-sm"></i>
+                <span class="text-sm font-medium">Sign Out</span>
+            </button>
+        </div>
+    </aside>
+    
+    <main id="main-content" class="flex-1 overflow-y-auto">
+        
+        <header id="header" class="bg-card-surface border-b border-border-color sticky top-0 z-40">
+            <div class="px-8 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <div>
+                            <h1 class="text-primary-text text-2xl font-bold">Quotas & Limits</h1>
+                            <p class="text-secondary-text text-sm mt-1">Configure default and organization-specific limits</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <input type="text" placeholder="Search organizations..." class="w-80 h-10 bg-bg-surface border border-border-color rounded-lg pl-10 pr-4 text-sm text-primary-text placeholder-secondary-text focus:outline-none focus:border-primary-blue focus:ring-2 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150">
+                            <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-secondary-text text-sm"></i>
+                        </div>
+                        <button class="w-10 h-10 bg-bg-surface hover:bg-border-color rounded-lg flex items-center justify-center transition-all duration-150 relative">
+                            <i class="fa-solid fa-bell text-secondary-text"></i>
+                            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-error rounded-full"></span>
+                        </button>
+                        <button class="h-10 px-4 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150 flex items-center space-x-2">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                            <span>Create Override</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div id="page-content" class="p-8">
+            
+            <div id="stats-overview" class="grid grid-cols-4 gap-6 mb-8">
+                <div class="bg-card-surface border border-border-color rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-building text-primary-blue text-xl"></i>
+                        </div>
+                        <span class="text-xs text-secondary-text">Total</span>
+                    </div>
+                    <div class="text-primary-text text-3xl font-bold mb-1">1,247</div>
+                    <div class="text-secondary-text text-sm">Organizations</div>
+                    <div class="mt-3 flex items-center space-x-2">
+                        <span class="text-xs text-success font-semibold">+12.5%</span>
+                        <span class="text-xs text-secondary-text">vs last month</span>
+                    </div>
+                </div>
+                
+                <div class="bg-card-surface border border-border-color rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-amber-50 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-sliders text-warning text-xl"></i>
+                        </div>
+                        <span class="text-xs text-secondary-text">Active</span>
+                    </div>
+                    <div class="text-primary-text text-3xl font-bold mb-1">347</div>
+                    <div class="text-secondary-text text-sm">Custom Overrides</div>
+                    <div class="mt-3 flex items-center space-x-2">
+                        <span class="text-xs text-success font-semibold">+8.2%</span>
+                        <span class="text-xs text-secondary-text">vs last month</span>
+                    </div>
+                </div>
+                
+                <div class="bg-card-surface border border-border-color rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-triangle-exclamation text-error text-xl"></i>
+                        </div>
+                        <span class="text-xs text-secondary-text">Critical</span>
+                    </div>
+                    <div class="text-primary-text text-3xl font-bold mb-1">23</div>
+                    <div class="text-secondary-text text-sm">Near Quota Limit</div>
+                    <div class="mt-3 flex items-center space-x-2">
+                        <span class="text-xs text-error font-semibold">+5</span>
+                        <span class="text-xs text-secondary-text">in last 24h</span>
+                    </div>
+                </div>
+                
+                <div class="bg-card-surface border border-border-color rounded-lg p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-chart-line text-success text-xl"></i>
+                        </div>
+                        <span class="text-xs text-secondary-text">Avg Usage</span>
+                    </div>
+                    <div class="text-primary-text text-3xl font-bold mb-1">67%</div>
+                    <div class="text-secondary-text text-sm">Quota Utilization</div>
+                    <div class="mt-3 flex items-center space-x-2">
+                        <span class="text-xs text-success font-semibold">Healthy</span>
+                        <span class="text-xs text-secondary-text">across all orgs</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tabs-section" class="bg-card-surface border border-border-color rounded-lg mb-8">
+                <div class="border-b border-border-color">
+                    <div class="flex items-center px-6">
+                        <button class="px-6 py-4 text-sm font-semibold text-primary-blue border-b-2 border-primary-blue transition-all duration-150" onclick="switchTab('default')">
+                            <span class="flex items-center space-x-2">
+                                <i class="fa-solid fa-layer-group"></i>
+                                <span>Default Quotas</span>
+                            </span>
+                        </button>
+                        <button class="px-6 py-4 text-sm font-medium text-secondary-text hover:text-primary-text border-b-2 border-transparent hover:border-border-color transition-all duration-150" onclick="switchTab('overrides')">
+                            <span class="flex items-center space-x-2">
+                                <i class="fa-solid fa-building"></i>
+                                <span>Organization Overrides</span>
+                                <span class="ml-2 px-2 py-0.5 bg-primary-blue text-white text-xs font-semibold rounded-full">347</span>
+                            </span>
+                        </button>
+                        <button class="px-6 py-4 text-sm font-medium text-secondary-text hover:text-primary-text border-b-2 border-transparent hover:border-border-color transition-all duration-150" onclick="switchTab('analytics')">
+                            <span class="flex items-center space-x-2">
+                                <i class="fa-solid fa-chart-bar"></i>
+                                <span>Usage Analytics</span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="default-quotas-content" class="p-6">
+                    
+                    <div id="interview-limits-section" class="mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-video text-primary-blue"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-primary-text text-lg font-semibold">Interview Limits</h3>
+                                    <p class="text-secondary-text text-sm">Configure interview session quotas</p>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 text-sm font-medium text-primary-blue hover:bg-blue-50 rounded-lg transition-all duration-150">
+                                <i class="fa-solid fa-pen text-xs mr-2"></i>Edit Defaults
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-secondary-text text-sm font-medium">Monthly Interviews</span>
+                                    <i class="fa-solid fa-calendar-days text-secondary-text"></i>
+                                </div>
+                                <div class="text-primary-text text-2xl font-bold mb-1">500</div>
+                                <div class="text-secondary-text text-xs">interviews per month</div>
+                                <div class="mt-3 w-full bg-border-color rounded-full h-2">
+                                    <div class="bg-primary-blue rounded-full h-2" style="width: 65%"></div>
+                                </div>
+                                <div class="mt-2 flex items-center justify-between text-xs">
+                                    <span class="text-secondary-text">Avg usage: 325</span>
+                                    <span class="text-success font-semibold">65%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-secondary-text text-sm font-medium">Concurrent Sessions</span>
+                                    <i class="fa-solid fa-users text-secondary-text"></i>
+                                </div>
+                                <div class="text-primary-text text-2xl font-bold mb-1">10</div>
+                                <div class="text-secondary-text text-xs">simultaneous interviews</div>
+                                <div class="mt-3 w-full bg-border-color rounded-full h-2">
+                                    <div class="bg-success rounded-full h-2" style="width: 40%"></div>
+                                </div>
+                                <div class="mt-2 flex items-center justify-between text-xs">
+                                    <span class="text-secondary-text">Peak usage: 4</span>
+                                    <span class="text-success font-semibold">40%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-secondary-text text-sm font-medium">Max Duration</span>
+                                    <i class="fa-solid fa-clock text-secondary-text"></i>
+                                </div>
+                                <div class="text-primary-text text-2xl font-bold mb-1">120</div>
+                                <div class="text-secondary-text text-xs">minutes per interview</div>
+                                <div class="mt-3 w-full bg-border-color rounded-full h-2">
+                                    <div class="bg-warning rounded-full h-2" style="width: 75%"></div>
+                                </div>
+                                <div class="mt-2 flex items-center justify-between text-xs">
+                                    <span class="text-secondary-text">Avg duration: 90m</span>
+                                    <span class="text-warning font-semibold">75%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="user-limits-section" class="mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-purple-50 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-users-gear text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-primary-text text-lg font-semibold">User Limits</h3>
+                                    <p class="text-secondary-text text-sm">Manage seat allocations per role</p>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 text-sm font-medium text-primary-blue hover:bg-blue-50 rounded-lg transition-all duration-150">
+                                <i class="fa-solid fa-pen text-xs mr-2"></i>Edit Defaults
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-secondary-text text-sm font-medium">Admin Seats</span>
+                                    <i class="fa-solid fa-user-shield text-secondary-text"></i>
+                                </div>
+                                <div class="text-primary-text text-2xl font-bold mb-1">5</div>
+                                <div class="text-secondary-text text-xs">administrator accounts</div>
+                                <div class="mt-3 w-full bg-border-color rounded-full h-2">
+                                    <div class="bg-purple-600 rounded-full h-2" style="width: 80%"></div>
+                                </div>
+                                <div class="mt-2 flex items-center justify-between text-xs">
+                                    <span class="text-secondary-text">Used: 4 seats</span>
+                                    <span class="text-purple-600 font-semibold">80%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-secondary-text text-sm font-medium">Recruiter Seats</span>
+                                    <i class="fa-solid fa-user-tie text-secondary-text"></i>
+                                </div>
+                                <div class="text-primary-text text-2xl font-bold mb-1">25</div>
+                                <div class="text-secondary-text text-xs">recruiter accounts</div>
+                                <div class="mt-3 w-full bg-border-color rounded-full h-2">
+                                    <div class="bg-primary-blue rounded-full h-2" style="width: 72%"></div>
+                                </div>
+                                <div class="mt-2 flex items-center justify-between text-xs">
+                                    <span class="text-secondary-text">Used: 18 seats</span>
+                                    <span class="text-primary-blue font-semibold">72%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-secondary-text text-sm font-medium">Interviewer Seats</span>
+                                    <i class="fa-solid fa-user-check text-secondary-text"></i>
+                                </div>
+                                <div class="text-primary-text text-2xl font-bold mb-1">50</div>
+                                <div class="text-secondary-text text-xs">interviewer accounts</div>
+                                <div class="mt-3 w-full bg-border-color rounded-full h-2">
+                                    <div class="bg-success rounded-full h-2" style="width: 58%"></div>
+                                </div>
+                                <div class="mt-2 flex items-center justify-between text-xs">
+                                    <span class="text-secondary-text">Used: 29 seats</span>
+                                    <span class="text-success font-semibold">58%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="storage-limits-section" class="mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-green-50 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-hard-drive text-success"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-primary-text text-lg font-semibold">Storage Limits</h3>
+                                    <p class="text-secondary-text text-sm">Configure storage allocations</p>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 text-sm font-medium text-primary-blue hover:bg-blue-50 rounded-lg transition-all duration-150">
+                                <i class="fa-solid fa-pen text-xs mr-2"></i>Edit Defaults
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center">
+                                            <i class="fa-solid fa-film text-primary-blue text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-secondary-text text-sm font-medium">Recording Storage</div>
+                                            <div class="text-primary-text text-2xl font-bold">500 GB</div>
+                                        </div>
+                                    </div>
+                                    <button class="text-primary-blue hover:text-hover-blue">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span class="text-secondary-text">Used: 387 GB</span>
+                                        <span class="text-warning font-semibold">77.4%</span>
+                                    </div>
+                                    <div class="w-full bg-border-color rounded-full h-3">
+                                        <div class="bg-warning rounded-full h-3 flex items-center justify-end pr-2" style="width: 77.4%">
+                                            <span class="text-white text-xs font-semibold">387GB</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs text-secondary-text">
+                                        <span>0 GB</span>
+                                        <span>500 GB</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-border-color">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span class="text-secondary-text">Avg per org:</span>
+                                        <span class="text-primary-text font-semibold">310 MB</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-12 h-12 bg-green-50 rounded-lg flex items-center justify-center">
+                                            <i class="fa-solid fa-file-pdf text-success text-lg"></i>
+                                        </div>
+                                        <div>
+                                            <div class="text-secondary-text text-sm font-medium">Document Storage</div>
+                                            <div class="text-primary-text text-2xl font-bold">100 GB</div>
+                                        </div>
+                                    </div>
+                                    <button class="text-primary-blue hover:text-hover-blue">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span class="text-secondary-text">Used: 45 GB</span>
+                                        <span class="text-success font-semibold">45%</span>
+                                    </div>
+                                    <div class="w-full bg-border-color rounded-full h-3">
+                                        <div class="bg-success rounded-full h-3 flex items-center justify-end pr-2" style="width: 45%">
+                                            <span class="text-white text-xs font-semibold">45GB</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs text-secondary-text">
+                                        <span>0 GB</span>
+                                        <span>100 GB</span>
+                                    </div>
+                                </div>
+                                <div class="mt-4 pt-4 border-t border-border-color">
+                                    <div class="flex items-center justify-between text-xs">
+                                        <span class="text-secondary-text">Avg per org:</span>
+                                        <span class="text-primary-text font-semibold">36 MB</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="ai-credits-section" class="mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-indigo-50 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-robot text-indigo-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-primary-text text-lg font-semibold">AI Credits</h3>
+                                    <p class="text-secondary-text text-sm">Manage AI service consumption limits</p>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 text-sm font-medium text-primary-blue hover:bg-blue-50 rounded-lg transition-all duration-150">
+                                <i class="fa-solid fa-pen text-xs mr-2"></i>Edit Defaults
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-secondary-text text-sm font-medium">LLM Tokens</span>
+                                    <i class="fa-solid fa-brain text-secondary-text"></i>
+                                </div>
+                                <div class="text-primary-text text-2xl font-bold mb-1">1M</div>
+                                <div class="text-secondary-text text-xs">tokens per month</div>
+                                <div class="mt-3 w-full bg-border-color rounded-full h-2">
+                                    <div class="bg-indigo-600 rounded-full h-2" style="width: 68%"></div>
+                                </div>
+                                <div class="mt-2 flex items-center justify-between text-xs">
+                                    <span class="text-secondary-text">Used: 680K</span>
+                                    <span class="text-indigo-600 font-semibold">68%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-secondary-text text-sm font-medium">TTS Minutes</span>
+                                    <i class="fa-solid fa-volume-high text-secondary-text"></i>
+                                </div>
+                                <div class="text-primary-text text-2xl font-bold mb-1">500</div>
+                                <div class="text-secondary-text text-xs">minutes per month</div>
+                                <div class="mt-3 w-full bg-border-color rounded-full h-2">
+                                    <div class="bg-primary-blue rounded-full h-2" style="width: 42%"></div>
+                                </div>
+                                <div class="mt-2 flex items-center justify-between text-xs">
+                                    <span class="text-secondary-text">Used: 210m</span>
+                                    <span class="text-primary-blue font-semibold">42%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-secondary-text text-sm font-medium">STT Minutes</span>
+                                    <i class="fa-solid fa-microphone text-secondary-text"></i>
+                                </div>
+                                <div class="text-primary-text text-2xl font-bold mb-1">1,000</div>
+                                <div class="text-secondary-text text-xs">minutes per month</div>
+                                <div class="mt-3 w-full bg-border-color rounded-full h-2">
+                                    <div class="bg-success rounded-full h-2" style="width: 55%"></div>
+                                </div>
+                                <div class="mt-2 flex items-center justify-between text-xs">
+                                    <span class="text-secondary-text">Used: 550m</span>
+                                    <span class="text-success font-semibold">55%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="api-limits-section" class="mb-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-orange-50 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-code text-orange-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-primary-text text-lg font-semibold">API Limits</h3>
+                                    <p class="text-secondary-text text-sm">Configure API rate limits and quotas</p>
+                                </div>
+                            </div>
+                            <button class="px-4 py-2 text-sm font-medium text-primary-blue hover:bg-blue-50 rounded-lg transition-all duration-150">
+                                <i class="fa-solid fa-pen text-xs mr-2"></i>Edit Defaults
+                            </button>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-secondary-text text-sm font-medium">Requests Per Minute</span>
+                                    <i class="fa-solid fa-gauge-high text-secondary-text"></i>
+                                </div>
+                                <div class="flex items-baseline space-x-2 mb-1">
+                                    <div class="text-primary-text text-2xl font-bold">100</div>
+                                    <div class="text-secondary-text text-sm">req/min</div>
+                                </div>
+                                <div class="text-secondary-text text-xs mb-3">Rate limit per organization</div>
+                                <div class="bg-card-surface border border-border-color rounded p-3">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs text-secondary-text">Current avg rate</span>
+                                        <span class="text-xs text-primary-text font-semibold">67 req/min</span>
+                                    </div>
+                                    <div class="w-full bg-border-color rounded-full h-1.5">
+                                        <div class="bg-success rounded-full h-1.5" style="width: 67%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-bg-surface border border-border-color rounded-lg p-5">
+                                <div class="flex items-center justify-between mb-3">
+                                    <span class="text-secondary-text text-sm font-medium">Requests Per Day</span>
+                                    <i class="fa-solid fa-calendar-day text-secondary-text"></i>
+                                </div>
+                                <div class="flex items-baseline space-x-2 mb-1">
+                                    <div class="text-primary-text text-2xl font-bold">100K</div>
+                                    <div class="text-secondary-text text-sm">req/day</div>
+                                </div>
+                                <div class="text-secondary-text text-xs mb-3">Daily quota per organization</div>
+                                <div class="bg-card-surface border border-border-color rounded p-3">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-xs text-secondary-text">Today's usage</span>
+                                        <span class="text-xs text-primary-text font-semibold">73.2K req</span>
+                                    </div>
+                                    <div class="w-full bg-border-color rounded-full h-1.5">
+                                        <div class="bg-warning rounded-full h-1.5" style="width: 73.2%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="feature-access-section">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-pink-50 rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-toggle-on text-pink-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-primary-text text-lg font-semibold">Feature Access</h3>
+                                    <p class="text-secondary-text text-sm">Toggle-based feature enablement controls</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="text-sm text-secondary-text">Bulk Actions:</span>
+                                <button class="px-3 py-1.5 text-xs font-medium text-primary-blue hover:bg-blue-50 rounded transition-all duration-150">Enable All</button>
+                                <button class="px-3 py-1.5 text-xs font-medium text-error hover:bg-red-50 rounded transition-all duration-150">Disable All</button>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-card-surface border border-border-color rounded-lg overflow-hidden">
+                            <table class="w-full">
+                                <thead class="bg-bg-surface border-b border-border-color">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold text-secondary-text uppercase tracking-wider">Feature</th>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold text-secondary-text uppercase tracking-wider">Description</th>
+                                        <th class="px-6 py-3 text-left text-xs font-semibold text-secondary-text uppercase tracking-wider">Usage</th>
+                                        <th class="px-6 py-3 text-center text-xs font-semibold text-secondary-text uppercase tracking-wider">Status</th>
+                                        <th class="px-6 py-3 text-center text-xs font-semibold text-secondary-text uppercase tracking-wider">Default</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-border-color">
+                                    <tr class="hover:bg-bg-surface transition-colors duration-150">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-3">
+                                                <i class="fa-solid fa-video text-primary-blue"></i>
+                                                <span class="text-sm font-semibold text-primary-text">Video Interviews</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-sm text-secondary-text">Live video interview sessions</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-20 bg-border-color rounded-full h-1.5">
+                                                    <div class="bg-success rounded-full h-1.5" style="width: 92%"></div>
+                                                </div>
+                                                <span class="text-xs text-secondary-text">92%</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <span class="px-2 py-1 bg-green-100 text-success text-xs font-semibold rounded-full">Active</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div class="w-11 h-6 bg-border-color peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-blue peer-focus:ring-opacity-20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-bg-surface transition-colors duration-150">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-3">
+                                                <i class="fa-solid fa-robot text-indigo-600"></i>
+                                                <span class="text-sm font-semibold text-primary-text">AI Analysis</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-sm text-secondary-text">Automated candidate evaluation</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-20 bg-border-color rounded-full h-1.5">
+                                                    <div class="bg-primary-blue rounded-full h-1.5" style="width: 78%"></div>
+                                                </div>
+                                                <span class="text-xs text-secondary-text">78%</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <span class="px-2 py-1 bg-green-100 text-success text-xs font-semibold rounded-full">Active</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div class="w-11 h-6 bg-border-color peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-blue peer-focus:ring-opacity-20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-bg-surface transition-colors duration-150">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-3">
+                                                <i class="fa-solid fa-chart-bar text-purple-600"></i>
+                                                <span class="text-sm font-semibold text-primary-text">Advanced Analytics</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-sm text-secondary-text">Detailed reporting and insights</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-20 bg-border-color rounded-full h-1.5">
+                                                    <div class="bg-warning rounded-full h-1.5" style="width: 65%"></div>
+                                                </div>
+                                                <span class="text-xs text-secondary-text">65%</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <span class="px-2 py-1 bg-green-100 text-success text-xs font-semibold rounded-full">Active</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div class="w-11 h-6 bg-border-color peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-blue peer-focus:ring-opacity-20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-bg-surface transition-colors duration-150">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-3">
+                                                <i class="fa-solid fa-code text-orange-600"></i>
+                                                <span class="text-sm font-semibold text-primary-text">API Access</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-sm text-secondary-text">RESTful API integration</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-20 bg-border-color rounded-full h-1.5">
+                                                    <div class="bg-success rounded-full h-1.5" style="width: 45%"></div>
+                                                </div>
+                                                <span class="text-xs text-secondary-text">45%</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <span class="px-2 py-1 bg-green-100 text-success text-xs font-semibold rounded-full">Active</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer" checked>
+                                                <div class="w-11 h-6 bg-border-color peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-blue peer-focus:ring-opacity-20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-bg-surface transition-colors duration-150">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-3">
+                                                <i class="fa-solid fa-shield-check text-success"></i>
+                                                <span class="text-sm font-semibold text-primary-text">SSO Integration</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-sm text-secondary-text">Single sign-on authentication</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-20 bg-border-color rounded-full h-1.5">
+                                                    <div class="bg-primary-blue rounded-full h-1.5" style="width: 38%"></div>
+                                                </div>
+                                                <span class="text-xs text-secondary-text">38%</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <span class="px-2 py-1 bg-gray-100 text-secondary-text text-xs font-semibold rounded-full">Inactive</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer">
+                                                <div class="w-11 h-6 bg-border-color peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-blue peer-focus:ring-opacity-20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-bg-surface transition-colors duration-150">
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-3">
+                                                <i class="fa-solid fa-users-gear text-pink-600"></i>
+                                                <span class="text-sm font-semibold text-primary-text">White Label</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="text-sm text-secondary-text">Custom branding options</span>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-20 bg-border-color rounded-full h-1.5">
+                                                    <div class="bg-error rounded-full h-1.5" style="width: 22%"></div>
+                                                </div>
+                                                <span class="text-xs text-secondary-text">22%</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <span class="px-2 py-1 bg-gray-100 text-secondary-text text-xs font-semibold rounded-full">Inactive</span>
+                                        </td>
+                                        <td class="px-6 py-4 text-center">
+                                            <label class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" class="sr-only peer">
+                                                <div class="w-11 h-6 bg-border-color peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-blue peer-focus:ring-opacity-20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-blue"></div>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="quota-alerts-section" class="bg-card-surface border border-border-color rounded-lg p-6 mb-8">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-red-50 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-triangle-exclamation text-error"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-primary-text text-lg font-semibold">Organizations Near Quota Limits</h3>
+                            <p class="text-secondary-text text-sm">23 organizations require immediate attention</p>
+                        </div>
+                    </div>
+                    <button class="px-4 py-2 text-sm font-semibold text-primary-blue hover:bg-blue-50 rounded-lg transition-all duration-150">
+                        View All Alerts
+                    </button>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-building text-error"></i>
+                                </div>
+                                <div>
+                                    <div class="text-primary-text text-sm font-semibold">TechCorp Solutions</div>
+                                    <div class="text-secondary-text text-xs">ID: ORG-2847</div>
+                                </div>
+                            </div>
+                            <button class="px-3 py-1.5 bg-primary-blue text-white text-xs font-semibold rounded-full hover:bg-hover-blue transition-all duration-150">
+                                Increase Quota
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="bg-white rounded p-3">
+                                <div class="text-xs text-secondary-text mb-1">Interviews</div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold text-error">487/500</span>
+                                    <span class="text-xs text-error font-semibold">97%</span>
+                                </div>
+                                <div class="w-full bg-border-color rounded-full h-1 mt-2">
+                                    <div class="bg-error rounded-full h-1" style="width: 97%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded p-3">
+                                <div class="text-xs text-secondary-text mb-1">Storage</div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold text-error">478/500 GB</span>
+                                    <span class="text-xs text-error font-semibold">96%</span>
+                                </div>
+                                <div class="w-full bg-border-color rounded-full h-1 mt-2">
+                                    <div class="bg-error rounded-full h-1" style="width: 96%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded p-3">
+                                <div class="text-xs text-secondary-text mb-1">AI Credits</div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold text-warning">820K/1M</span>
+                                    <span class="text-xs text-warning font-semibold">82%</span>
+                                </div>
+                                <div class="w-full bg-border-color rounded-full h-1 mt-2">
+                                    <div class="bg-warning rounded-full h-1" style="width: 82%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+                                    <i class="fa-solid fa-building text-warning"></i>
+                                </div>
+                                <div>
+                                    <div class="text-primary-text text-sm font-semibold">Global Innovations Inc</div>
+                                    <div class="text-secondary-text text-xs">ID: ORG-1523</div>
+                                </div>
+                            </div>
+                            <button class="px-3 py-1.5 bg-primary-blue text-white text-xs font-semibold rounded-full hover:bg-hover-blue transition-all duration-150">
+                                Increase Quota
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="bg-white rounded p-3">
+                                <div class="text-xs text-secondary-text mb-1">Interviews</div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold text-warning">445/500</span>
+                                    <span class="text-xs text-warning font-semibold">89%</span>
+                                </div>
+                                <div class="w-full bg-border-color rounded-full h-1 mt-2">
+                                    <div class="bg-warning rounded-full h-1" style="width: 89%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded p-3">
+                                <div class="text-xs text-secondary-text mb-1">User Seats</div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold text-error">49/50</span>
+                                    <span class="text-xs text-error font-semibold">98%</span>
+                                </div>
+                                <div class="w-full bg-border-color rounded-full h-1 mt-2">
+                                    <div class="bg-error rounded-full h-1" style="width: 98%"></div>
+                                </div>
+                            </div>
+                            <div class="bg-white rounded p-3">
+                                <div class="text-xs text-secondary-text mb-1">API Calls</div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold text-success">68K/100K</span>
+                                    <span class="text-xs text-success font-semibold">68%</span>
+                                </div>
+                                <div class="w-full bg-border-color rounded-full h-1 mt-2">
+                                    <div class="bg-success rounded-full h-1" style="width: 68%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="usage-chart-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-primary-text text-lg font-semibold">Quota Usage Trends</h3>
+                        <p class="text-secondary-text text-sm">Monthly consumption across all organizations</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="px-3 py-1.5 text-xs font-medium text-secondary-text hover:text-primary-text hover:bg-bg-surface rounded transition-all duration-150">7D</button>
+                        <button class="px-3 py-1.5 text-xs font-medium text-secondary-text hover:text-primary-text hover:bg-bg-surface rounded transition-all duration-150">30D</button>
+                        <button class="px-3 py-1.5 text-xs font-semibold text-white bg-primary-blue rounded transition-all duration-150">90D</button>
+                        <button class="px-3 py-1.5 text-xs font-medium text-secondary-text hover:text-primary-text hover:bg-bg-surface rounded transition-all duration-150">1Y</button>
+                    </div>
+                </div>
+                <div id="quota-usage-chart" style="height: 400px"></div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+window.addEventListener('load', function() {
+    try {
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        
+        const trace1 = {
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Interviews',
+            x: months,
+            y: [320, 340, 365, 380, 395, 410, 425, 440, 455, 470, 485, 500],
+            line: { color: '#0A66C2', width: 3 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(10, 102, 194, 0.1)'
+        };
+        
+        const trace2 = {
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Storage (GB)',
+            x: months,
+            y: [250, 270, 290, 310, 330, 350, 370, 390, 410, 430, 450, 470],
+            line: { color: '#057642', width: 3 }
+        };
+        
+        const trace3 = {
+            type: 'scatter',
+            mode: 'lines',
+            name: 'AI Credits (K)',
+            x: months,
+            y: [600, 650, 680, 710, 740, 770, 800, 830, 860, 890, 920, 950],
+            line: { color: '#B45309', width: 3 }
+        };
+        
+        const trace4 = {
+            type: 'scatter',
+            mode: 'lines',
+            name: 'User Seats',
+            x: months,
+            y: [45, 48, 52, 55, 58, 62, 65, 68, 72, 75, 78, 80],
+            line: { color: '#7C3AED', width: 3 }
+        };
+        
+        const layout = {
+            title: { text: '', font: { size: 0 } },
+            xaxis: { 
+                title: 'Month',
+                showgrid: true,
+                gridcolor: '#E5E7EB'
+            },
+            yaxis: { 
+                title: 'Usage',
+                showgrid: true,
+                gridcolor: '#E5E7EB'
+            },
+            margin: { t: 20, r: 20, b: 60, l: 60 },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: true,
+            legend: {
+                orientation: 'h',
+                y: -0.2,
+                x: 0.5,
+                xanchor: 'center'
+            },
+            hovermode: 'x unified'
+        };
+        
+        const config = {
+            responsive: true,
+            displayModeBar: false,
+            displaylogo: false
+        };
+        
+        Plotly.newPlot('quota-usage-chart', [trace1, trace2, trace3, trace4], layout, config);
+    } catch(e) {
+        document.getElementById('quota-usage-chart').innerHTML = '<div class="flex items-center justify-center h-full text-secondary-text">Chart could not be loaded</div>';
+    }
+});
+
+function switchTab(tab) {
+    console.log('Switching to tab:', tab);
+}
+</script>
+
+</body>
+</html>

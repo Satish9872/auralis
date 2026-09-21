@@ -1,0 +1,41 @@
+# Archives — source folders are tracked, the zips are not
+*.zip
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Build output
+dist/
+build/
+.next/
+out/
+
+# Netlify
+.netlify/
+
+# Editor & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+
+# Office lock files
+~$*

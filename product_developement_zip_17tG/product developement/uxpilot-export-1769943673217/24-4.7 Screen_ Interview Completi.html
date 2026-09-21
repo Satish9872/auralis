@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Completion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-bg-surface">
+
+<div id="interview-completion-page" class="min-h-screen flex items-center justify-center px-6 py-12">
+    <div class="w-full max-w-3xl">
+        
+        <div id="completion-card" class="bg-card-surface border border-border-color rounded-lg p-12 text-center mb-6 shadow-sm">
+            
+            <div id="success-icon-container" class="mb-8 flex justify-center">
+                <div class="relative">
+                    <div class="w-32 h-32 bg-green-100 rounded-full flex items-center justify-center animate-pulse">
+                        <div class="w-28 h-28 bg-green-200 rounded-full flex items-center justify-center">
+                            <div class="w-24 h-24 bg-success rounded-full flex items-center justify-center">
+                                <i class="fa-solid fa-check text-white text-5xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute -top-2 -right-2 w-12 h-12 bg-success rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                        <i class="fa-solid fa-star text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <h1 id="completion-title" class="text-primary-text text-4xl font-bold mb-4">Interview Completed!</h1>
+            
+            <p id="completion-message" class="text-secondary-text text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+                Thank you for completing your interview with <span class="text-primary-text font-semibold">Euron</span>. Your responses have been successfully submitted and our team is reviewing them carefully. We appreciate the time and effort you put into this interview.
+            </p>
+            
+            <div id="completion-stats" class="flex items-center justify-center space-x-8 mb-8 pb-8 border-b border-border-color">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-primary-blue mb-1">12</div>
+                    <div class="text-sm text-secondary-text">Questions Answered</div>
+                </div>
+                <div class="w-px h-12 bg-border-color"></div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-primary-blue mb-1">24:35</div>
+                    <div class="text-sm text-secondary-text">Time Spent</div>
+                </div>
+                <div class="w-px h-12 bg-border-color"></div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-success mb-1">100%</div>
+                    <div class="text-sm text-secondary-text">Completion Rate</div>
+                </div>
+            </div>
+            
+            <div id="next-steps-card" class="bg-blue-50 border border-blue-200 rounded-lg p-6 text-left mb-6">
+                <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-primary-blue rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-route text-white text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-primary-text text-lg font-semibold mb-3">What Happens Next?</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-start space-x-3">
+                                <div class="w-6 h-6 bg-primary-blue rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <span class="text-white text-xs font-bold">1</span>
+                                </div>
+                                <div>
+                                    <div class="text-primary-text text-sm font-medium mb-1">Review Process</div>
+                                    <div class="text-secondary-text text-sm">Our hiring team will carefully review your interview responses and qualifications.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-6 h-6 bg-primary-blue rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <span class="text-white text-xs font-bold">2</span>
+                                </div>
+                                <div>
+                                    <div class="text-primary-text text-sm font-medium mb-1">Team Discussion</div>
+                                    <div class="text-secondary-text text-sm">Your responses will be discussed with the relevant department heads and stakeholders.</div>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <div class="w-6 h-6 bg-primary-blue rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <span class="text-white text-xs font-bold">3</span>
+                                </div>
+                                <div>
+                                    <div class="text-primary-text text-sm font-medium mb-1">Decision & Notification</div>
+                                    <div class="text-secondary-text text-sm">You'll receive an update about the next steps via email within the specified timeframe.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="timeline-info" class="bg-amber-50 border border-amber-200 rounded-lg p-5 mb-6">
+                <div class="flex items-center justify-center space-x-3 mb-3">
+                    <i class="fa-solid fa-clock text-warning text-xl"></i>
+                    <h4 class="text-primary-text text-base font-semibold">Expected Response Time</h4>
+                </div>
+                <p class="text-primary-text text-lg font-semibold mb-2">You will hear back within 5 business days</p>
+                <p class="text-secondary-text text-sm">We typically respond faster, but please allow up to 5 business days for a complete review. You'll receive an email notification regardless of the outcome.</p>
+            </div>
+            
+            <div id="contact-card" class="bg-green-50 border border-green-200 rounded-lg p-5">
+                <div class="flex items-start space-x-4">
+                    <div class="w-10 h-10 bg-success rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-headset text-white"></i>
+                    </div>
+                    <div class="text-left flex-1">
+                        <h4 class="text-primary-text text-base font-semibold mb-2">Have Questions?</h4>
+                        <p class="text-secondary-text text-sm mb-3">Our recruitment team is here to help with any questions or concerns.</p>
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-envelope text-success text-sm"></i>
+                                <a href="mailto:careers@euron.one" class="text-primary-blue text-sm font-medium hover:text-hover-blue transition-colors">careers@euron.one</a>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-phone text-success text-sm"></i>
+                                <a href="tel:+1-555-0123" class="text-primary-blue text-sm font-medium hover:text-hover-blue transition-colors">+1 (555) 123-4567</a>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-globe text-success text-sm"></i>
+                                <a href="#" class="text-primary-blue text-sm font-medium hover:text-hover-blue transition-colors">Help Center</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="survey-card" class="bg-card-surface border border-border-color rounded-lg p-8 mb-6 shadow-sm">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-comments text-primary-blue text-2xl"></i>
+                </div>
+                <h2 class="text-primary-text text-2xl font-semibold mb-2">How was your experience?</h2>
+                <p class="text-secondary-text text-sm">Your feedback helps us improve our interview process</p>
+            </div>
+            
+            <div id="rating-section" class="mb-6">
+                <label class="block text-primary-text text-sm font-medium mb-3 text-center">Rate your interview experience</label>
+                <div class="flex items-center justify-center space-x-3">
+                    <button onclick="setRating(1)" class="rating-btn w-16 h-16 rounded-lg border-2 border-border-color hover:border-primary-blue hover:bg-blue-50 transition-all duration-150 flex flex-col items-center justify-center">
+                        <span class="text-2xl mb-1">😞</span>
+                        <span class="text-xs text-secondary-text">Poor</span>
+                    </button>
+                    <button onclick="setRating(2)" class="rating-btn w-16 h-16 rounded-lg border-2 border-border-color hover:border-primary-blue hover:bg-blue-50 transition-all duration-150 flex flex-col items-center justify-center">
+                        <span class="text-2xl mb-1">😕</span>
+                        <span class="text-xs text-secondary-text">Fair</span>
+                    </button>
+                    <button onclick="setRating(3)" class="rating-btn w-16 h-16 rounded-lg border-2 border-border-color hover:border-primary-blue hover:bg-blue-50 transition-all duration-150 flex flex-col items-center justify-center">
+                        <span class="text-2xl mb-1">😐</span>
+                        <span class="text-xs text-secondary-text">Good</span>
+                    </button>
+                    <button onclick="setRating(4)" class="rating-btn w-16 h-16 rounded-lg border-2 border-border-color hover:border-primary-blue hover:bg-blue-50 transition-all duration-150 flex flex-col items-center justify-center">
+                        <span class="text-2xl mb-1">😊</span>
+                        <span class="text-xs text-secondary-text">Great</span>
+                    </button>
+                    <button onclick="setRating(5)" class="rating-btn w-16 h-16 rounded-lg border-2 border-border-color hover:border-primary-blue hover:bg-blue-50 transition-all duration-150 flex flex-col items-center justify-center">
+                        <span class="text-2xl mb-1">😄</span>
+                        <span class="text-xs text-secondary-text">Excellent</span>
+                    </button>
+                </div>
+                <input type="hidden" id="rating-value" value="0">
+            </div>
+            
+            <div id="star-rating-section" class="mb-6 pb-6 border-b border-border-color">
+                <label class="block text-primary-text text-sm font-medium mb-3 text-center">Or rate with stars</label>
+                <div class="flex items-center justify-center space-x-2">
+                    <button onclick="setStarRating(1)" class="star-btn text-3xl text-gray-300 hover:text-warning transition-colors duration-150">
+                        <i class="fa-solid fa-star"></i>
+                    </button>
+                    <button onclick="setStarRating(2)" class="star-btn text-3xl text-gray-300 hover:text-warning transition-colors duration-150">
+                        <i class="fa-solid fa-star"></i>
+                    </button>
+                    <button onclick="setStarRating(3)" class="star-btn text-3xl text-gray-300 hover:text-warning transition-colors duration-150">
+                        <i class="fa-solid fa-star"></i>
+                    </button>
+                    <button onclick="setStarRating(4)" class="star-btn text-3xl text-gray-300 hover:text-warning transition-colors duration-150">
+                        <i class="fa-solid fa-star"></i>
+                    </button>
+                    <button onclick="setStarRating(5)" class="star-btn text-3xl text-gray-300 hover:text-warning transition-colors duration-150">
+                        <i class="fa-solid fa-star"></i>
+                    </button>
+                </div>
+                <input type="hidden" id="star-rating-value" value="0">
+            </div>
+            
+            <div id="feedback-section" class="mb-6">
+                <label for="feedback-textarea" class="block text-primary-text text-sm font-medium mb-2">Additional feedback (optional)</label>
+                <textarea 
+                    id="feedback-textarea" 
+                    rows="4" 
+                    class="w-full bg-card-surface border border-border-color rounded-md px-4 py-3 text-primary-text text-sm placeholder-secondary-text focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150 resize-none"
+                    placeholder="Tell us about your experience, what went well, or how we can improve..."
+                ></textarea>
+                <div class="flex items-center justify-between mt-2">
+                    <p class="text-xs text-secondary-text">Your feedback is anonymous and helps us improve</p>
+                    <p class="text-xs text-secondary-text"><span id="char-count">0</span>/500</p>
+                </div>
+            </div>
+            
+            <div id="survey-actions" class="flex items-center justify-center space-x-4">
+                <button 
+                    onclick="skipSurvey()"
+                    class="px-6 py-2.5 text-secondary-text text-sm font-medium hover:text-primary-text transition-colors duration-150"
+                >
+                    Skip
+                </button>
+                <button 
+                    onclick="submitSurvey()"
+                    class="px-8 py-2.5 bg-transparent text-primary-blue text-sm font-semibold border border-primary-blue rounded-full hover:bg-primary-blue hover:bg-opacity-8 focus:outline-none focus:ring-4 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150"
+                >
+                    Submit Feedback
+                </button>
+            </div>
+        </div>
+        
+        <div id="close-actions" class="flex items-center justify-center space-x-4">
+            <button 
+                onclick="window.close()"
+                class="px-8 py-3 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue focus:outline-none focus:ring-4 focus:ring-primary-blue focus:ring-opacity-20 transition-all duration-150 shadow-sm hover:shadow-md"
+            >
+                <span class="flex items-center space-x-2">
+                    <span>Close Window</span>
+                    <i class="fa-solid fa-xmark"></i>
+                </span>
+            </button>
+            <button 
+                onclick="window.location.href='/'"
+                class="px-8 py-3 bg-transparent text-primary-blue text-sm font-semibold border border-primary-blue rounded-full hover:bg-primary-blue hover:bg-opacity-8 focus:outline-none focus:ring-4 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150"
+            >
+                <span class="flex items-center space-x-2">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Return to Homepage</span>
+                </span>
+            </button>
+        </div>
+        
+        <div id="footer-note" class="mt-8 text-center">
+            <p class="text-xs text-secondary-text">
+                This interview session is now complete. You can safely close this window.
+            </p>
+            <p class="text-xs text-secondary-text mt-2">
+                Reference ID: <span class="font-mono text-primary-text">INT-2024-A7B3C9</span>
+            </p>
+        </div>
+        
+        <div id="social-share" class="mt-8 bg-card-surface border border-border-color rounded-lg p-6">
+            <div class="text-center mb-4">
+                <h3 class="text-primary-text text-base font-semibold mb-2">Share Your Journey</h3>
+                <p class="text-secondary-text text-sm">Let your network know you're exploring opportunities</p>
+            </div>
+            <div class="flex items-center justify-center space-x-3">
+                <button class="w-10 h-10 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-150 flex items-center justify-center">
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </button>
+                <button class="w-10 h-10 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors duration-150 flex items-center justify-center">
+                    <i class="fa-brands fa-twitter"></i>
+                </button>
+                <button class="w-10 h-10 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-150 flex items-center justify-center">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </button>
+                <button class="w-10 h-10 bg-border-color text-primary-text rounded-lg hover:bg-gray-300 transition-colors duration-150 flex items-center justify-center">
+                    <i class="fa-solid fa-link"></i>
+                </button>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+let selectedRating = 0;
+let selectedStarRating = 0;
+
+function setRating(rating) {
+    selectedRating = rating;
+    document.getElementById('rating-value').value = rating;
+    
+    const buttons = document.querySelectorAll('.rating-btn');
+    buttons.forEach((btn, index) => {
+        if (index < rating) {
+            btn.classList.add('border-primary-blue', 'bg-blue-50');
+            btn.classList.remove('border-border-color');
+        } else {
+            btn.classList.remove('border-primary-blue', 'bg-blue-50');
+            btn.classList.add('border-border-color');
+        }
+    });
+}
+
+function setStarRating(rating) {
+    selectedStarRating = rating;
+    document.getElementById('star-rating-value').value = rating;
+    
+    const stars = document.querySelectorAll('.star-btn');
+    stars.forEach((star, index) => {
+        const icon = star.querySelector('i');
+        if (index < rating) {
+            icon.classList.remove('text-gray-300');
+            icon.classList.add('text-warning');
+        } else {
+            icon.classList.add('text-gray-300');
+            icon.classList.remove('text-warning');
+        }
+    });
+}
+
+document.getElementById('feedback-textarea').addEventListener('input', function(e) {
+    const count = e.target.value.length;
+    document.getElementById('char-count').textContent = Math.min(count, 500);
+    if (count > 500) {
+        e.target.value = e.target.value.substring(0, 500);
+    }
+});
+
+function submitSurvey() {
+    const feedback = document.getElementById('feedback-textarea').value;
+    const rating = selectedRating || selectedStarRating;
+    
+    console.log('Survey submitted:', {
+        rating: rating,
+        feedback: feedback
+    });
+    
+    const surveyCard = document.getElementById('survey-card');
+    surveyCard.innerHTML = `
+        <div class="text-center py-8">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fa-solid fa-check text-success text-2xl"></i>
+            </div>
+            <h3 class="text-primary-text text-xl font-semibold mb-2">Thank you for your feedback!</h3>
+            <p class="text-secondary-text text-sm">Your input helps us create a better interview experience.</p>
+        </div>
+    `;
+}
+
+function skipSurvey() {
+    const surveyCard = document.getElementById('survey-card');
+    surveyCard.style.display = 'none';
+}
+
+document.querySelectorAll('.star-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', function() {
+        const stars = document.querySelectorAll('.star-btn');
+        const index = Array.from(stars).indexOf(this);
+        stars.forEach((star, i) => {
+            const icon = star.querySelector('i');
+            if (i <= index) {
+                icon.classList.add('text-warning');
+                icon.classList.remove('text-gray-300');
+            }
+        });
+    });
+});
+
+document.querySelector('.flex.items-center.justify-center.space-x-2').addEventListener('mouseleave', function() {
+    const stars = document.querySelectorAll('.star-btn');
+    stars.forEach((star, index) => {
+        const icon = star.querySelector('i');
+        if (index < selectedStarRating) {
+            icon.classList.add('text-warning');
+            icon.classList.remove('text-gray-300');
+        } else {
+            icon.classList.remove('text-warning');
+            icon.classList.add('text-gray-300');
+        }
+    });
+});
+</script>
+
+</body>
+</html>

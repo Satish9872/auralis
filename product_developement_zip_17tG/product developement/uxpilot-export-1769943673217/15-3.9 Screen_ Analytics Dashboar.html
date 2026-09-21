@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.plot.ly/plotly-3.1.1.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-bg-surface">
+
+<div id="analytics-dashboard" class="flex h-screen w-screen overflow-hidden">
+    
+    <aside id="sidebar" class="w-64 bg-card-surface border-r border-border-color flex flex-col">
+        <div id="sidebar-header" class="p-6 border-b border-border-color">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-primary-blue rounded-xl flex items-center justify-center">
+                    <i class="fa-solid fa-shield-halved text-white text-lg"></i>
+                </div>
+                <div>
+                    <div class="text-primary-text text-lg font-bold">Euron</div>
+                    <div class="text-secondary-text text-xs">Super Admin</div>
+                </div>
+            </div>
+        </div>
+        
+        <nav id="sidebar-nav" class="flex-1 p-4 space-y-1 overflow-y-auto">
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface transition-colors duration-150">
+                <i class="fa-solid fa-grid-2 w-5"></i>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface transition-colors duration-150">
+                <i class="fa-solid fa-users w-5"></i>
+                <span class="text-sm font-medium">Clients</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-primary-blue text-white">
+                <i class="fa-solid fa-chart-line w-5"></i>
+                <span class="text-sm font-medium">Analytics</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface transition-colors duration-150">
+                <i class="fa-solid fa-credit-card w-5"></i>
+                <span class="text-sm font-medium">Billing</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface transition-colors duration-150">
+                <i class="fa-solid fa-sliders w-5"></i>
+                <span class="text-sm font-medium">System Settings</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface transition-colors duration-150">
+                <i class="fa-solid fa-server w-5"></i>
+                <span class="text-sm font-medium">Infrastructure</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface transition-colors duration-150">
+                <i class="fa-solid fa-shield-check w-5"></i>
+                <span class="text-sm font-medium">Security</span>
+            </a>
+            <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface transition-colors duration-150">
+                <i class="fa-solid fa-file-lines w-5"></i>
+                <span class="text-sm font-medium">Audit Logs</span>
+            </a>
+        </nav>
+        
+        <div id="sidebar-footer" class="p-4 border-t border-border-color">
+            <div class="flex items-center space-x-3 px-4 py-3">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-2.jpg" alt="Admin" class="w-10 h-10 rounded-full">
+                <div class="flex-1 min-w-0">
+                    <div class="text-sm font-semibold text-primary-text truncate">John Admin</div>
+                    <div class="text-xs text-secondary-text">Super Admin</div>
+                </div>
+                <button class="text-secondary-text hover:text-primary-text">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+    
+    <main id="main-content" class="flex-1 flex flex-col overflow-hidden">
+        
+        <header id="header" class="bg-card-surface border-b border-border-color px-8 py-5">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-2xl font-bold text-primary-text mb-1">Analytics Dashboard</h1>
+                    <p class="text-sm text-secondary-text">Comprehensive hiring metrics and performance insights</p>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <button class="h-10 px-4 bg-transparent text-primary-blue text-sm font-semibold border border-primary-blue rounded-full hover:bg-primary-blue hover:bg-opacity-8 transition-all duration-150">
+                        <i class="fa-solid fa-download mr-2"></i>
+                        Export Report
+                    </button>
+                    <button class="h-10 px-4 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150">
+                        <i class="fa-solid fa-share-nodes mr-2"></i>
+                        Share
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <div id="content-area" class="flex-1 overflow-y-auto">
+            <div class="p-8 space-y-6">
+                
+                <section id="date-range-selector" class="bg-card-surface border border-border-color rounded-lg p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-calendar-days text-primary-blue text-lg"></i>
+                                <span class="text-sm font-semibold text-primary-text">Date Range:</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="px-4 py-2 text-sm font-medium text-secondary-text hover:text-primary-blue hover:bg-bg-surface rounded-lg transition-all duration-150">Today</button>
+                                <button class="px-4 py-2 text-sm font-medium text-secondary-text hover:text-primary-blue hover:bg-bg-surface rounded-lg transition-all duration-150">7 days</button>
+                                <button class="px-4 py-2 text-sm font-medium bg-primary-blue text-white rounded-lg">30 days</button>
+                                <button class="px-4 py-2 text-sm font-medium text-secondary-text hover:text-primary-blue hover:bg-bg-surface rounded-lg transition-all duration-150">90 days</button>
+                                <button class="px-4 py-2 text-sm font-medium text-secondary-text hover:text-primary-blue hover:bg-bg-surface rounded-lg transition-all duration-150">This year</button>
+                                <button class="px-4 py-2 text-sm font-medium text-secondary-text hover:text-primary-blue hover:bg-bg-surface rounded-lg transition-all duration-150 border border-border-color">
+                                    <i class="fa-solid fa-calendar-range mr-2"></i>
+                                    Custom
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <label class="flex items-center space-x-2 cursor-pointer">
+                                <input type="checkbox" class="w-4 h-4 text-primary-blue border-border-color rounded focus:ring-primary-blue">
+                                <span class="text-sm text-primary-text">Compare to previous period</span>
+                            </label>
+                            <button class="h-10 px-6 bg-primary-blue text-white text-sm font-semibold rounded-full hover:bg-hover-blue transition-all duration-150">
+                                Apply
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="key-metrics" class="grid grid-cols-6 gap-6">
+                    
+                    <div id="metric-applications" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-file-lines text-primary-blue text-lg"></i>
+                            </div>
+                            <div class="flex items-center space-x-1 text-success text-xs font-semibold">
+                                <i class="fa-solid fa-arrow-up"></i>
+                                <span>12.5%</span>
+                            </div>
+                        </div>
+                        <div class="text-3xl font-bold text-primary-text mb-1">2,847</div>
+                        <div class="text-sm text-secondary-text mb-4">Total Applications</div>
+                        <div class="h-12" id="sparkline-applications"></div>
+                    </div>
+                    
+                    <div id="metric-interviews" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-microphone text-purple-600 text-lg"></i>
+                            </div>
+                            <div class="flex items-center space-x-1 text-success text-xs font-semibold">
+                                <i class="fa-solid fa-arrow-up"></i>
+                                <span>8.3%</span>
+                            </div>
+                        </div>
+                        <div class="text-3xl font-bold text-primary-text mb-1">1,243</div>
+                        <div class="text-sm text-secondary-text mb-2">Interviews Conducted</div>
+                        <div class="flex items-center space-x-3 text-xs">
+                            <div class="flex items-center space-x-1">
+                                <div class="w-2 h-2 bg-primary-blue rounded-full"></div>
+                                <span class="text-secondary-text">AI: 856</span>
+                            </div>
+                            <div class="flex items-center space-x-1">
+                                <div class="w-2 h-2 bg-purple-600 rounded-full"></div>
+                                <span class="text-secondary-text">Human: 387</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="metric-time-to-hire" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-clock text-success text-lg"></i>
+                            </div>
+                            <div class="flex items-center space-x-1 text-success text-xs font-semibold">
+                                <i class="fa-solid fa-arrow-down"></i>
+                                <span>15.2%</span>
+                            </div>
+                        </div>
+                        <div class="text-3xl font-bold text-primary-text mb-1">14.2</div>
+                        <div class="text-sm text-secondary-text mb-2">Avg. Time to Hire (days)</div>
+                        <div class="text-xs text-secondary-text">
+                            Previous: <span class="font-semibold">16.8 days</span>
+                        </div>
+                    </div>
+                    
+                    <div id="metric-acceptance-rate" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-handshake text-warning text-lg"></i>
+                            </div>
+                            <div class="flex items-center space-x-1 text-success text-xs font-semibold">
+                                <i class="fa-solid fa-arrow-up"></i>
+                                <span>4.1%</span>
+                            </div>
+                        </div>
+                        <div class="text-3xl font-bold text-primary-text mb-1">87.3%</div>
+                        <div class="text-sm text-secondary-text mb-4">Offer Acceptance Rate</div>
+                        <div class="h-12" id="gauge-acceptance"></div>
+                    </div>
+                    
+                    <div id="metric-cost-per-hire" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-dollar-sign text-error text-lg"></i>
+                            </div>
+                            <div class="flex items-center space-x-1 text-success text-xs font-semibold">
+                                <i class="fa-solid fa-arrow-down"></i>
+                                <span>22.4%</span>
+                            </div>
+                        </div>
+                        <div class="text-3xl font-bold text-primary-text mb-1">$3,245</div>
+                        <div class="text-sm text-secondary-text mb-2">Cost per Hire</div>
+                        <div class="text-xs text-secondary-text">
+                            Previous: <span class="font-semibold">$4,182</span>
+                        </div>
+                    </div>
+                    
+                    <div id="metric-quality" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="w-10 h-10 bg-indigo-100 rounded-lg flex items-center justify-center">
+                                <i class="fa-solid fa-star text-indigo-600 text-lg"></i>
+                            </div>
+                            <div class="flex items-center space-x-1 text-success text-xs font-semibold">
+                                <i class="fa-solid fa-arrow-up"></i>
+                                <span>6.7%</span>
+                            </div>
+                        </div>
+                        <div class="text-3xl font-bold text-primary-text mb-1">4.6/5.0</div>
+                        <div class="text-sm text-secondary-text mb-2">Quality of Hire</div>
+                        <div class="flex items-center space-x-1">
+                            <i class="fa-solid fa-star text-warning text-sm"></i>
+                            <i class="fa-solid fa-star text-warning text-sm"></i>
+                            <i class="fa-solid fa-star text-warning text-sm"></i>
+                            <i class="fa-solid fa-star text-warning text-sm"></i>
+                            <i class="fa-solid fa-star-half-stroke text-warning text-sm"></i>
+                        </div>
+                    </div>
+                </section>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    
+                    <section id="hiring-funnel-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="text-lg font-bold text-primary-text mb-1">Hiring Funnel</h2>
+                                <p class="text-sm text-secondary-text">Stage-by-stage conversion rates</p>
+                            </div>
+                            <button class="text-secondary-text hover:text-primary-text">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                        </div>
+                        <div id="hiring-funnel-chart" style="height: 400px"></div>
+                    </section>
+                    
+                    <section id="applications-over-time-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="text-lg font-bold text-primary-text mb-1">Applications Over Time</h2>
+                                <p class="text-sm text-secondary-text">Daily application volume trend</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="px-3 py-1.5 text-xs font-medium bg-primary-blue text-white rounded-full">Daily</button>
+                                <button class="px-3 py-1.5 text-xs font-medium text-secondary-text hover:bg-bg-surface rounded-full">Weekly</button>
+                                <button class="px-3 py-1.5 text-xs font-medium text-secondary-text hover:bg-bg-surface rounded-full">Monthly</button>
+                            </div>
+                        </div>
+                        <div id="applications-time-chart" style="height: 400px"></div>
+                    </section>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    
+                    <section id="source-effectiveness-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="text-lg font-bold text-primary-text mb-1">Source Effectiveness</h2>
+                                <p class="text-sm text-secondary-text">Applications by source with quality scores</p>
+                            </div>
+                            <button class="text-secondary-text hover:text-primary-text">
+                                <i class="fa-solid fa-filter"></i>
+                            </button>
+                        </div>
+                        <div id="source-effectiveness-chart" style="height: 400px"></div>
+                    </section>
+                    
+                    <section id="time-in-stage-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="text-lg font-bold text-primary-text mb-1">Time in Stage</h2>
+                                <p class="text-sm text-secondary-text">Average days spent in each hiring stage</p>
+                            </div>
+                            <button class="text-secondary-text hover:text-primary-text">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                        </div>
+                        <div id="time-in-stage-chart" style="height: 400px"></div>
+                    </section>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    
+                    <section id="interview-scores-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="text-lg font-bold text-primary-text mb-1">Interview Score Distribution</h2>
+                                <p class="text-sm text-secondary-text">AI interview performance metrics</p>
+                            </div>
+                            <div class="flex items-center space-x-2 text-xs">
+                                <div class="flex items-center space-x-1">
+                                    <div class="w-2 h-2 bg-primary-blue rounded-full"></div>
+                                    <span class="text-secondary-text">Mean: 7.2</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <div class="w-2 h-2 bg-success rounded-full"></div>
+                                    <span class="text-secondary-text">Median: 7.5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="interview-scores-chart" style="height: 400px"></div>
+                    </section>
+                    
+                    <section id="interviewer-performance-section" class="bg-card-surface border border-border-color rounded-lg p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h2 class="text-lg font-bold text-primary-text mb-1">Interviewer Performance</h2>
+                                <p class="text-sm text-secondary-text">Top performing interviewers this period</p>
+                            </div>
+                            <button class="text-sm text-primary-blue font-semibold hover:text-hover-blue">View All</button>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="overflow-x-auto">
+                                <table class="w-full">
+                                    <thead>
+                                        <tr class="border-b border-border-color">
+                                            <th class="text-left text-xs font-semibold text-secondary-text uppercase tracking-wider pb-3">Rank</th>
+                                            <th class="text-left text-xs font-semibold text-secondary-text uppercase tracking-wider pb-3">Interviewer</th>
+                                            <th class="text-center text-xs font-semibold text-secondary-text uppercase tracking-wider pb-3">Interviews</th>
+                                            <th class="text-center text-xs font-semibold text-secondary-text uppercase tracking-wider pb-3">Avg Score</th>
+                                            <th class="text-center text-xs font-semibold text-secondary-text uppercase tracking-wider pb-3">Success Rate</th>
+                                            <th class="text-center text-xs font-semibold text-secondary-text uppercase tracking-wider pb-3">Feedback</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-border-color">
+                                        <tr class="hover:bg-bg-surface transition-colors duration-150">
+                                            <td class="py-4">
+                                                <div class="flex items-center justify-center w-6 h-6 bg-warning text-white text-xs font-bold rounded-full">1</div>
+                                            </td>
+                                            <td class="py-4">
+                                                <div class="flex items-center space-x-3">
+                                                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Sarah" class="w-8 h-8 rounded-full">
+                                                    <div>
+                                                        <div class="text-sm font-semibold text-primary-text">Sarah Johnson</div>
+                                                        <div class="text-xs text-secondary-text">Senior Recruiter</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 text-center text-sm font-semibold text-primary-text">147</td>
+                                            <td class="py-4 text-center">
+                                                <div class="inline-flex items-center space-x-1">
+                                                    <span class="text-sm font-semibold text-primary-text">8.9</span>
+                                                    <i class="fa-solid fa-star text-warning text-xs"></i>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 text-center">
+                                                <span class="inline-flex items-center px-2.5 py-1 bg-green-100 text-success text-xs font-semibold rounded-full">94.2%</span>
+                                            </td>
+                                            <td class="py-4 text-center text-sm font-semibold text-primary-text">4.8/5.0</td>
+                                        </tr>
+                                        <tr class="hover:bg-bg-surface transition-colors duration-150">
+                                            <td class="py-4">
+                                                <div class="flex items-center justify-center w-6 h-6 bg-secondary-text text-white text-xs font-bold rounded-full">2</div>
+                                            </td>
+                                            <td class="py-4">
+                                                <div class="flex items-center space-x-3">
+                                                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-3.jpg" alt="Michael" class="w-8 h-8 rounded-full">
+                                                    <div>
+                                                        <div class="text-sm font-semibold text-primary-text">Michael Chen</div>
+                                                        <div class="text-xs text-secondary-text">Tech Lead</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 text-center text-sm font-semibold text-primary-text">132</td>
+                                            <td class="py-4 text-center">
+                                                <div class="inline-flex items-center space-x-1">
+                                                    <span class="text-sm font-semibold text-primary-text">8.7</span>
+                                                    <i class="fa-solid fa-star text-warning text-xs"></i>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 text-center">
+                                                <span class="inline-flex items-center px-2.5 py-1 bg-green-100 text-success text-xs font-semibold rounded-full">91.8%</span>
+                                            </td>
+                                            <td class="py-4 text-center text-sm font-semibold text-primary-text">4.7/5.0</td>
+                                        </tr>
+                                        <tr class="hover:bg-bg-surface transition-colors duration-150">
+                                            <td class="py-4">
+                                                <div class="flex items-center justify-center w-6 h-6 bg-amber-700 text-white text-xs font-bold rounded-full">3</div>
+                                            </td>
+                                            <td class="py-4">
+                                                <div class="flex items-center space-x-3">
+                                                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-6.jpg" alt="Emily" class="w-8 h-8 rounded-full">
+                                                    <div>
+                                                        <div class="text-sm font-semibold text-primary-text">Emily Rodriguez</div>
+                                                        <div class="text-xs text-secondary-text">HR Manager</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 text-center text-sm font-semibold text-primary-text">128</td>
+                                            <td class="py-4 text-center">
+                                                <div class="inline-flex items-center space-x-1">
+                                                    <span class="text-sm font-semibold text-primary-text">8.5</span>
+                                                    <i class="fa-solid fa-star text-warning text-xs"></i>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 text-center">
+                                                <span class="inline-flex items-center px-2.5 py-1 bg-green-100 text-success text-xs font-semibold rounded-full">89.5%</span>
+                                            </td>
+                                            <td class="py-4 text-center text-sm font-semibold text-primary-text">4.6/5.0</td>
+                                        </tr>
+                                        <tr class="hover:bg-bg-surface transition-colors duration-150">
+                                            <td class="py-4">
+                                                <div class="flex items-center justify-center w-6 h-6 bg-border-color text-secondary-text text-xs font-bold rounded-full">4</div>
+                                            </td>
+                                            <td class="py-4">
+                                                <div class="flex items-center space-x-3">
+                                                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-8.jpg" alt="David" class="w-8 h-8 rounded-full">
+                                                    <div>
+                                                        <div class="text-sm font-semibold text-primary-text">David Park</div>
+                                                        <div class="text-xs text-secondary-text">Engineering Manager</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 text-center text-sm font-semibold text-primary-text">115</td>
+                                            <td class="py-4 text-center">
+                                                <div class="inline-flex items-center space-x-1">
+                                                    <span class="text-sm font-semibold text-primary-text">8.3</span>
+                                                    <i class="fa-solid fa-star text-warning text-xs"></i>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 text-center">
+                                                <span class="inline-flex items-center px-2.5 py-1 bg-green-100 text-success text-xs font-semibold rounded-full">87.3%</span>
+                                            </td>
+                                            <td class="py-4 text-center text-sm font-semibold text-primary-text">4.5/5.0</td>
+                                        </tr>
+                                        <tr class="hover:bg-bg-surface transition-colors duration-150">
+                                            <td class="py-4">
+                                                <div class="flex items-center justify-center w-6 h-6 bg-border-color text-secondary-text text-xs font-bold rounded-full">5</div>
+                                            </td>
+                                            <td class="py-4">
+                                                <div class="flex items-center space-x-3">
+                                                    <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-7.jpg" alt="Lisa" class="w-8 h-8 rounded-full">
+                                                    <div>
+                                                        <div class="text-sm font-semibold text-primary-text">Lisa Anderson</div>
+                                                        <div class="text-xs text-secondary-text">Talent Acquisition</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 text-center text-sm font-semibold text-primary-text">108</td>
+                                            <td class="py-4 text-center">
+                                                <div class="inline-flex items-center space-x-1">
+                                                    <span class="text-sm font-semibold text-primary-text">8.1</span>
+                                                    <i class="fa-solid fa-star text-warning text-xs"></i>
+                                                </div>
+                                            </td>
+                                            <td class="py-4 text-center">
+                                                <span class="inline-flex items-center px-2.5 py-1 bg-green-100 text-success text-xs font-semibold rounded-full">85.7%</span>
+                                            </td>
+                                            <td class="py-4 text-center text-sm font-semibold text-primary-text">4.4/5.0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+window.addEventListener('load', function() {
+    try {
+        var sparklineData = [{
+            x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+            y: [85, 92, 88, 95, 102, 98, 105, 110, 108, 115, 120, 118, 125, 130, 128],
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#0A66C2', width: 2 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(10, 102, 194, 0.1)',
+            hoverinfo: 'skip'
+        }];
+        
+        var sparklineLayout = {
+            margin: { t: 0, r: 0, b: 0, l: 0 },
+            xaxis: { visible: false },
+            yaxis: { visible: false },
+            plot_bgcolor: 'transparent',
+            paper_bgcolor: 'transparent',
+            showlegend: false
+        };
+        
+        Plotly.newPlot('sparkline-applications', sparklineData, sparklineLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+    } catch(e) {
+        console.error('Sparkline error:', e);
+    }
+    
+    try {
+        var gaugeData = [{
+            type: 'indicator',
+            mode: 'gauge+number',
+            value: 87.3,
+            gauge: {
+                axis: { range: [0, 100], visible: false },
+                bar: { color: '#0A66C2', thickness: 0.8 },
+                bgcolor: '#E5E7EB',
+                borderwidth: 0,
+                steps: [
+                    { range: [0, 100], color: '#E5E7EB' }
+                ]
+            },
+            number: { font: { size: 0 } }
+        }];
+        
+        var gaugeLayout = {
+            margin: { t: 0, r: 0, b: 0, l: 0 },
+            plot_bgcolor: 'transparent',
+            paper_bgcolor: 'transparent',
+            showlegend: false
+        };
+        
+        Plotly.newPlot('gauge-acceptance', gaugeData, gaugeLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+    } catch(e) {
+        console.error('Gauge error:', e);
+    }
+    
+    try {
+        var funnelData = [{
+            type: 'funnel',
+            y: ['Applications', 'Screening', 'Phone Interview', 'Technical Interview', 'Final Interview', 'Offer', 'Hired'],
+            x: [2847, 1856, 1243, 847, 456, 298, 256],
+            textposition: 'inside',
+            textinfo: 'value+percent initial',
+            marker: {
+                color: ['#0A66C2', '#1E7FD6', '#3299EA', '#46B3FF', '#5ACCFF', '#6EE6FF', '#82FFFF']
+            },
+            connector: { line: { color: '#E5E7EB', width: 2 } }
+        }];
+        
+        var funnelLayout = {
+            margin: { t: 20, r: 20, b: 40, l: 120 },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false,
+            font: { family: 'Inter', size: 12, color: '#111827' }
+        };
+        
+        Plotly.newPlot('hiring-funnel-chart', funnelData, funnelLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+    } catch(e) {
+        console.error('Funnel chart error:', e);
+    }
+    
+    try {
+        var timeData = [{
+            type: 'scatter',
+            mode: 'lines',
+            name: 'Applications',
+            x: ['Jan 1', 'Jan 5', 'Jan 10', 'Jan 15', 'Jan 20', 'Jan 25', 'Jan 30', 'Feb 4', 'Feb 9', 'Feb 14', 'Feb 19', 'Feb 24', 'Mar 1'],
+            y: [45, 52, 48, 65, 72, 68, 78, 85, 92, 88, 95, 102, 98],
+            line: { color: '#0A66C2', width: 3 },
+            fill: 'tozeroy',
+            fillcolor: 'rgba(10, 102, 194, 0.1)'
+        }];
+        
+        var timeLayout = {
+            margin: { t: 20, r: 20, b: 60, l: 60 },
+            xaxis: { title: 'Date', gridcolor: '#E5E7EB' },
+            yaxis: { title: 'Applications', gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false,
+            font: { family: 'Inter', size: 12, color: '#111827' }
+        };
+        
+        Plotly.newPlot('applications-time-chart', timeData, timeLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+    } catch(e) {
+        console.error('Time chart error:', e);
+    }
+    
+    try {
+        var sourceData = [{
+            type: 'bar',
+            x: [856, 624, 487, 392, 288, 200],
+            y: ['LinkedIn', 'Indeed', 'Company Website', 'Referrals', 'Glassdoor', 'Other'],
+            orientation: 'h',
+            marker: {
+                color: ['#0A66C2', '#1E7FD6', '#3299EA', '#46B3FF', '#5ACCFF', '#6EE6FF']
+            },
+            text: ['Quality: 8.5', 'Quality: 7.8', 'Quality: 8.9', 'Quality: 9.2', 'Quality: 7.5', 'Quality: 6.8'],
+            textposition: 'outside'
+        }];
+        
+        var sourceLayout = {
+            margin: { t: 20, r: 100, b: 60, l: 120 },
+            xaxis: { title: 'Number of Applications', gridcolor: '#E5E7EB' },
+            yaxis: { gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false,
+            font: { family: 'Inter', size: 12, color: '#111827' }
+        };
+        
+        Plotly.newPlot('source-effectiveness-chart', sourceData, sourceLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+    } catch(e) {
+        console.error('Source chart error:', e);
+    }
+    
+    try {
+        var stageData = [{
+            type: 'bar',
+            x: [2.3, 3.8, 4.2, 5.6, 6.8, 3.2, 2.1],
+            y: ['Application Review', 'Initial Screening', 'Phone Interview', 'Technical Test', 'Final Interview', 'Offer Preparation', 'Onboarding'],
+            orientation: 'h',
+            marker: {
+                color: ['#0A66C2', '#1E7FD6', '#3299EA', '#46B3FF', '#5ACCFF', '#6EE6FF', '#82FFFF']
+            }
+        }];
+        
+        var stageLayout = {
+            margin: { t: 20, r: 60, b: 60, l: 140 },
+            xaxis: { title: 'Average Days', gridcolor: '#E5E7EB' },
+            yaxis: { gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false,
+            font: { family: 'Inter', size: 12, color: '#111827' }
+        };
+        
+        Plotly.newPlot('time-in-stage-chart', stageData, stageLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+    } catch(e) {
+        console.error('Stage chart error:', e);
+    }
+    
+    try {
+        var scoresData = [{
+            type: 'histogram',
+            x: [4.2, 5.1, 5.8, 6.2, 6.5, 6.8, 7.1, 7.3, 7.5, 7.6, 7.8, 7.9, 8.0, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8, 8.9, 9.0, 9.1, 9.2, 9.3, 9.4, 9.5, 6.9, 7.2, 7.4, 7.7, 8.0, 8.2, 8.4, 8.6, 8.8, 7.0, 7.3, 7.5, 7.8, 8.1, 8.3, 8.5, 8.7, 8.9],
+            nbinsx: 20,
+            marker: {
+                color: '#0A66C2',
+                line: { color: '#004182', width: 1 }
+            }
+        }];
+        
+        var scoresLayout = {
+            margin: { t: 20, r: 60, b: 60, l: 60 },
+            xaxis: { title: 'Interview Score (0-10)', gridcolor: '#E5E7EB' },
+            yaxis: { title: 'Frequency', gridcolor: '#E5E7EB' },
+            plot_bgcolor: '#FFFFFF',
+            paper_bgcolor: '#FFFFFF',
+            showlegend: false,
+            font: { family: 'Inter', size: 12, color: '#111827' }
+        };
+        
+        Plotly.newPlot('interview-scores-chart', scoresData, scoresLayout, {responsive: true, displayModeBar: false, displaylogo: false});
+    } catch(e) {
+        console.error('Scores chart error:', e);
+    }
+});
+</script>
+
+</body>
+</html>

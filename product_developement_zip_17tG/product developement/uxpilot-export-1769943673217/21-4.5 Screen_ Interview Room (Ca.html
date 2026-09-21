@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Room</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-[#0F172A] overflow-hidden">
+
+<div id="interview-room" class="relative w-screen h-screen">
+    
+    <div id="main-video-area" class="absolute inset-0 flex items-center justify-center">
+        <div class="relative w-full h-full flex items-center justify-center">
+            <div class="absolute inset-0 bg-gradient-to-br from-[#1E293B] via-[#0F172A] to-[#020617]"></div>
+            
+            <div id="ai-interviewer-container" class="relative z-10 flex flex-col items-center justify-center">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-primary-blue opacity-20 blur-3xl rounded-full"></div>
+                    
+                    <div class="relative w-[600px] h-[600px] rounded-full overflow-hidden border-4 border-primary-blue border-opacity-30 shadow-2xl">
+                        <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/0c67b1b99f-d7d63b022282669a578e.png" alt="professional AI avatar hologram, futuristic interviewer, blue and white color scheme, corporate setting, high-tech interface" />
+                    </div>
+                    
+                    <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-[#1E293B] bg-opacity-90 backdrop-blur-md px-6 py-3 rounded-full border border-slate-600">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-3 h-3 bg-success rounded-full animate-pulse"></div>
+                            <span class="text-white text-sm font-medium">AI Interviewer</span>
+                            <span class="text-slate-400 text-xs">•</span>
+                            <span class="text-slate-400 text-xs">Active</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="ambient-effects" class="absolute inset-0 pointer-events-none">
+                <div class="absolute top-20 left-20 w-32 h-32 bg-primary-blue opacity-10 rounded-full blur-2xl"></div>
+                <div class="absolute bottom-40 right-32 w-40 h-40 bg-cyan-500 opacity-10 rounded-full blur-2xl"></div>
+                <div class="absolute top-1/2 right-20 w-24 h-24 bg-blue-400 opacity-10 rounded-full blur-2xl"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="question-display" class="absolute top-8 left-1/2 transform -translate-x-1/2 z-20 w-full max-w-4xl px-8">
+        <div class="bg-[#1E293B] bg-opacity-95 backdrop-blur-xl rounded-2xl border border-slate-700 shadow-2xl p-8">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-primary-blue bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-comment-dots text-primary-blue text-sm"></i>
+                    </div>
+                    <span class="text-slate-400 text-xs font-medium uppercase tracking-wider">Question 3 of 12</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <i class="fa-solid fa-clock text-slate-400 text-sm"></i>
+                        <span class="text-slate-400 text-sm">Time Remaining:</span>
+                        <span class="text-white font-semibold text-lg" id="question-timer">2:45</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-700 pt-6">
+                <p class="text-white text-xl leading-relaxed font-medium">
+                    Describe a challenging project where you had to collaborate with a cross-functional team. What was your role, and how did you ensure effective communication throughout the project lifecycle?
+                </p>
+            </div>
+            
+            <div class="mt-6 flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+                    <span class="text-slate-400 text-sm">Recording in progress</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <div class="flex space-x-1">
+                        <div class="w-1.5 h-4 bg-primary-blue rounded-full opacity-30"></div>
+                        <div class="w-1.5 h-6 bg-primary-blue rounded-full opacity-50"></div>
+                        <div class="w-1.5 h-8 bg-primary-blue rounded-full opacity-70"></div>
+                        <div class="w-1.5 h-6 bg-primary-blue rounded-full opacity-50"></div>
+                        <div class="w-1.5 h-4 bg-primary-blue rounded-full opacity-30"></div>
+                    </div>
+                    <span class="text-slate-400 text-sm">Listening...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="self-view-pip" class="absolute bottom-24 right-8 z-30">
+        <div class="relative w-[280px] h-[210px] rounded-2xl overflow-hidden border-2 border-primary-blue shadow-2xl">
+            <div class="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900"></div>
+            
+            <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/399b96c874-b0d9544f64bbdaead6d9.png" alt="professional candidate in video call, business casual attire, well-lit home office background" />
+            
+            <div class="absolute inset-0 ring-2 ring-primary-blue ring-opacity-50 rounded-2xl pointer-events-none"></div>
+            
+            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-3">
+                <div class="flex items-center justify-between">
+                    <span class="text-white text-xs font-medium">You</span>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-success rounded-full"></div>
+                        <span class="text-white text-xs">Live</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="absolute top-3 right-3 w-8 h-8 bg-black bg-opacity-50 hover:bg-opacity-70 rounded-lg flex items-center justify-center transition-all duration-150" onclick="togglePiPSize()">
+                <i class="fa-solid fa-expand text-white text-xs"></i>
+            </button>
+        </div>
+    </div>
+    
+    <div id="control-bar" class="absolute bottom-0 left-0 right-0 z-40">
+        <div class="flex items-center justify-center pb-8">
+            <div class="bg-[#1E293B] bg-opacity-95 backdrop-blur-xl rounded-2xl border border-slate-700 shadow-2xl px-8 py-4">
+                <div class="flex items-center space-x-6">
+                    
+                    <div class="flex items-center space-x-2 pr-6 border-r border-slate-700">
+                        <i class="fa-solid fa-circle text-error text-xs animate-pulse"></i>
+                        <div class="text-white text-sm font-medium" id="elapsed-timer">00:12:34</div>
+                        <span class="text-slate-400 text-xs">elapsed</span>
+                    </div>
+                    
+                    <button id="mute-button" class="w-14 h-14 bg-slate-700 hover:bg-slate-600 rounded-xl flex items-center justify-center transition-all duration-150 group" onclick="toggleMute()">
+                        <i class="fa-solid fa-microphone text-white text-xl group-hover:scale-110 transition-transform duration-150"></i>
+                    </button>
+                    
+                    <button id="video-button" class="w-14 h-14 bg-slate-700 hover:bg-slate-600 rounded-xl flex items-center justify-center transition-all duration-150 group" onclick="toggleVideo()">
+                        <i class="fa-solid fa-video text-white text-xl group-hover:scale-110 transition-transform duration-150"></i>
+                    </button>
+                    
+                    <div class="w-px h-10 bg-slate-700"></div>
+                    
+                    <button class="w-14 h-14 bg-slate-700 hover:bg-slate-600 rounded-xl flex items-center justify-center transition-all duration-150 group" onclick="toggleSettings()">
+                        <i class="fa-solid fa-gear text-white text-xl group-hover:scale-110 group-hover:rotate-90 transition-all duration-150"></i>
+                    </button>
+                    
+                    <button class="w-14 h-14 bg-slate-700 hover:bg-slate-600 rounded-xl flex items-center justify-center transition-all duration-150 group" onclick="toggleHelp()">
+                        <i class="fa-solid fa-circle-question text-white text-xl group-hover:scale-110 transition-transform duration-150"></i>
+                    </button>
+                    
+                    <div class="w-px h-10 bg-slate-700"></div>
+                    
+                    <button class="px-6 h-14 bg-error hover:bg-red-700 rounded-xl flex items-center justify-center space-x-3 transition-all duration-150 group" onclick="confirmEndInterview()">
+                        <i class="fa-solid fa-phone-slash text-white text-lg group-hover:scale-110 transition-transform duration-150"></i>
+                        <span class="text-white font-semibold text-sm">End Interview</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="progress-indicator" class="absolute top-0 left-0 right-0 z-20">
+        <div class="h-1 bg-slate-800">
+            <div class="h-full bg-gradient-to-r from-primary-blue to-cyan-500 transition-all duration-300" style="width: 25%"></div>
+        </div>
+    </div>
+    
+    <div id="interview-stats" class="absolute top-8 left-8 z-20">
+        <div class="bg-[#1E293B] bg-opacity-90 backdrop-blur-md rounded-xl border border-slate-700 p-4 space-y-3">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-primary-blue bg-opacity-20 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-list-check text-primary-blue text-sm"></i>
+                </div>
+                <div>
+                    <div class="text-white text-sm font-semibold">Progress</div>
+                    <div class="text-slate-400 text-xs">3 of 12 completed</div>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-success bg-opacity-20 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-signal text-success text-sm"></i>
+                </div>
+                <div>
+                    <div class="text-white text-sm font-semibold">Connection</div>
+                    <div class="text-success text-xs">Excellent</div>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-cyan-500 bg-opacity-20 rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-brain text-cyan-400 text-sm"></i>
+                </div>
+                <div>
+                    <div class="text-white text-sm font-semibold">AI Analysis</div>
+                    <div class="text-cyan-400 text-xs">Active</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="help-panel" class="hidden absolute top-0 right-0 bottom-0 w-96 bg-[#1E293B] bg-opacity-98 backdrop-blur-xl border-l border-slate-700 z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary-blue bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-circle-question text-primary-blue"></i>
+                    </div>
+                    <h3 class="text-white text-lg font-semibold">Help & Tips</h3>
+                </div>
+                <button class="w-8 h-8 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors duration-150" onclick="toggleHelp()">
+                    <i class="fa-solid fa-xmark text-slate-400"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="bg-slate-800 bg-opacity-50 rounded-xl p-4 border border-slate-700">
+                    <div class="flex items-start space-x-3">
+                        <i class="fa-solid fa-lightbulb text-warning text-lg mt-1"></i>
+                        <div>
+                            <h4 class="text-white font-semibold text-sm mb-2">Interview Tips</h4>
+                            <ul class="space-y-2 text-slate-300 text-xs">
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-primary-blue mt-1">•</span>
+                                    <span>Speak clearly and at a moderate pace</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-primary-blue mt-1">•</span>
+                                    <span>Look at the camera when speaking</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-primary-blue mt-1">•</span>
+                                    <span>Take a moment to think before answering</span>
+                                </li>
+                                <li class="flex items-start space-x-2">
+                                    <span class="text-primary-blue mt-1">•</span>
+                                    <span>Use specific examples from your experience</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-800 bg-opacity-50 rounded-xl p-4 border border-slate-700">
+                    <div class="flex items-start space-x-3">
+                        <i class="fa-solid fa-keyboard text-primary-blue text-lg mt-1"></i>
+                        <div>
+                            <h4 class="text-white font-semibold text-sm mb-2">Keyboard Shortcuts</h4>
+                            <div class="space-y-2 text-xs">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-300">Toggle Mute</span>
+                                    <span class="bg-slate-700 px-2 py-1 rounded text-white font-mono">M</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-300">Toggle Video</span>
+                                    <span class="bg-slate-700 px-2 py-1 rounded text-white font-mono">V</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-slate-300">Help Panel</span>
+                                    <span class="bg-slate-700 px-2 py-1 rounded text-white font-mono">H</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-800 bg-opacity-50 rounded-xl p-4 border border-slate-700">
+                    <div class="flex items-start space-x-3">
+                        <i class="fa-solid fa-triangle-exclamation text-warning text-lg mt-1"></i>
+                        <div>
+                            <h4 class="text-white font-semibold text-sm mb-2">Technical Issues?</h4>
+                            <p class="text-slate-300 text-xs mb-3">If you experience any problems:</p>
+                            <button class="w-full bg-primary-blue hover:bg-hover-blue text-white text-xs font-semibold py-2 rounded-lg transition-colors duration-150">
+                                Contact Support
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-slate-800 bg-opacity-50 rounded-xl p-4 border border-slate-700">
+                    <div class="flex items-start space-x-3">
+                        <i class="fa-solid fa-clock text-cyan-400 text-lg mt-1"></i>
+                        <div>
+                            <h4 class="text-white font-semibold text-sm mb-2">Time Management</h4>
+                            <p class="text-slate-300 text-xs">
+                                Each question has a recommended time limit. You'll see a timer at the top of the screen. Don't worry if you need more time - the AI will wait for you to finish your thought.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="settings-panel" class="hidden absolute top-0 right-0 bottom-0 w-96 bg-[#1E293B] bg-opacity-98 backdrop-blur-xl border-l border-slate-700 z-50 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary-blue bg-opacity-20 rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-gear text-primary-blue"></i>
+                    </div>
+                    <h3 class="text-white text-lg font-semibold">Settings</h3>
+                </div>
+                <button class="w-8 h-8 hover:bg-slate-700 rounded-lg flex items-center justify-center transition-colors duration-150" onclick="toggleSettings()">
+                    <i class="fa-solid fa-xmark text-slate-400"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="text-white text-sm font-semibold mb-3 block">Camera</label>
+                    <select class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary-blue">
+                        <option>Built-in Camera (Default)</option>
+                        <option>External Webcam</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="text-white text-sm font-semibold mb-3 block">Microphone</label>
+                    <select class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary-blue">
+                        <option>Built-in Microphone (Default)</option>
+                        <option>External Microphone</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="text-white text-sm font-semibold mb-3 block">Speaker</label>
+                    <select class="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-primary-blue">
+                        <option>Built-in Speakers (Default)</option>
+                        <option>Headphones</option>
+                    </select>
+                </div>
+                
+                <div class="border-t border-slate-700 pt-6">
+                    <label class="text-white text-sm font-semibold mb-3 block">Video Quality</label>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="radio" name="quality" class="w-4 h-4 text-primary-blue" checked />
+                            <span class="text-slate-300 text-sm">Auto (Recommended)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="radio" name="quality" class="w-4 h-4 text-primary-blue" />
+                            <span class="text-slate-300 text-sm">High Quality (720p)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="radio" name="quality" class="w-4 h-4 text-primary-blue" />
+                            <span class="text-slate-300 text-sm">Standard Quality (480p)</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="border-t border-slate-700 pt-6">
+                    <button class="w-full bg-slate-800 hover:bg-slate-700 text-white text-sm font-semibold py-3 rounded-lg transition-colors duration-150 flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-video text-sm"></i>
+                        <span>Test Camera & Microphone</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="end-interview-modal" class="hidden fixed inset-0 bg-black bg-opacity-75 backdrop-blur-sm z-50 flex items-center justify-center">
+        <div class="bg-[#1E293B] rounded-2xl border border-slate-700 shadow-2xl max-w-md w-full mx-4 p-8">
+            <div class="flex flex-col items-center text-center">
+                <div class="w-16 h-16 bg-error bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-triangle-exclamation text-error text-2xl"></i>
+                </div>
+                
+                <h3 class="text-white text-xl font-bold mb-2">End Interview?</h3>
+                <p class="text-slate-400 text-sm mb-6">
+                    Are you sure you want to end this interview? You have completed 3 out of 12 questions. Your progress will be saved, but you won't be able to resume this session.
+                </p>
+                
+                <div class="flex items-center space-x-3 w-full">
+                    <button class="flex-1 bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-xl transition-colors duration-150" onclick="closeEndModal()">
+                        Cancel
+                    </button>
+                    <button class="flex-1 bg-error hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-colors duration-150" onclick="endInterview()">
+                        End Interview
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let isMuted = false;
+let isVideoOff = false;
+let elapsedSeconds = 754;
+let questionSeconds = 165;
+
+function toggleMute() {
+    isMuted = !isMuted;
+    const button = document.getElementById('mute-button');
+    const icon = button.querySelector('i');
+    
+    if (isMuted) {
+        button.classList.remove('bg-slate-700', 'hover:bg-slate-600');
+        button.classList.add('bg-error', 'hover:bg-red-700');
+        icon.classList.remove('fa-microphone');
+        icon.classList.add('fa-microphone-slash');
+    } else {
+        button.classList.remove('bg-error', 'hover:bg-red-700');
+        button.classList.add('bg-slate-700', 'hover:bg-slate-600');
+        icon.classList.remove('fa-microphone-slash');
+        icon.classList.add('fa-microphone');
+    }
+}
+
+function toggleVideo() {
+    isVideoOff = !isVideoOff;
+    const button = document.getElementById('video-button');
+    const icon = button.querySelector('i');
+    
+    if (isVideoOff) {
+        button.classList.remove('bg-slate-700', 'hover:bg-slate-600');
+        button.classList.add('bg-error', 'hover:bg-red-700');
+        icon.classList.remove('fa-video');
+        icon.classList.add('fa-video-slash');
+    } else {
+        button.classList.remove('bg-error', 'hover:bg-red-700');
+        button.classList.add('bg-slate-700', 'hover:bg-slate-600');
+        icon.classList.remove('fa-video-slash');
+        icon.classList.add('fa-video');
+    }
+}
+
+function toggleHelp() {
+    const panel = document.getElementById('help-panel');
+    const settingsPanel = document.getElementById('settings-panel');
+    settingsPanel.classList.add('hidden');
+    panel.classList.toggle('hidden');
+}
+
+function toggleSettings() {
+    const panel = document.getElementById('settings-panel');
+    const helpPanel = document.getElementById('help-panel');
+    helpPanel.classList.add('hidden');
+    panel.classList.toggle('hidden');
+}
+
+function confirmEndInterview() {
+    document.getElementById('end-interview-modal').classList.remove('hidden');
+}
+
+function closeEndModal() {
+    document.getElementById('end-interview-modal').classList.add('hidden');
+}
+
+function endInterview() {
+    console.log('Interview ended');
+}
+
+function togglePiPSize() {
+    console.log('Toggle PiP size');
+}
+
+function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+function formatElapsedTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    return `${hours.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+setInterval(() => {
+    elapsedSeconds++;
+    document.getElementById('elapsed-timer').textContent = formatElapsedTime(elapsedSeconds);
+    
+    if (questionSeconds > 0) {
+        questionSeconds--;
+        document.getElementById('question-timer').textContent = formatTime(questionSeconds);
+    }
+}, 1000);
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'm' || e.key === 'M') toggleMute();
+    if (e.key === 'v' || e.key === 'V') toggleVideo();
+    if (e.key === 'h' || e.key === 'H') toggleHelp();
+});
+
+window.addEventListener('beforeunload', (e) => {
+    e.preventDefault();
+    e.returnValue = 'Are you sure you want to leave? Your interview progress will be lost.';
+});
+</script>
+
+</body>
+</html>

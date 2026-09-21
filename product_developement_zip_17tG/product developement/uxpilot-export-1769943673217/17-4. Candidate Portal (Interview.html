@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Invitation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-bg-surface">
+
+<div id="interview-invitation-page" class="min-h-screen w-full flex items-center justify-center px-4 py-12">
+    
+    <div id="invitation-card" class="w-full max-w-[640px] bg-card-surface rounded-xl shadow-sm border border-border-color overflow-hidden">
+        
+        <div id="card-header" class="bg-gradient-to-r from-primary-blue to-hover-blue px-10 py-8 text-center relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 20px 20px;"></div>
+            <div class="relative z-10">
+                <div class="flex justify-center mb-4">
+                    <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg">
+                        <i class="fa-solid fa-video text-primary-blue text-2xl"></i>
+                    </div>
+                </div>
+                <div class="text-white text-sm font-semibold uppercase tracking-wider mb-2">Interview Invitation</div>
+                <div class="flex items-center justify-center space-x-2">
+                    <div class="w-20 h-12 bg-white rounded-lg flex items-center justify-center">
+                        <span class="text-primary-blue text-xl font-bold">Euron</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="card-content" class="px-10 py-10">
+            
+            <div id="greeting-section" class="mb-8">
+                <h1 class="text-primary-text text-2xl font-semibold mb-2">Hello, Sarah Mitchell</h1>
+                <p class="text-secondary-text text-base">You have been invited to interview for:</p>
+            </div>
+            
+            <div id="job-details" class="mb-8 pb-8 border-b border-border-color">
+                <h2 class="text-primary-blue text-3xl font-bold mb-3 leading-tight">Senior Product Designer</h2>
+                <div class="flex items-center space-x-2 mb-6">
+                    <i class="fa-solid fa-building text-secondary-text text-sm"></i>
+                    <span class="text-secondary-text text-lg">TechCorp Solutions</span>
+                </div>
+                
+                <div class="inline-flex items-center space-x-2 bg-blue-50 border border-blue-200 rounded-full px-4 py-2">
+                    <div class="w-2 h-2 bg-primary-blue rounded-full animate-pulse"></div>
+                    <span class="text-primary-blue text-sm font-semibold">AI-Powered Interview</span>
+                </div>
+            </div>
+            
+            <div id="interview-info" class="space-y-4 mb-8">
+                <div class="flex items-start space-x-4 p-4 bg-bg-surface rounded-lg border border-border-color">
+                    <div class="w-10 h-10 bg-primary-blue bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-clock text-primary-blue text-lg"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-primary-text text-sm font-semibold mb-1">Duration</div>
+                        <div class="text-secondary-text text-sm">Approximately 45 minutes</div>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
+                    <div class="w-10 h-10 bg-warning bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-calendar-check text-warning text-lg"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-primary-text text-sm font-semibold mb-1">Deadline</div>
+                        <div class="text-secondary-text text-sm">Complete by: <span class="font-semibold text-primary-text">February 5, 2026</span></div>
+                        <div class="text-xs text-secondary-text mt-1">3 days remaining</div>
+                    </div>
+                </div>
+                
+                <div class="flex items-start space-x-4 p-4 bg-green-50 rounded-lg border border-green-200">
+                    <div class="w-10 h-10 bg-success bg-opacity-10 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="fa-solid fa-language text-success text-lg"></i>
+                    </div>
+                    <div class="flex-1">
+                        <div class="text-primary-text text-sm font-semibold mb-1">Language</div>
+                        <div class="text-secondary-text text-sm">English (US)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="process-description" class="mb-8 p-6 bg-blue-50 rounded-lg border border-blue-200">
+                <div class="flex items-start space-x-3 mb-4">
+                    <i class="fa-solid fa-circle-info text-primary-blue text-lg mt-0.5"></i>
+                    <div>
+                        <h3 class="text-primary-text text-base font-semibold mb-2">What to Expect</h3>
+                        <p class="text-secondary-text text-sm leading-relaxed mb-4">
+                            This AI-powered interview consists of structured questions designed to assess your skills, experience, and cultural fit. You'll have time to prepare your responses, and you can re-record answers if needed.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="space-y-3">
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-primary-blue rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <span class="text-white text-xs font-bold">1</span>
+                        </div>
+                        <div>
+                            <div class="text-primary-text text-sm font-medium">Technical Assessment</div>
+                            <div class="text-secondary-text text-xs">15-20 minutes of role-specific questions</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-primary-blue rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <span class="text-white text-xs font-bold">2</span>
+                        </div>
+                        <div>
+                            <div class="text-primary-text text-sm font-medium">Behavioral Questions</div>
+                            <div class="text-secondary-text text-xs">15-20 minutes exploring your work style</div>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <div class="w-6 h-6 bg-primary-blue rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                            <span class="text-white text-xs font-bold">3</span>
+                        </div>
+                        <div>
+                            <div class="text-primary-text text-sm font-medium">Cultural Fit</div>
+                            <div class="text-secondary-text text-xs">10-15 minutes understanding your values</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="preparation-tips" class="mb-8 p-6 bg-green-50 rounded-lg border border-green-200">
+                <div class="flex items-start space-x-3">
+                    <i class="fa-solid fa-lightbulb text-success text-lg mt-0.5"></i>
+                    <div>
+                        <h3 class="text-primary-text text-base font-semibold mb-2">Preparation Tips</h3>
+                        <ul class="space-y-2 text-sm text-secondary-text">
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-check text-success text-xs mt-1"></i>
+                                <span>Find a quiet, well-lit space with stable internet connection</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-check text-success text-xs mt-1"></i>
+                                <span>Test your camera and microphone before starting</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-check text-success text-xs mt-1"></i>
+                                <span>Have your resume and portfolio ready for reference</span>
+                            </li>
+                            <li class="flex items-start space-x-2">
+                                <i class="fa-solid fa-check text-success text-xs mt-1"></i>
+                                <span>Dress professionally as you would for an in-person interview</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="action-buttons" class="space-y-3">
+                <button class="w-full h-12 bg-primary-blue text-white text-base font-semibold rounded-full hover:bg-hover-blue focus:outline-none focus:ring-4 focus:ring-primary-blue focus:ring-opacity-20 transition-all duration-150 shadow-sm hover:shadow-md">
+                    <span class="flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-play text-sm"></i>
+                        <span>Start Interview Now</span>
+                    </span>
+                </button>
+                
+                <button class="w-full h-12 bg-transparent text-primary-blue text-base font-semibold border border-primary-blue rounded-full hover:bg-primary-blue hover:bg-opacity-8 focus:outline-none focus:ring-4 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150">
+                    <span class="flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-calendar text-sm"></i>
+                        <span>Schedule for Later</span>
+                    </span>
+                </button>
+            </div>
+            
+            <div id="technical-requirements" class="mt-8 pt-6 border-t border-border-color">
+                <h3 class="text-primary-text text-sm font-semibold mb-4">Technical Requirements</h3>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="flex items-center space-x-2 text-xs text-secondary-text">
+                        <i class="fa-solid fa-check-circle text-success"></i>
+                        <span>Chrome, Firefox, or Safari</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-xs text-secondary-text">
+                        <i class="fa-solid fa-check-circle text-success"></i>
+                        <span>Webcam enabled</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-xs text-secondary-text">
+                        <i class="fa-solid fa-check-circle text-success"></i>
+                        <span>Microphone access</span>
+                    </div>
+                    <div class="flex items-center space-x-2 text-xs text-secondary-text">
+                        <i class="fa-solid fa-check-circle text-success"></i>
+                        <span>Stable internet (5+ Mbps)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="privacy-notice" class="mt-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
+                <div class="flex items-start space-x-3">
+                    <i class="fa-solid fa-shield-halved text-purple-600 text-lg mt-0.5"></i>
+                    <div>
+                        <h4 class="text-primary-text text-sm font-semibold mb-1">Privacy & Security</h4>
+                        <p class="text-secondary-text text-xs leading-relaxed">
+                            Your interview responses are encrypted and securely stored. Only authorized hiring team members will have access to review your interview. We comply with GDPR and data protection regulations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="card-footer" class="px-10 py-6 bg-bg-surface border-t border-border-color">
+            <div class="flex items-center justify-between text-xs text-secondary-text mb-4">
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="hover:text-primary-blue transition-colors duration-150 flex items-center space-x-1">
+                        <i class="fa-solid fa-circle-question"></i>
+                        <span>Help Center</span>
+                    </a>
+                    <span class="text-border-color">•</span>
+                    <a href="#" class="hover:text-primary-blue transition-colors duration-150 flex items-center space-x-1">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>Contact Support</span>
+                    </a>
+                </div>
+                <div class="flex items-center space-x-1">
+                    <i class="fa-solid fa-lock text-xs"></i>
+                    <span>Secure Connection</span>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <p class="text-xs text-secondary-text">Powered by <span class="font-semibold text-primary-blue">Euron</span> • AI Interview Platform</p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="floating-help" class="fixed bottom-8 right-8 z-50">
+        <button class="w-14 h-14 bg-primary-blue text-white rounded-full shadow-lg hover:bg-hover-blue hover:shadow-xl transition-all duration-150 flex items-center justify-center">
+            <i class="fa-solid fa-headset text-xl"></i>
+        </button>
+    </div>
+</div>
+
+</body>
+</html>

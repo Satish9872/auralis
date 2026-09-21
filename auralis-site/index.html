@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Auralis — The autonomous interview layer</title>
+<meta name="description" content="Auralis runs the whole hiring funnel — screening, scheduling, interviewing, scoring and feedback — with no recruiter in the room.">
+<meta property="og:title" content="Auralis — The autonomous interview layer">
+<meta property="og:description" content="Post a job. Get a ranked, evidence-backed shortlist. Zero recruiter hours in the room.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230A66C2'/><g fill='white'><rect x='24' y='42' width='6' height='16' rx='3'/><rect x='36' y='32' width='6' height='36' rx='3'/><rect x='48' y='24' width='6' height='52' rx='3'/><rect x='60' y='36' width='6' height='28' rx='3'/><rect x='72' y='44' width='6' height='12' rx='3'/></g></svg>">
+
+<style>
+:root{
+  --brand-primary:#0A66C2; --brand-primary-hover:#004182; --brand-primary-subtle:#E8F3FF;
+  --bg-canvas:#F4F2EE; --bg-surface:#FFFFFF; --bg-subtle:#F3F2F0;
+  --text-primary:rgba(0,0,0,.90); --text-secondary:rgba(0,0,0,.60); --text-tertiary:rgba(0,0,0,.45);
+  --border-default:rgba(0,0,0,.10); --border-strong:rgba(0,0,0,.25);
+  --success:#01754F; --warning:#915907;
+  --radius-sm:4px; --radius-md:8px; --radius-lg:12px; --radius-full:999px;
+  --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-8:48px; --space-10:64px;
+  --shadow-md:0 4px 12px rgba(0,0,0,.10);
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI","Source Sans 3",Roboto,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+ :root:not([data-theme="light"]){
+  --brand-primary:#71B7FB; --brand-primary-hover:#9CCEFF; --brand-primary-subtle:#1A3A52;
+  --bg-canvas:#151719; --bg-surface:#1D2226; --bg-subtle:#22282C;
+  --text-primary:rgba(255,255,255,.90); --text-secondary:rgba(255,255,255,.60); --text-tertiary:rgba(255,255,255,.45);
+  --border-default:rgba(255,255,255,.12); --border-strong:rgba(255,255,255,.28);
+  --success:#44C98F; --warning:#E8A33D;
+  --shadow-md:0 4px 12px rgba(0,0,0,.40);
+ }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg-canvas);color:var(--text-primary);font-family:var(--font);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:var(--brand-primary);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:none;box-shadow:0 0 0 2px var(--bg-canvas),0 0 0 4px var(--brand-primary);border-radius:var(--radius-sm)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 var(--space-5)}
+.narrow{max-width:720px}
+
+/* nav */
+header{position:sticky;top:0;z-index:20;background:var(--bg-surface);border-bottom:1px solid var(--border-default)}
+.nav{height:56px;display:flex;align-items:center;justify-content:space-between;gap:var(--space-4)}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;font-size:17px;color:var(--text-primary)}
+.brand:hover{text-decoration:none}
+.mark{width:28px;height:28px;border-radius:7px;background:var(--brand-primary);display:flex;align-items:center;justify-content:center;gap:2px;flex-shrink:0}
+.mark i{display:block;width:2px;background:#fff;border-radius:2px}
+.mark i:nth-child(1){height:8px}.mark i:nth-child(2){height:14px}.mark i:nth-child(3){height:18px}
+.mark i:nth-child(4){height:11px}.mark i:nth-child(5){height:6px}
+.byline{color:var(--text-tertiary);font-weight:400;font-size:13px;margin-left:2px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:40px;padding:0 20px;border-radius:var(--radius-full);font-size:14px;font-weight:600;font-family:inherit;border:none;cursor:pointer;transition:background .1s ease-out,color .1s ease-out;white-space:nowrap}
+.btn-primary{background:var(--brand-primary);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn-primary{color:#0A1419}}
+.btn-primary:hover{background:var(--brand-primary-hover);text-decoration:none}
+.btn-secondary{background:transparent;color:var(--brand-primary);box-shadow:inset 0 0 0 1.5px var(--brand-primary)}
+.btn-secondary:hover{background:var(--brand-primary-subtle);text-decoration:none}
+.btn-lg{height:48px;padding:0 28px;font-size:16px}
+
+/* hero */
+.hero{padding:var(--space-10) 0 var(--space-8)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;height:24px;padding:0 12px;border-radius:var(--radius-full);background:var(--brand-primary-subtle);color:var(--brand-primary);font-size:12px;font-weight:600;letter-spacing:.2px;margin-bottom:var(--space-5)}
+h1{font-size:clamp(32px,5.5vw,52px);line-height:1.12;font-weight:600;letter-spacing:-.8px;margin:0 0 var(--space-4)}
+.lede{font-size:clamp(17px,2.2vw,20px);line-height:1.55;color:var(--text-secondary);margin:0 0 var(--space-6);max-width:620px}
+.lede strong{color:var(--text-primary);font-weight:600}
+
+/* form */
+.form-card{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--radius-lg);padding:var(--space-5);max-width:560px}
+.form-card h3{margin:0 0 4px;font-size:16px;font-weight:600}
+.form-card p.hint{margin:0 0 var(--space-4);font-size:13px;color:var(--text-secondary)}
+.row{display:flex;gap:var(--space-2);flex-wrap:wrap}
+.field{flex:1 1 220px;min-width:0}
+label.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+input[type=email],input[type=text]{width:100%;height:48px;padding:0 14px;font-size:16px;font-family:inherit;color:var(--text-primary);background:var(--bg-surface);border:1px solid var(--border-strong);border-radius:var(--radius-sm);transition:border-color .1s}
+input::placeholder{color:var(--text-tertiary)}
+input:focus{outline:none;border-color:var(--brand-primary);box-shadow:inset 0 0 0 1px var(--brand-primary)}
+.privacy{margin:var(--space-3) 0 0;font-size:12px;color:var(--text-tertiary)}
+.hp{position:absolute;left:-9999px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--space-4);margin:var(--space-10) 0 0}
+.stat{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:var(--space-4)}
+.stat .n{font-size:26px;font-weight:600;letter-spacing:-.5px;line-height:1.2}
+.stat .l{font-size:13px;color:var(--text-secondary);margin-top:4px;line-height:1.4}
+.stat .src{font-size:11px;color:var(--text-tertiary);margin-top:8px}
+
+/* sections */
+section{padding:var(--space-10) 0}
+.sec-head{margin-bottom:var(--space-6)}
+.overline{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:var(--text-secondary);margin:0 0 var(--space-2)}
+h2{font-size:clamp(24px,3.5vw,32px);line-height:1.2;font-weight:600;letter-spacing:-.4px;margin:0 0 var(--space-3)}
+.sec-head p{margin:0;color:var(--text-secondary);font-size:17px;max-width:620px}
+
+/* steps */
+.steps{display:grid;gap:var(--space-3)}
+.step{display:flex;gap:var(--space-4);background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:var(--space-4) var(--space-5)}
+.step .num{flex-shrink:0;width:28px;height:28px;border-radius:var(--radius-full);background:var(--brand-primary-subtle);color:var(--brand-primary);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.step h4{margin:2px 0 4px;font-size:16px;font-weight:600}
+.step p{margin:0;font-size:14px;color:var(--text-secondary);line-height:1.55}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-4)}
+.card{background:var(--bg-surface);border:1px solid var(--border-default);border-radius:var(--radius-md);padding:var(--space-5)}
+.card .ico{width:36px;height:36px;border-radius:var(--radius-md);background:var(--brand-primary-subtle);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-4)}
+.card .ico svg{width:20px;height:20px;stroke:var(--brand-primary);fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.card h4{margin:0 0 var(--space-2);font-size:16px;font-weight:600}
+.card p{margin:0;font-size:14px;color:var(--text-secondary);line-height:1.6}
+
+/* band */
+.band{background:var(--bg-surface);border-top:1px solid var(--border-default);border-bottom:1px solid var(--border-default)}
+
+/* cta */
+.cta{text-align:center;padding:var(--space-10) 0}
+.cta h2{margin-bottom:var(--space-3)}
+.cta p{color:var(--text-secondary);font-size:17px;max-width:520px;margin:0 auto var(--space-6)}
+
+/* footer */
+footer{border-top:1px solid var(--border-default);padding:var(--space-6) 0;font-size:13px;color:var(--text-tertiary)}
+.foot{display:flex;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;align-items:center}
+.foot a{color:var(--text-secondary)}
+
+@media (max-width:600px){
+  .hero{padding:var(--space-8) 0 var(--space-6)}
+  section{padding:var(--space-8) 0}
+  .btn-lg{width:100%}
+  .field{flex:1 1 100%}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:0s!important;animation-duration:0s!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/">
+      <span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      Auralis <span class="byline">by Euron</span>
+    </a>
+    <a class="btn btn-secondary" href="#access">Request early access</a>
+  </div>
+</header>
+
+<main>
+
+<div class="wrap hero">
+  <span class="eyebrow">Private beta · 2026</span>
+  <h1>The autonomous interview layer</h1>
+  <p class="lede">Post a job. Auralis screens every resume, invites the right candidates, lets them book a slot in their own timezone, and then <strong>conducts the interview</strong> — a real conversation, with follow-ups, a whiteboard, and proctoring. You get a ranked shortlist where every score cites the moment that earned it.</p>
+
+  <div class="form-card" id="access">
+    <h3>Request early access</h3>
+    <p class="hint">We're onboarding a small number of design partners. Tell us where you're hiring and we'll be in touch within two business days.</p>
+    <form name="early-access" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="early-access">
+      <p class="hp"><label>Leave this empty: <input name="bot-field"></label></p>
+      <div class="row">
+        <div class="field">
+          <label class="sr" for="name">Your name</label>
+          <input id="name" name="name" type="text" placeholder="Your name" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label class="sr" for="email">Work email</label>
+          <input id="email" name="email" type="email" placeholder="Work email" autocomplete="email" required>
+        </div>
+      </div>
+      <div class="row" style="margin-top:var(--space-2)">
+        <div class="field">
+          <label class="sr" for="company">Company</label>
+          <input id="company" name="company" type="text" placeholder="Company" autocomplete="organization">
+        </div>
+        <button class="btn btn-primary btn-lg" type="submit">Request access</button>
+      </div>
+      <p class="privacy">We'll only use this to contact you about early access. No newsletter, no sharing.</p>
+    </form>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="n">$5,475</div>
+      <div class="l">Average cost to fill one non-executive role</div>
+      <div class="src">SHRM, 2025</div>
+    </div>
+    <div class="stat">
+      <div class="n">42 days</div>
+      <div class="l">Median time from opening to accepted offer</div>
+      <div class="src">SHRM, 2025</div>
+    </div>
+    <div class="stat">
+      <div class="n">6&ndash;10</div>
+      <div class="l">Resumes a recruiter can screen per day with real judgment</div>
+      <div class="src">Industry benchmark</div>
+    </div>
+    <div class="stat">
+      <div class="n">38.5%</div>
+      <div class="l">Candidates showing AI-assisted cheating signals</div>
+      <div class="src">19,368 interviews, 2025&ndash;26</div>
+    </div>
+  </div>
+</div>
+
+<div class="band">
+  <section class="wrap">
+    <div class="sec-head">
+      <p class="overline">How it works</p>
+      <h2>Requisition to shortlist, without a recruiter in the room</h2>
+      <p>Every stage runs on its own. A person steps in only at the final decision — or whenever they choose to.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><div>
+        <h4>The job goes live</h4>
+        <p>Write a brief; Auralis drafts the description, flags exclusionary language, and turns the requirements into a scoring rubric. It posts to your careers page and syndicates to the boards you use.</p>
+      </div></div>
+      <div class="step"><div class="num">2</div><div>
+        <h4>Every resume gets read properly</h4>
+        <p>Not keyword matching. Each application is parsed, enriched, and scored against the rubric and your own hiring bar — with the evidence for each score recorded.</p>
+      </div></div>
+      <div class="step"><div class="num">3</div><div>
+        <h4>Candidates book themselves in</h4>
+        <p>Those who pass get an invitation and choose a slot in their own timezone. No calendar ping-pong, no recruiter coordination, no days lost.</p>
+      </div></div>
+      <div class="step"><div class="num">4</div><div>
+        <h4>The interview actually happens</h4>
+        <p>At the booked time, a live voice-and-video interview runs round by round. It asks follow-ups based on what the candidate just said, opens a whiteboard or code editor when the question calls for it, and proctors throughout.</p>
+      </div></div>
+      <div class="step"><div class="num">5</div><div>
+        <h4>Scores arrive with their evidence</h4>
+        <p>Each competency is scored against your rubric and cites the exact moment that earned it — playable, timestamped, quoted. Pass the bar and the next round schedules itself.</p>
+      </div></div>
+      <div class="step"><div class="num">6</div><div>
+        <h4>Everyone hears back</h4>
+        <p>Including the people you decline. Specific, honest, written feedback — the thing almost no company has the hours to do, and the thing candidates remember.</p>
+      </div></div>
+    </div>
+  </section>
+</div>
+
+<section class="wrap">
+  <div class="sec-head">
+    <p class="overline">Why it's different</p>
+    <h2>Built for the part everyone else skips</h2>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9c1.7 0 3.29.47 4.65 1.29"/></svg></div>
+      <h4>No score without its evidence</h4>
+      <p>Every number links to the moment that produced it — the audio, the transcript line, the code that was written. A hiring manager can check the reasoning in seconds instead of trusting it.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 4.5-3.2 8.3-8 9-4.8-.7-8-4.5-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <h4>Compliance is the feature</h4>
+      <p>Bias audits, candidate notice, human-review paths, and full audit trails are built in — not bolted on. NYC LL144, Illinois AIVIA, and the EU AI Act are handled as configuration, not consulting.</p>
+    </div>
+    <div class="card">
+      <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+      <h4>Signal the take-home lost</h4>
+      <p>Overlay tools broke unproctored assessments. A live, adaptive conversation with follow-ups the candidate can't pre-compute is the only screen that still measures anything — and we record how work was built, not just what was submitted.</p>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <div class="wrap cta">
+    <h2>Interview every qualified candidate</h2>
+    <p>Not just the twelve you had time for.</p>
+    <a class="btn btn-primary btn-lg" href="#access">Request early access</a>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>&copy; 2026 Euron. Auralis is in private beta.</div>
+    <div><a href="mailto:businessintl@ifieldsmart.com">Contact</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

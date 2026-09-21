@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-bg-surface">
+
+<div id="candidate-dashboard" class="flex h-screen w-screen overflow-hidden">
+    
+    <aside id="sidebar" class="w-64 bg-card-surface border-r border-border-color flex flex-col">
+        
+        <div id="sidebar-header" class="p-6 border-b border-border-color">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="w-10 h-10 bg-primary-blue rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-briefcase text-white text-lg"></i>
+                </div>
+                <div>
+                    <div class="text-primary-text text-lg font-bold">Euron</div>
+                    <div class="text-secondary-text text-xs">Candidate Portal</div>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-3 bg-bg-surface rounded-lg p-3">
+                <img src="https://storage.googleapis.com/uxpilot-auth.appspot.com/avatars/avatar-5.jpg" alt="Profile" class="w-10 h-10 rounded-full border-2 border-primary-blue">
+                <div class="flex-1 min-w-0">
+                    <div class="text-primary-text text-sm font-semibold truncate">Sarah Mitchell</div>
+                    <div class="text-secondary-text text-xs truncate">sarah.mitchell@email.com</div>
+                </div>
+            </div>
+        </div>
+        
+        <nav id="sidebar-nav" class="flex-1 overflow-y-auto p-4">
+            <div class="space-y-1">
+                <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg bg-blue-50 text-primary-blue font-medium text-sm transition-all duration-150">
+                    <i class="fa-solid fa-file-lines w-5"></i>
+                    <span>My Applications</span>
+                    <span class="ml-auto bg-primary-blue text-white text-xs font-semibold px-2 py-0.5 rounded-full">8</span>
+                </a>
+                
+                <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm transition-all duration-150">
+                    <i class="fa-solid fa-calendar-check w-5"></i>
+                    <span>Interviews</span>
+                    <span class="ml-auto bg-purple-100 text-purple-700 text-xs font-semibold px-2 py-0.5 rounded-full">3</span>
+                </a>
+                
+                <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm transition-all duration-150">
+                    <i class="fa-solid fa-message w-5"></i>
+                    <span>Messages</span>
+                    <span class="ml-auto bg-red-100 text-red-700 text-xs font-semibold px-2 py-0.5 rounded-full">5</span>
+                </a>
+                
+                <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm transition-all duration-150">
+                    <i class="fa-solid fa-user w-5"></i>
+                    <span>Profile</span>
+                </a>
+                
+                <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text font-medium text-sm transition-all duration-150">
+                    <i class="fa-solid fa-gear w-5"></i>
+                    <span>Settings</span>
+                </a>
+            </div>
+            
+            <div class="mt-6 pt-6 border-t border-border-color">
+                <div class="text-xs font-semibold text-secondary-text uppercase tracking-wider mb-3 px-4">Quick Actions</div>
+                <div class="space-y-1">
+                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text text-sm transition-all duration-150">
+                        <i class="fa-solid fa-magnifying-glass w-5"></i>
+                        <span>Browse Jobs</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text text-sm transition-all duration-150">
+                        <i class="fa-solid fa-file-arrow-up w-5"></i>
+                        <span>Update Resume</span>
+                    </a>
+                    <a href="#" class="flex items-center space-x-3 px-4 py-3 rounded-lg text-secondary-text hover:bg-bg-surface hover:text-primary-text text-sm transition-all duration-150">
+                        <i class="fa-solid fa-bell w-5"></i>
+                        <span>Notifications</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div id="sidebar-footer" class="p-4 border-t border-border-color">
+            <div class="bg-gradient-to-br from-primary-blue to-hover-blue rounded-lg p-4 text-white">
+                <div class="flex items-center justify-between mb-2">
+                    <i class="fa-solid fa-chart-line text-xl"></i>
+                    <span class="text-xs bg-white bg-opacity-20 px-2 py-1 rounded-full">75%</span>
+                </div>
+                <div class="text-sm font-semibold mb-1">Profile Strength</div>
+                <div class="text-xs opacity-90 mb-3">Complete your profile to increase visibility</div>
+                <div class="w-full bg-white bg-opacity-20 rounded-full h-1.5">
+                    <div class="bg-white h-1.5 rounded-full" style="width: 75%"></div>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <main id="main-content" class="flex-1 overflow-y-auto">
+        
+        <header id="header" class="bg-card-surface border-b border-border-color sticky top-0 z-40">
+            <div class="px-8 py-5">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-primary-text text-2xl font-bold mb-1">My Applications</h1>
+                        <p class="text-secondary-text text-sm">Track and manage your job applications</p>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="relative">
+                            <input type="text" placeholder="Search applications..." class="w-80 h-10 bg-bg-surface border border-border-color rounded-lg pl-10 pr-4 text-sm text-primary-text placeholder-secondary-text focus:outline-none focus:border-primary-blue focus:ring-3 focus:ring-primary-blue focus:ring-opacity-10 transition-all duration-150">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-secondary-text text-sm"></i>
+                        </div>
+                        
+                        <button class="h-10 px-4 bg-transparent border border-border-color rounded-lg text-secondary-text hover:bg-bg-surface text-sm font-medium transition-all duration-150 flex items-center space-x-2">
+                            <i class="fa-solid fa-filter"></i>
+                            <span>Filter</span>
+                        </button>
+                        
+                        <button class="h-10 px-6 bg-primary-blue text-white rounded-full text-sm font-semibold hover:bg-hover-blue transition-all duration-150 flex items-center space-x-2 shadow-sm">
+                            <i class="fa-solid fa-plus"></i>
+                            <span>Browse Jobs</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div id="stats-overview" class="px-8 py-6 border-b border-border-color bg-card-surface">
+            <div class="grid grid-cols-6 gap-6">
+                <div class="bg-bg-surface rounded-lg p-5 border border-border-color">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-file-lines text-primary-blue text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="text-2xl font-bold text-primary-text mb-1">8</div>
+                    <div class="text-xs text-secondary-text">Total Applications</div>
+                </div>
+                
+                <div class="bg-bg-surface rounded-lg p-5 border border-border-color">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-clock text-yellow-600 text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="text-2xl font-bold text-primary-text mb-1">3</div>
+                    <div class="text-xs text-secondary-text">Under Review</div>
+                </div>
+                
+                <div class="bg-bg-surface rounded-lg p-5 border border-border-color">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-calendar-check text-purple-600 text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="text-2xl font-bold text-primary-text mb-1">3</div>
+                    <div class="text-xs text-secondary-text">Interviews</div>
+                </div>
+                
+                <div class="bg-bg-surface rounded-lg p-5 border border-border-color">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-handshake text-green-600 text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="text-2xl font-bold text-primary-text mb-1">1</div>
+                    <div class="text-xs text-secondary-text">Offers</div>
+                </div>
+                
+                <div class="bg-bg-surface rounded-lg p-5 border border-border-color">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-check-circle text-teal-600 text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="text-2xl font-bold text-primary-text mb-1">2</div>
+                    <div class="text-xs text-secondary-text">Completed</div>
+                </div>
+                
+                <div class="bg-bg-surface rounded-lg p-5 border border-border-color">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-xmark text-gray-600 text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="text-2xl font-bold text-primary-text mb-1">1</div>
+                    <div class="text-xs text-secondary-text">Not Selected</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="filter-tabs" class="px-8 py-4 bg-card-surface border-b border-border-color">
+            <div class="flex items-center space-x-2">
+                <button class="px-4 py-2 bg-primary-blue text-white text-sm font-semibold rounded-full transition-all duration-150">All Applications</button>
+                <button class="px-4 py-2 bg-transparent text-secondary-text text-sm font-medium rounded-full hover:bg-bg-surface transition-all duration-150">Active</button>
+                <button class="px-4 py-2 bg-transparent text-secondary-text text-sm font-medium rounded-full hover:bg-bg-surface transition-all duration-150">Interview Scheduled</button>
+                <button class="px-4 py-2 bg-transparent text-secondary-text text-sm font-medium rounded-full hover:bg-bg-surface transition-all duration-150">Offers</button>
+                <button class="px-4 py-2 bg-transparent text-secondary-text text-sm font-medium rounded-full hover:bg-bg-surface transition-all duration-150">Archived</button>
+            </div>
+        </div>
+        
+        <div id="applications-list" class="px-8 py-6">
+            
+            <div id="application-card-1" class="bg-card-surface border border-border-color rounded-lg p-6 mb-4 hover:shadow-lg transition-all duration-150">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4 flex-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-primary-blue to-hover-blue rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-white text-xl font-bold">TI</span>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h3 class="text-primary-text text-lg font-semibold">Senior Product Designer</h3>
+                                <span class="px-3 py-1 bg-teal-100 text-teal-700 text-xs font-semibold rounded-full">Offer Extended</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 text-sm text-secondary-text mb-3">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-building"></i>
+                                    <span>TechInnovate Inc.</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>San Francisco, CA</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <span>$140,000 - $180,000</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-calendar"></i>
+                                    <span>Applied 18 days ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-1 bg-blue-50 text-primary-blue text-xs font-medium rounded">Full-time</span>
+                                <span class="px-2 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded">Remote</span>
+                                <span class="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded">Senior Level</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-star"></i>
+                        </button>
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="border-t border-border-color pt-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="text-sm font-semibold text-primary-text">Application Progress</div>
+                        <div class="text-sm text-secondary-text">Step 5 of 5</div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="flex-1 h-2 bg-teal-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-teal-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-teal-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-teal-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-teal-500 rounded-full"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fa-solid fa-circle-check text-success"></i>
+                                <span class="text-secondary-text">Next: Review offer details</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <button class="h-9 px-4 bg-transparent border border-primary-blue text-primary-blue rounded-full text-sm font-semibold hover:bg-blue-50 transition-all duration-150">
+                                View Details
+                            </button>
+                            <button class="h-9 px-4 bg-primary-blue text-white rounded-full text-sm font-semibold hover:bg-hover-blue transition-all duration-150">
+                                Review Offer
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="application-card-2" class="bg-card-surface border border-border-color rounded-lg p-6 mb-4 hover:shadow-lg transition-all duration-150">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4 flex-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-white text-xl font-bold">DS</span>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h3 class="text-primary-text text-lg font-semibold">UX Research Lead</h3>
+                                <span class="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full">Interview Scheduled</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 text-sm text-secondary-text mb-3">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-building"></i>
+                                    <span>DesignSphere</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>New York, NY</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <span>$130,000 - $160,000</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-calendar"></i>
+                                    <span>Applied 12 days ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-1 bg-blue-50 text-primary-blue text-xs font-medium rounded">Full-time</span>
+                                <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs font-medium rounded">Hybrid</span>
+                                <span class="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded">Lead</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-warning hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-star"></i>
+                        </button>
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="border-t border-border-color pt-4">
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-4">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-calendar-check text-purple-600 text-lg mt-0.5"></i>
+                            <div class="flex-1">
+                                <div class="text-sm font-semibold text-primary-text mb-1">Final Interview Scheduled</div>
+                                <div class="text-sm text-secondary-text mb-2">Wednesday, February 5, 2026 at 2:00 PM EST</div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs text-secondary-text">Video call with Sarah Chen (Hiring Manager)</span>
+                                    <span class="text-xs text-secondary-text">•</span>
+                                    <span class="text-xs text-purple-600 font-medium">60 minutes</span>
+                                </div>
+                            </div>
+                            <button class="h-8 px-3 bg-purple-600 text-white rounded-full text-xs font-semibold hover:bg-purple-700 transition-all duration-150">
+                                Join Meeting
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="text-sm font-semibold text-primary-text">Application Progress</div>
+                        <div class="text-sm text-secondary-text">Step 4 of 5</div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="flex-1 h-2 bg-purple-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-purple-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-purple-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-purple-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fa-solid fa-circle-check text-success"></i>
+                                <span class="text-secondary-text">Prepare for final interview</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <button class="h-9 px-4 bg-transparent border border-primary-blue text-primary-blue rounded-full text-sm font-semibold hover:bg-blue-50 transition-all duration-150">
+                                View Details
+                            </button>
+                            <button class="h-9 px-4 bg-primary-blue text-white rounded-full text-sm font-semibold hover:bg-hover-blue transition-all duration-150">
+                                Prepare
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="application-card-3" class="bg-card-surface border border-border-color rounded-lg p-6 mb-4 hover:shadow-lg transition-all duration-150">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4 flex-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-white text-xl font-bold">IC</span>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h3 class="text-primary-text text-lg font-semibold">Product Design Manager</h3>
+                                <span class="px-3 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded-full">Interview Completed</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 text-sm text-secondary-text mb-3">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-building"></i>
+                                    <span>InnovateCorp</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>Austin, TX</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <span>$150,000 - $190,000</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-calendar"></i>
+                                    <span>Applied 22 days ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-1 bg-blue-50 text-primary-blue text-xs font-medium rounded">Full-time</span>
+                                <span class="px-2 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded">Remote</span>
+                                <span class="px-2 py-1 bg-orange-50 text-orange-700 text-xs font-medium rounded">Management</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-star"></i>
+                        </button>
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="border-t border-border-color pt-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="text-sm font-semibold text-primary-text">Application Progress</div>
+                        <div class="text-sm text-secondary-text">Step 4 of 5</div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="flex-1 h-2 bg-green-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-green-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-green-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-green-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fa-solid fa-hourglass-half text-warning"></i>
+                                <span class="text-secondary-text">Awaiting feedback from hiring team</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <button class="h-9 px-4 bg-transparent border border-primary-blue text-primary-blue rounded-full text-sm font-semibold hover:bg-blue-50 transition-all duration-150">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="application-card-4" class="bg-card-surface border border-border-color rounded-lg p-6 mb-4 hover:shadow-lg transition-all duration-150">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4 flex-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-yellow-500 to-yellow-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-white text-xl font-bold">CP</span>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h3 class="text-primary-text text-lg font-semibold">Senior UX Designer</h3>
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded-full">Under Review</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 text-sm text-secondary-text mb-3">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-building"></i>
+                                    <span>CreativePulse</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>Seattle, WA</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <span>$125,000 - $155,000</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-calendar"></i>
+                                    <span>Applied 8 days ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-1 bg-blue-50 text-primary-blue text-xs font-medium rounded">Full-time</span>
+                                <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs font-medium rounded">Hybrid</span>
+                                <span class="px-2 py-1 bg-green-50 text-green-700 text-xs font-medium rounded">Senior Level</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-star"></i>
+                        </button>
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="border-t border-border-color pt-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="text-sm font-semibold text-primary-text">Application Progress</div>
+                        <div class="text-sm text-secondary-text">Step 2 of 5</div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="flex-1 h-2 bg-yellow-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-yellow-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fa-solid fa-spinner fa-spin text-warning"></i>
+                                <span class="text-secondary-text">Recruiter reviewing your application</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <button class="h-9 px-4 bg-transparent border border-primary-blue text-primary-blue rounded-full text-sm font-semibold hover:bg-blue-50 transition-all duration-150">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="application-card-5" class="bg-card-surface border border-border-color rounded-lg p-6 mb-4 hover:shadow-lg transition-all duration-150">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4 flex-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-white text-xl font-bold">DW</span>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h3 class="text-primary-text text-lg font-semibold">UI/UX Designer</h3>
+                                <span class="px-3 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">Application Received</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 text-sm text-secondary-text mb-3">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-building"></i>
+                                    <span>DigitalWave</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>Boston, MA</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <span>$110,000 - $140,000</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-calendar"></i>
+                                    <span>Applied 3 days ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-1 bg-blue-50 text-primary-blue text-xs font-medium rounded">Full-time</span>
+                                <span class="px-2 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded">Remote</span>
+                                <span class="px-2 py-1 bg-gray-50 text-gray-700 text-xs font-medium rounded">Mid Level</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-star"></i>
+                        </button>
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="border-t border-border-color pt-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="text-sm font-semibold text-primary-text">Application Progress</div>
+                        <div class="text-sm text-secondary-text">Step 1 of 5</div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="flex-1 h-2 bg-blue-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fa-solid fa-circle-check text-success"></i>
+                                <span class="text-secondary-text">Application successfully submitted</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <button class="h-9 px-4 bg-transparent border border-primary-blue text-primary-blue rounded-full text-sm font-semibold hover:bg-blue-50 transition-all duration-150">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="application-card-6" class="bg-card-surface border border-border-color rounded-lg p-6 mb-4 hover:shadow-lg transition-all duration-150">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4 flex-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-gray-400 to-gray-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-white text-xl font-bold">MS</span>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h3 class="text-primary-text text-lg font-semibold">Lead Product Designer</h3>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full">Not Selected</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 text-sm text-secondary-text mb-3">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-building"></i>
+                                    <span>ModernStack</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>Chicago, IL</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <span>$145,000 - $175,000</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-calendar"></i>
+                                    <span>Applied 35 days ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-1 bg-blue-50 text-primary-blue text-xs font-medium rounded">Full-time</span>
+                                <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs font-medium rounded">Hybrid</span>
+                                <span class="px-2 py-1 bg-orange-50 text-orange-700 text-xs font-medium rounded">Lead</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-archive"></i>
+                        </button>
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="border-t border-border-color pt-4">
+                    <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-info-circle text-gray-600 text-lg mt-0.5"></i>
+                            <div class="flex-1">
+                                <div class="text-sm font-semibold text-primary-text mb-1">Application Status Update</div>
+                                <div class="text-sm text-secondary-text mb-2">Thank you for your interest. After careful consideration, we've decided to move forward with other candidates whose experience more closely aligns with our current needs.</div>
+                                <div class="text-xs text-secondary-text">We encourage you to apply for future opportunities that match your qualifications.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="application-card-7" class="bg-card-surface border border-border-color rounded-lg p-6 mb-4 hover:shadow-lg transition-all duration-150">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4 flex-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-indigo-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-white text-xl font-bold">VL</span>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h3 class="text-primary-text text-lg font-semibold">Design Systems Architect</h3>
+                                <span class="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-semibold rounded-full">Interview Scheduled</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 text-sm text-secondary-text mb-3">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-building"></i>
+                                    <span>VisionaryLabs</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>Los Angeles, CA</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <span>$155,000 - $195,000</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-calendar"></i>
+                                    <span>Applied 15 days ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-1 bg-blue-50 text-primary-blue text-xs font-medium rounded">Full-time</span>
+                                <span class="px-2 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded">Remote</span>
+                                <span class="px-2 py-1 bg-red-50 text-red-700 text-xs font-medium rounded">Architect</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-warning hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-star"></i>
+                        </button>
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="border-t border-border-color pt-4">
+                    <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 mb-4">
+                        <div class="flex items-start space-x-3">
+                            <i class="fa-solid fa-calendar-check text-purple-600 text-lg mt-0.5"></i>
+                            <div class="flex-1">
+                                <div class="text-sm font-semibold text-primary-text mb-1">Technical Interview Scheduled</div>
+                                <div class="text-sm text-secondary-text mb-2">Friday, February 7, 2026 at 10:00 AM PST</div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-xs text-secondary-text">Panel interview with Design & Engineering leads</span>
+                                    <span class="text-xs text-secondary-text">•</span>
+                                    <span class="text-xs text-purple-600 font-medium">90 minutes</span>
+                                </div>
+                            </div>
+                            <button class="h-8 px-3 bg-purple-600 text-white rounded-full text-xs font-semibold hover:bg-purple-700 transition-all duration-150">
+                                Add to Calendar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="text-sm font-semibold text-primary-text">Application Progress</div>
+                        <div class="text-sm text-secondary-text">Step 3 of 5</div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="flex-1 h-2 bg-purple-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-purple-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-purple-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fa-solid fa-circle-check text-success"></i>
+                                <span class="text-secondary-text">Review design systems case study</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <button class="h-9 px-4 bg-transparent border border-primary-blue text-primary-blue rounded-full text-sm font-semibold hover:bg-blue-50 transition-all duration-150">
+                                View Details
+                            </button>
+                            <button class="h-9 px-4 bg-primary-blue text-white rounded-full text-sm font-semibold hover:bg-hover-blue transition-all duration-150">
+                                Prepare
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="application-card-8" class="bg-card-surface border border-border-color rounded-lg p-6 mb-4 hover:shadow-lg transition-all duration-150">
+                <div class="flex items-start justify-between mb-4">
+                    <div class="flex items-start space-x-4 flex-1">
+                        <div class="w-14 h-14 bg-gradient-to-br from-pink-500 to-pink-700 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <span class="text-white text-xl font-bold">FD</span>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h3 class="text-primary-text text-lg font-semibold">Principal Designer</h3>
+                                <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded-full">Under Review</span>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4 text-sm text-secondary-text mb-3">
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-building"></i>
+                                    <span>FutureDesign Co.</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    <span>Denver, CO</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-dollar-sign"></i>
+                                    <span>$165,000 - $210,000</span>
+                                </div>
+                                <div class="flex items-center space-x-1">
+                                    <i class="fa-solid fa-calendar"></i>
+                                    <span>Applied 6 days ago</span>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-2">
+                                <span class="px-2 py-1 bg-blue-50 text-primary-blue text-xs font-medium rounded">Full-time</span>
+                                <span class="px-2 py-1 bg-yellow-50 text-yellow-700 text-xs font-medium rounded">Hybrid</span>
+                                <span class="px-2 py-1 bg-purple-50 text-purple-700 text-xs font-medium rounded">Principal</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-warning hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-star"></i>
+                        </button>
+                        <button class="w-9 h-9 bg-bg-surface rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150">
+                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="border-t border-border-color pt-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="text-sm font-semibold text-primary-text">Application Progress</div>
+                        <div class="text-sm text-secondary-text">Step 2 of 5</div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="flex-1 h-2 bg-yellow-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-yellow-500 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex items-center space-x-2 text-sm">
+                                <i class="fa-solid fa-spinner fa-spin text-warning"></i>
+                                <span class="text-secondary-text">Portfolio under review by design leadership</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <button class="h-9 px-4 bg-transparent border border-primary-blue text-primary-blue rounded-full text-sm font-semibold hover:bg-blue-50 transition-all duration-150">
+                                View Details
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="pagination" class="px-8 py-6 border-t border-border-color bg-card-surface">
+            <div class="flex items-center justify-between">
+                <div class="text-sm text-secondary-text">
+                    Showing <span class="font-semibold text-primary-text">8</span> of <span class="font-semibold text-primary-text">8</span> applications
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <button class="w-9 h-9 bg-bg-surface border border-border-color rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150 opacity-50 cursor-not-allowed">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+                    
+                    <button class="w-9 h-9 bg-primary-blue text-white rounded-lg flex items-center justify-center font-semibold">
+                        1
+                    </button>
+                    
+                    <button class="w-9 h-9 bg-bg-surface border border-border-color rounded-lg flex items-center justify-center text-secondary-text hover:text-primary-text hover:bg-border-color transition-all duration-150 opacity-50 cursor-not-allowed">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+document.querySelectorAll('[id^="application-card-"]').forEach(card => {
+    card.addEventListener('click', function(e) {
+        if (!e.target.closest('button')) {
+            console.log('Application card clicked:', this.id);
+        }
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Room - Coding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script> window.FontAwesomeConfig = { autoReplaceSvg: 'nest'};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
+    <style>::-webkit-scrollbar { display: none;}</style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-blue': '#0A66C2',
+                        'hover-blue': '#004182',
+                        'bg-surface': '#F3F6F8',
+                        'card-surface': '#FFFFFF',
+                        'border-color': '#E5E7EB',
+                        'primary-text': '#111827',
+                        'secondary-text': '#6B7280',
+                        'success': '#057642',
+                        'warning': '#B45309',
+                        'error': '#B91C1C',
+                        'editor-bg': '#1E1E1E',
+                        'editor-sidebar': '#252526',
+                        'editor-line': '#333333',
+                    },
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter antialiased bg-editor-bg overflow-hidden">
+
+<div id="interview-room-coding" class="flex flex-col h-screen w-screen">
+    
+    <div id="top-header" class="bg-editor-sidebar border-b border-editor-line px-6 py-3 flex items-center justify-between">
+        <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 bg-primary-blue rounded-lg flex items-center justify-center">
+                    <i class="fa-solid fa-shield-halved text-white text-sm"></i>
+                </div>
+                <div>
+                    <div class="text-white text-sm font-semibold">Euron Interview</div>
+                    <div class="text-gray-400 text-xs">Coding Assessment</div>
+                </div>
+            </div>
+            
+            <div class="h-6 w-px bg-editor-line"></div>
+            
+            <div class="flex items-center space-x-2">
+                <div class="px-3 py-1 bg-success bg-opacity-20 rounded-full flex items-center space-x-2">
+                    <i class="fa-solid fa-circle text-success text-xs animate-pulse"></i>
+                    <span class="text-success text-xs font-semibold">Recording</span>
+                </div>
+                <div class="text-gray-400 text-xs font-mono">45:32</div>
+            </div>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <button class="px-4 py-2 bg-transparent text-gray-300 text-sm font-medium rounded-lg hover:bg-editor-line transition-all duration-150 flex items-center space-x-2">
+                <i class="fa-solid fa-comment-dots text-sm"></i>
+                <span>Chat</span>
+            </button>
+            
+            <button class="px-4 py-2 bg-transparent text-gray-300 text-sm font-medium rounded-lg hover:bg-editor-line transition-all duration-150 flex items-center space-x-2">
+                <i class="fa-solid fa-gear text-sm"></i>
+                <span>Settings</span>
+            </button>
+            
+            <div class="h-6 w-px bg-editor-line"></div>
+            
+            <button class="px-5 py-2 bg-error text-white text-sm font-semibold rounded-full hover:bg-red-700 transition-all duration-150 flex items-center space-x-2">
+                <i class="fa-solid fa-phone-slash text-sm"></i>
+                <span>End Interview</span>
+            </button>
+        </div>
+    </div>
+    
+    <div id="main-content" class="flex flex-1 overflow-hidden">
+        
+        <div id="code-editor-section" class="flex flex-col" style="width: 60%;">
+            
+            <div id="editor-toolbar" class="bg-editor-sidebar border-b border-editor-line px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <button id="coding-mode-btn" class="px-3 py-1.5 bg-primary-blue text-white text-xs font-semibold rounded-md flex items-center space-x-1.5">
+                            <i class="fa-solid fa-code"></i>
+                            <span>Code Editor</span>
+                        </button>
+                        <button id="whiteboard-mode-btn" class="px-3 py-1.5 bg-transparent text-gray-400 text-xs font-semibold rounded-md hover:bg-editor-line transition-all duration-150 flex items-center space-x-1.5">
+                            <i class="fa-solid fa-pencil"></i>
+                            <span>Whiteboard</span>
+                        </button>
+                    </div>
+                    
+                    <div class="h-4 w-px bg-editor-line"></div>
+                    
+                    <div class="relative">
+                        <select id="language-selector" class="bg-editor-bg border border-editor-line text-gray-300 text-sm rounded-md px-3 py-1.5 pr-8 focus:outline-none focus:border-primary-blue cursor-pointer appearance-none">
+                            <option value="python">Python</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="java">Java</option>
+                            <option value="cpp">C++</option>
+                            <option value="csharp">C#</option>
+                            <option value="go">Go</option>
+                            <option value="rust">Rust</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down text-gray-400 text-xs absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none"></i>
+                    </div>
+                    
+                    <div class="flex items-center space-x-2">
+                        <button class="px-3 py-1.5 bg-transparent text-gray-400 text-xs font-medium rounded-md hover:bg-editor-line transition-all duration-150 flex items-center space-x-1.5">
+                            <i class="fa-solid fa-text-height"></i>
+                            <span>14px</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-2">
+                    <button class="px-3 py-1.5 bg-transparent text-gray-400 text-xs font-medium rounded-md hover:bg-editor-line transition-all duration-150 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-rotate-left"></i>
+                        <span>Reset</span>
+                    </button>
+                    
+                    <button id="run-code-btn" class="px-4 py-1.5 bg-success text-white text-xs font-semibold rounded-md hover:bg-green-700 transition-all duration-150 flex items-center space-x-2">
+                        <i class="fa-solid fa-play"></i>
+                        <span>Run Code</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div id="editor-main" class="flex flex-1 overflow-hidden">
+                
+                <div id="editor-container" class="flex-1 relative">
+                    <div id="monaco-editor" class="absolute inset-0"></div>
+                </div>
+                
+                <div id="test-cases-panel" class="w-80 bg-editor-sidebar border-l border-editor-line flex flex-col">
+                    <div class="px-4 py-3 border-b border-editor-line flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-flask text-primary-blue"></i>
+                            <span class="text-white text-sm font-semibold">Test Cases</span>
+                        </div>
+                        <button class="text-gray-400 hover:text-white transition-colors duration-150">
+                            <i class="fa-solid fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="flex-1 overflow-y-auto p-4 space-y-3">
+                        <div class="bg-editor-bg border border-editor-line rounded-lg p-3">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-300 text-xs font-semibold">Test Case 1</span>
+                                <div class="px-2 py-0.5 bg-success bg-opacity-20 rounded text-success text-xs font-semibold">Passed</div>
+                            </div>
+                            <div class="space-y-2">
+                                <div>
+                                    <div class="text-gray-500 text-xs mb-1">Input:</div>
+                                    <div class="bg-black bg-opacity-30 rounded p-2 text-gray-300 text-xs font-mono">[1, 2, 3, 4, 5]</div>
+                                </div>
+                                <div>
+                                    <div class="text-gray-500 text-xs mb-1">Expected:</div>
+                                    <div class="bg-black bg-opacity-30 rounded p-2 text-gray-300 text-xs font-mono">15</div>
+                                </div>
+                                <div>
+                                    <div class="text-gray-500 text-xs mb-1">Output:</div>
+                                    <div class="bg-black bg-opacity-30 rounded p-2 text-success text-xs font-mono">15</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-editor-bg border border-editor-line rounded-lg p-3">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-300 text-xs font-semibold">Test Case 2</span>
+                                <div class="px-2 py-0.5 bg-success bg-opacity-20 rounded text-success text-xs font-semibold">Passed</div>
+                            </div>
+                            <div class="space-y-2">
+                                <div>
+                                    <div class="text-gray-500 text-xs mb-1">Input:</div>
+                                    <div class="bg-black bg-opacity-30 rounded p-2 text-gray-300 text-xs font-mono">[-1, 0, 1]</div>
+                                </div>
+                                <div>
+                                    <div class="text-gray-500 text-xs mb-1">Expected:</div>
+                                    <div class="bg-black bg-opacity-30 rounded p-2 text-gray-300 text-xs font-mono">0</div>
+                                </div>
+                                <div>
+                                    <div class="text-gray-500 text-xs mb-1">Output:</div>
+                                    <div class="bg-black bg-opacity-30 rounded p-2 text-success text-xs font-mono">0</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-editor-bg border border-editor-line rounded-lg p-3">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-300 text-xs font-semibold">Test Case 3</span>
+                                <div class="px-2 py-0.5 bg-gray-700 rounded text-gray-400 text-xs font-semibold">Not Run</div>
+                            </div>
+                            <div class="space-y-2">
+                                <div>
+                                    <div class="text-gray-500 text-xs mb-1">Input:</div>
+                                    <div class="bg-black bg-opacity-30 rounded p-2 text-gray-300 text-xs font-mono">[10, 20, 30]</div>
+                                </div>
+                                <div>
+                                    <div class="text-gray-500 text-xs mb-1">Expected:</div>
+                                    <div class="bg-black bg-opacity-30 rounded p-2 text-gray-300 text-xs font-mono">60</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-editor-bg border border-amber-600 rounded-lg p-3">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-gray-300 text-xs font-semibold">Test Case 4 (Hidden)</span>
+                                <div class="px-2 py-0.5 bg-gray-700 rounded text-gray-400 text-xs font-semibold">Locked</div>
+                            </div>
+                            <div class="flex items-center space-x-2 text-amber-500 text-xs">
+                                <i class="fa-solid fa-lock"></i>
+                                <span>Hidden test case - runs on submission</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-4 border-t border-editor-line">
+                        <div class="bg-editor-bg rounded-lg p-3 space-y-2">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-gray-400">Test Results</span>
+                                <span class="text-success font-semibold">2/3 Passed</span>
+                            </div>
+                            <div class="w-full bg-editor-line rounded-full h-1.5">
+                                <div class="bg-success h-1.5 rounded-full" style="width: 66.6%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="output-panel" class="bg-editor-sidebar border-t border-editor-line" style="height: 180px;">
+                <div class="px-4 py-2 border-b border-editor-line flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <button class="text-primary-blue text-xs font-semibold border-b-2 border-primary-blue pb-2">Output</button>
+                        <button class="text-gray-400 text-xs font-semibold hover:text-white pb-2">Console</button>
+                        <button class="text-gray-400 text-xs font-semibold hover:text-white pb-2">Problems</button>
+                    </div>
+                    <button class="text-gray-400 hover:text-white transition-colors duration-150">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                
+                <div class="p-4 overflow-y-auto font-mono text-sm" style="height: calc(100% - 42px);">
+                    <div class="space-y-2">
+                        <div class="flex items-start space-x-2">
+                            <i class="fa-solid fa-circle-check text-success text-xs mt-1"></i>
+                            <div>
+                                <div class="text-gray-400 text-xs mb-1">Execution completed successfully</div>
+                                <div class="text-success">Output: 15</div>
+                            </div>
+                        </div>
+                        <div class="text-gray-500 text-xs">Execution time: 0.023s</div>
+                        <div class="text-gray-500 text-xs">Memory used: 2.4 MB</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="video-section" class="flex flex-col border-l border-editor-line" style="width: 40%;">
+            
+            <div id="problem-statement" class="bg-editor-sidebar px-6 py-4 border-b border-editor-line overflow-y-auto" style="height: 45%;">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-white text-lg font-bold">Problem: Sum of Array</h2>
+                    <div class="flex items-center space-x-2">
+                        <div class="px-2 py-1 bg-success bg-opacity-20 rounded text-success text-xs font-semibold">Easy</div>
+                        <button class="text-gray-400 hover:text-white transition-colors duration-150">
+                            <i class="fa-solid fa-bookmark text-sm"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="space-y-4 text-gray-300 text-sm leading-relaxed">
+                    <p>Write a function that takes an array of integers and returns the sum of all elements in the array.</p>
+                    
+                    <div>
+                        <div class="text-white font-semibold mb-2">Example 1:</div>
+                        <div class="bg-editor-bg rounded-lg p-3 font-mono text-xs space-y-1">
+                            <div><span class="text-gray-500">Input:</span> <span class="text-gray-300">nums = [1, 2, 3, 4, 5]</span></div>
+                            <div><span class="text-gray-500">Output:</span> <span class="text-success">15</span></div>
+                            <div><span class="text-gray-500">Explanation:</span> <span class="text-gray-400">1 + 2 + 3 + 4 + 5 = 15</span></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="text-white font-semibold mb-2">Example 2:</div>
+                        <div class="bg-editor-bg rounded-lg p-3 font-mono text-xs space-y-1">
+                            <div><span class="text-gray-500">Input:</span> <span class="text-gray-300">nums = [-1, 0, 1]</span></div>
+                            <div><span class="text-gray-500">Output:</span> <span class="text-success">0</span></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="text-white font-semibold mb-2">Constraints:</div>
+                        <ul class="list-disc list-inside space-y-1 text-gray-400 text-xs">
+                            <li>1 ≤ nums.length ≤ 10<sup>4</sup></li>
+                            <li>-10<sup>9</sup> ≤ nums[i] ≤ 10<sup>9</sup></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <div class="text-white font-semibold mb-2">Follow-up:</div>
+                        <p class="text-gray-400 text-xs">Can you solve this problem in O(n) time complexity?</p>
+                    </div>
+                </div>
+                
+                <div class="mt-6 flex items-center space-x-2">
+                    <button class="px-3 py-1.5 bg-editor-bg text-gray-300 text-xs font-medium rounded-md hover:bg-editor-line transition-all duration-150 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-thumbs-up"></i>
+                        <span>124</span>
+                    </button>
+                    <button class="px-3 py-1.5 bg-editor-bg text-gray-300 text-xs font-medium rounded-md hover:bg-editor-line transition-all duration-150 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-thumbs-down"></i>
+                        <span>8</span>
+                    </button>
+                    <button class="px-3 py-1.5 bg-editor-bg text-gray-300 text-xs font-medium rounded-md hover:bg-editor-line transition-all duration-150 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-share-nodes"></i>
+                        <span>Share</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div id="video-feed-container" class="flex-1 bg-black relative">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/08db2c0fe7-c95dc0e6b46a7f998d2e.png" alt="professional video conference call showing interviewer in business attire in modern office, high quality webcam view" />
+                </div>
+                
+                <div class="absolute top-4 left-4 flex items-center space-x-2">
+                    <div class="px-3 py-1.5 bg-black bg-opacity-60 backdrop-blur-sm rounded-lg flex items-center space-x-2">
+                        <i class="fa-solid fa-video text-white text-sm"></i>
+                        <span class="text-white text-xs font-semibold">Interviewer</span>
+                    </div>
+                </div>
+                
+                <div class="absolute top-4 right-4 bg-black bg-opacity-60 backdrop-blur-sm rounded-lg px-3 py-1.5">
+                    <div class="text-white text-xs font-mono">45:32</div>
+                </div>
+                
+                <div class="absolute bottom-20 left-4 right-4">
+                    <div class="bg-black bg-opacity-80 backdrop-blur-sm rounded-lg p-3 border border-gray-700">
+                        <div class="flex items-start space-x-2">
+                            <i class="fa-solid fa-microphone text-primary-blue mt-1"></i>
+                            <div class="flex-1">
+                                <div class="text-white text-xs font-semibold mb-1">AI Interviewer</div>
+                                <div class="text-gray-300 text-xs leading-relaxed">Great! Now let's move to a coding challenge. Please implement a function to sum all elements in an array. Take your time and explain your approach as you code.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center space-x-3">
+                    <button class="w-12 h-12 bg-editor-sidebar rounded-full flex items-center justify-center hover:bg-editor-line transition-all duration-150">
+                        <i class="fa-solid fa-microphone text-white"></i>
+                    </button>
+                    <button class="w-12 h-12 bg-editor-sidebar rounded-full flex items-center justify-center hover:bg-editor-line transition-all duration-150">
+                        <i class="fa-solid fa-video text-white"></i>
+                    </button>
+                    <button class="w-12 h-12 bg-editor-sidebar rounded-full flex items-center justify-center hover:bg-editor-line transition-all duration-150">
+                        <i class="fa-solid fa-desktop text-white"></i>
+                    </button>
+                </div>
+                
+                <div class="absolute bottom-4 right-4 w-32 h-24 bg-editor-sidebar rounded-lg border-2 border-primary-blue overflow-hidden">
+                    <img class="w-full h-full object-cover" src="https://storage.googleapis.com/uxpilot-auth.appspot.com/bc41a7371a-ac9c9ca8919dfbd53c0f.png" alt="professional candidate in interview setting, webcam view, modern home office background" />
+                    <div class="absolute bottom-1 left-1 px-2 py-0.5 bg-black bg-opacity-60 rounded text-white text-xs">You</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="whiteboard-container" class="hidden flex flex-col" style="width: 60%;">
+        <div id="whiteboard-toolbar" class="bg-editor-sidebar border-b border-editor-line px-4 py-2 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="flex items-center space-x-2">
+                    <button class="px-3 py-1.5 bg-transparent text-gray-400 text-xs font-semibold rounded-md hover:bg-editor-line transition-all duration-150 flex items-center space-x-1.5">
+                        <i class="fa-solid fa-code"></i>
+                        <span>Code Editor</span>
+                    </button>
+                    <button class="px-3 py-1.5 bg-primary-blue text-white text-xs font-semibold rounded-md flex items-center space-x-1.5">
+                        <i class="fa-solid fa-pencil"></i>
+                        <span>Whiteboard</span>
+                    </button>
+                </div>
+                
+                <div class="h-4 w-px bg-editor-line"></div>
+                
+                <div class="flex items-center space-x-2">
+                    <button id="pen-tool" class="w-9 h-9 bg-primary-blue rounded-md flex items-center justify-center text-white">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button id="highlighter-tool" class="w-9 h-9 bg-transparent rounded-md flex items-center justify-center text-gray-400 hover:bg-editor-line transition-all duration-150">
+                        <i class="fa-solid fa-highlighter"></i>
+                    </button>
+                    <button id="shapes-tool" class="w-9 h-9 bg-transparent rounded-md flex items-center justify-center text-gray-400 hover:bg-editor-line transition-all duration-150">
+                        <i class="fa-solid fa-shapes"></i>
+                    </button>
+                    <button id="text-tool" class="w-9 h-9 bg-transparent rounded-md flex items-center justify-center text-gray-400 hover:bg-editor-line transition-all duration-150">
+                        <i class="fa-solid fa-font"></i>
+                    </button>
+                    <button id="eraser-tool" class="w-9 h-9 bg-transparent rounded-md flex items-center justify-center text-gray-400 hover:bg-editor-line transition-all duration-150">
+                        <i class="fa-solid fa-eraser"></i>
+                    </button>
+                </div>
+                
+                <div class="h-4 w-px bg-editor-line"></div>
+                
+                <div class="flex items-center space-x-2">
+                    <button class="w-7 h-7 bg-black rounded border-2 border-primary-blue"></button>
+                    <button class="w-7 h-7 bg-blue-600 rounded border border-editor-line"></button>
+                    <button class="w-7 h-7 bg-red-600 rounded border border-editor-line"></button>
+                    <button class="w-7 h-7 bg-green-600 rounded border border-editor-line"></button>
+                </div>
+                
+                <div class="h-4 w-px bg-editor-line"></div>
+                
+                <div class="flex items-center space-x-2">
+                    <button class="px-2 py-1 bg-editor-bg text-gray-300 text-xs rounded border border-primary-blue">Thin</button>
+                    <button class="px-2 py-1 bg-transparent text-gray-400 text-xs rounded hover:bg-editor-line transition-all duration-150">Medium</button>
+                    <button class="px-2 py-1 bg-transparent text-gray-400 text-xs rounded hover:bg-editor-line transition-all duration-150">Thick</button>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <button class="px-3 py-1.5 bg-transparent text-gray-400 text-xs font-medium rounded-md hover:bg-editor-line transition-all duration-150 flex items-center space-x-1.5">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    <span>Undo</span>
+                </button>
+                <button class="px-3 py-1.5 bg-transparent text-gray-400 text-xs font-medium rounded-md hover:bg-editor-line transition-all duration-150 flex items-center space-x-1.5">
+                    <i class="fa-solid fa-rotate-right"></i>
+                    <span>Redo</span>
+                </button>
+                <button class="px-3 py-1.5 bg-transparent text-gray-400 text-xs font-medium rounded-md hover:bg-editor-line transition-all duration-150 flex items-center space-x-1.5">
+                    <i class="fa-solid fa-download"></i>
+                    <span>Export</span>
+                </button>
+                <button class="px-3 py-1.5 bg-error text-white text-xs font-medium rounded-md hover:bg-red-700 transition-all duration-150 flex items-center space-x-1.5">
+                    <i class="fa-solid fa-trash"></i>
+                    <span>Clear All</span>
+                </button>
+            </div>
+        </div>
+        
+        <div id="whiteboard-canvas" class="flex-1 bg-white relative">
+            <canvas id="drawing-canvas" class="absolute inset-0 w-full h-full cursor-crosshair"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+require.config({ paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs' } });
+
+require(['vs/editor/editor.main'], function() {
+    const editor = monaco.editor.create(document.getElementById('monaco-editor'), {
+        value: `def sum_array(nums):
+    """
+    Calculate the sum of all elements in an array.
+    
+    Args:
+        nums: List of integers
+        
+    Returns:
+        Integer sum of all elements
+    """
+    # Your code here
+    total = 0
+    for num in nums:
+        total += num
+    return total
+
+
+if __name__ == "__main__":
+    test_cases = [
+        [1, 2, 3, 4, 5],
+        [-1, 0, 1],
+        [10, 20, 30]
+    ]
+    
+    for test in test_cases:
+        result = sum_array(test)
+        print(f"Input: {test}, Output: {result}")`,
+        language: 'python',
+        theme: 'vs-dark',
+        fontSize: 14,
+        fontFamily: 'JetBrains Mono',
+        lineNumbers: 'on',
+        minimap: { enabled: false },
+        scrollBeyondLastLine: false,
+        automaticLayout: true,
+        tabSize: 4,
+        wordWrap: 'on'
+    });
+    
+    document.getElementById('language-selector').addEventListener('change', function(e) {
+        monaco.editor.setModelLanguage(editor.getModel(), e.target.value);
+    });
+});
+
+document.getElementById('coding-mode-btn').addEventListener('click', function() {
+    document.getElementById('code-editor-section').classList.remove('hidden');
+    document.getElementById('whiteboard-container').classList.add('hidden');
+    this.classList.add('bg-primary-blue', 'text-white');
+    this.classList.remove('bg-transparent', 'text-gray-400');
+    document.getElementById('whiteboard-mode-btn').classList.remove('bg-primary-blue', 'text-white');
+    document.getElementById('whiteboard-mode-btn').classList.add('bg-transparent', 'text-gray-400');
+});
+
+document.getElementById('whiteboard-mode-btn').addEventListener('click', function() {
+    document.getElementById('code-editor-section').classList.add('hidden');
+    document.getElementById('whiteboard-container').classList.remove('hidden');
+    this.classList.add('bg-primary-blue', 'text-white');
+    this.classList.remove('bg-transparent', 'text-gray-400');
+    document.getElementById('coding-mode-btn').classList.remove('bg-primary-blue', 'text-white');
+    document.getElementById('coding-mode-btn').classList.add('bg-transparent', 'text-gray-400');
+});
+
+const canvas = document.getElementById('drawing-canvas');
+const ctx = canvas.getContext('2d');
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+
+function resizeCanvas() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+}
+
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+canvas.addEventListener('mousedown', (e) => {
+    isDrawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+});
+
+canvas.addEventListener('mousemove', (e) => {
+    if (!isDrawing) return;
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+});
+
+canvas.addEventListener('mouseup', () => isDrawing = false);
+canvas.addEventListener('mouseout', () => isDrawing = false);
+
+document.getElementById('run-code-btn').addEventListener('click', function() {
+    console.log('Running code...');
+});
+</script>
+
+</body>
+</html>
