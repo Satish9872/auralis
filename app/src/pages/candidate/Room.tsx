@@ -1,167 +1,221 @@
 import { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Waveform, Button, cx } from '../../ui'
-import { script } from '../../data'
-import {
-  Mic, MicOff, VideoIcon, VideoOff, Captions, RotateCcw, Coffee, HelpCircle, PhoneOff, Wifi,
-} from 'lucide-react'
+import { api, type Turn } from '../../api'
+import { Send, PhoneOff, Loader2, PanelRightClose, AlertTriangle } from 'lucide-react'
 
 type AiState = 'idle' | 'listening' | 'thinking' | 'speaking'
 
 export default function Room() {
   const nav = useNavigate()
-  const [i, setI] = useState(0)
-  const [state, setState] = useState<AiState>('speaking')
-  const [muted, setMuted] = useState(false)
-  const [cam, setCam] = useState(true)
-  const [caps, setCaps] = useState(true)
+  const [params] = useSearchParams()
+  const interviewId = params.get('interview') || ''
+
+  const [transcript, setTranscript] = useState<Turn[]>([])
+  const [state, setState] = useState<AiState>('idle')
+  const [answer, setAnswer] = useState('')
   const [canvas, setCanvas] = useState(false)
+  const [canvasMode, setCanvasMode] = useState('none')
+  const [canvasText, setCanvasText] = useState('')
+  const [competency, setCompetency] = useState('')
   const [secs, setSecs] = useState(0)
-  const [ended, setEnded] = useState(false)
-  const timer = useRef<number>(0)
+  const [ending, setEnding] = useState(false)
+  const [finished, setFinished] = useState(false)
+  const [err, setErr] = useState<string | null>(null)
+  const [aiMode, setAiMode] = useState('')
+  const started = useRef(false)
+  const scroller = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    timer.current = window.setInterval(() => setSecs(s => s + 1), 1000)
-    return () => clearInterval(timer.current)
+    const t = setInterval(() => setSecs(s => s + 1), 1000)
+    return () => clearInterval(t)
   }, [])
 
-  // Drive the scripted exchange
   useEffect(() => {
-    if (ended) return
-    const line = script[i]
-    if (!line) return
-    if (line.canvas) setCanvas(true)
-    if (line.who === 'ai') {
-      setState('speaking')
-      const t = setTimeout(() => {
+    if (started.current || !interviewId) return
+    started.current = true
+    setState('thinking')
+    api.startInterview(interviewId)
+      .then(r => {
+        setTranscript(r.transcript)
+        setCompetency(r.competency)
+        setCanvas(r.open_canvas)
+        setCanvasMode(r.canvas_mode)
+        setAiMode(r.ai)
         setState('listening')
-        if (i + 1 < script.length) setTimeout(() => setI(i + 1), 1800)
-      }, 2600 + line.text.length * 18)
-      return () => clearTimeout(t)
-    } else {
+      })
+      .catch(e => { setErr(e.message); setState('idle') })
+  }, [interviewId])
+
+  useEffect(() => {
+    scroller.current?.scrollTo({ top: scroller.current.scrollHeight, behavior: 'smooth' })
+  }, [transcript])
+
+  async function send() {
+    const text = answer.trim()
+    if (!text || state === 'thinking') return
+    setAnswer('')
+    setTranscript(t => [...t, { who: 'candidate', text }])
+    setState('thinking')
+    setErr(null)
+    try {
+      const r = await api.turn(interviewId, text, canvasText || undefined)
+      setTranscript(r.transcript)
+      setCompetency(r.competency)
+      setCanvas(r.open_canvas)
+      setCanvasMode(r.canvas_mode)
       setState('listening')
-      const t = setTimeout(() => {
-        setState('thinking')
-        setTimeout(() => setI(i + 1), 1400)
-      }, 2200)
-      return () => clearTimeout(t)
+      if (r.should_end) finish()
+    } catch (e) {
+      setErr((e as Error).message)
+      setState('listening')
     }
-  }, [i, ended])
+  }
+
+  async function finish() {
+    setEnding(true)
+    setState('thinking')
+    try {
+      await api.finish(interviewId)
+      setFinished(true)
+    } catch (e) {
+      setErr((e as Error).message)
+      setEnding(false)
+    }
+  }
 
   const mmss = `${String(Math.floor(secs / 60)).padStart(2, '0')}:${String(secs % 60).padStart(2, '0')}`
-  const lastAi = [...script.slice(0, i + 1)].reverse().find(l => l.who === 'ai')
 
-  if (ended) return (
-    <div className="min-h-screen bg-canvas flex items-center justify-center p-6">
+  if (!interviewId) return (
+    <div className="min-h-screen flex items-center justify-center p-6" style={{ background: '#12171A', color: '#fff' }}>
+      <p>No interview specified. Start from your application status page.</p>
+    </div>
+  )
+
+  if (finished) return (
+    <div className="min-h-screen flex items-center justify-center p-6" style={{ background: '#12171A', color: 'rgba(255,255,255,.9)' }}>
       <div className="max-w-md text-center">
-        <span className="inline-flex w-12 h-12 rounded-full bg-ok-subtle items-center justify-center mb-5">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--color-ok)" strokeWidth="2.5" strokeLinecap="round"><path d="M4 12l6 6L20 6" /></svg>
+        <span className="inline-flex w-12 h-12 rounded-full items-center justify-center mb-5" style={{ background: 'rgba(1,117,79,.2)' }}>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#44C98F" strokeWidth="2.5" strokeLinecap="round"><path d="M4 12l6 6L20 6" /></svg>
         </span>
         <h1 className="text-2xl font-semibold mb-3">That's the end of the interview</h1>
-        <p className="text-ink-2 leading-relaxed mb-8">
-          Thank you for your time. Your interview has been recorded and will be reviewed.
-          You'll hear from us within 2 business days.
+        <p className="opacity-70 leading-relaxed mb-8">
+          Your answers have been evaluated against the rubric. The scorecard is ready.
         </p>
-        <Button size="xl" className="w-full" onClick={() => nav('/feedback')}>Back to my application</Button>
+        <Button size="xl" className="w-full" onClick={() => nav(`/feedback?interview=${interviewId}`)}>
+          See my result
+        </Button>
       </div>
     </div>
   )
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: '#12171A', color: 'rgba(255,255,255,.9)' }}>
-      {/* progress line */}
-      <div className="h-0.5 bg-white/10">
-        <div className="h-full bg-brand transition-all duration-500"
-          style={{ width: state === 'speaking' ? '100%' : '0%' }} />
+      <div className="h-0.5" style={{ background: 'rgba(255,255,255,.1)' }}>
+        <div className="h-full bg-brand transition-all duration-700" style={{ width: state === 'thinking' ? '70%' : '0%' }} />
       </div>
 
-      {/* top bar */}
-      <div className="h-14 px-4 flex items-center gap-4 border-b border-white/10">
-        <span className="text-sm font-medium">Round 1 · Technical screen</span>
-        <div className="hidden sm:flex gap-1">
-          {['System design', 'Coding', 'Debugging', 'Communication'].map((c, n) => (
-            <span key={c} title={c} className={cx('w-8 h-1 rounded-full', n === 0 ? 'bg-brand' : 'bg-white/20')} />
-          ))}
-        </div>
+      <div className="h-14 px-4 flex items-center gap-4 border-b" style={{ borderColor: 'rgba(255,255,255,.1)' }}>
+        <span className="text-sm font-medium">Technical screen</span>
+        {competency && <span className="text-xs px-2 py-0.5 rounded-full bg-brand/20 text-brand">{competency}</span>}
         <div className="flex-1" />
-        <span className="font-mono text-sm tabular-nums">{mmss} / 45:00</span>
-        <Wifi size={16} className="text-ok" />
+        {aiMode && (
+          <span className="text-[10px] px-2 py-0.5 rounded-full" style={{ background: 'rgba(255,255,255,.1)' }}>
+            {aiMode === 'claude' ? 'Claude live' : 'fallback mode'}
+          </span>
+        )}
+        <span className="font-mono text-sm tabular-nums">{mmss}</span>
       </div>
 
-      <div className={cx('flex-1 flex', canvas ? 'flex-row' : 'flex-col')}>
-        {/* stage */}
-        <div className={cx('flex flex-col items-center justify-center p-6', canvas ? 'w-[280px] shrink-0 border-r border-white/10' : 'flex-1')}>
-          <Waveform state={state} size={canvas ? 120 : 240} />
-          <p className="text-xs mt-3 capitalize" style={{ color: 'rgba(255,255,255,.5)' }}>{state}</p>
+      <div className={cx('flex-1 flex min-h-0', canvas ? 'flex-row' : 'flex-col')}>
+        <div className={cx('flex flex-col min-h-0', canvas ? 'w-[46%] shrink-0 border-r' : 'flex-1')}
+             style={canvas ? { borderColor: 'rgba(255,255,255,.1)' } : undefined}>
+          <div className="flex flex-col items-center pt-6 pb-3 shrink-0">
+            <Waveform state={state} size={canvas ? 140 : 220} />
+            <p className="text-xs mt-2 capitalize" style={{ color: 'rgba(255,255,255,.45)' }}>
+              {state === 'thinking' ? 'Aria is thinking…' : state === 'listening' ? 'Your turn' : state}
+            </p>
+          </div>
 
-          {caps && lastAi && (
-            <div className={cx('mt-8 text-center', canvas ? 'text-sm' : 'text-lg max-w-[640px]')}>
-              <p className="leading-relaxed">{lastAi.text}</p>
+          <div ref={scroller} className="flex-1 overflow-y-auto px-6 pb-4 space-y-4 min-h-0">
+            {transcript.map((t, i) => (
+              <div key={i} className={cx('max-w-[600px] mx-auto w-full', t.who === 'candidate' && 'text-right')}>
+                <p className="text-[10px] uppercase tracking-wide mb-1" style={{ color: 'rgba(255,255,255,.35)' }}>
+                  {t.who === 'ai' ? 'Aria' : 'You'}
+                </p>
+                <p className={cx('inline-block text-left leading-relaxed rounded-lg px-4 py-2.5',
+                  t.who === 'ai' ? 'text-base' : 'text-sm')}
+                  style={t.who === 'candidate'
+                    ? { background: 'rgba(10,102,194,.25)' }
+                    : { background: 'rgba(255,255,255,.06)' }}>
+                  {t.text}
+                </p>
+              </div>
+            ))}
+            {state === 'thinking' && (
+              <div className="max-w-[600px] mx-auto flex gap-2 items-center text-sm" style={{ color: 'rgba(255,255,255,.45)' }}>
+                <Loader2 size={14} className="animate-spin" /> Aria is composing a follow-up…
+              </div>
+            )}
+          </div>
+
+          {err && (
+            <div className="mx-6 mb-2 flex gap-2 p-2.5 rounded text-sm" style={{ background: 'rgba(178,64,32,.25)' }}>
+              <AlertTriangle size={15} className="shrink-0 mt-0.5" /> <span>{err}</span>
             </div>
           )}
 
-          {!canvas && (
-            <div className="fixed bottom-24 right-6 w-[200px] rounded-lg overflow-hidden border border-white/15"
-                 style={{ background: '#1D2226' }}>
-              <div className="aspect-[4/3] flex items-center justify-center text-xs" style={{ color: 'rgba(255,255,255,.4)' }}>
-                {cam ? 'You' : 'Camera off'}
-              </div>
-              <div className="absolute top-2 left-2 flex items-center gap-1.5 text-[10px] font-semibold">
-                <span className="live-dot w-1.5 h-1.5 rounded-full bg-live" /> Recording
-              </div>
+          <div className="p-4 border-t shrink-0" style={{ borderColor: 'rgba(255,255,255,.1)' }}>
+            <div className="max-w-[640px] mx-auto flex gap-2">
+              <textarea
+                value={answer} onChange={e => setAnswer(e.target.value)}
+                onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send() } }}
+                rows={2} placeholder="Type your answer… (Enter to send, Shift+Enter for a new line)"
+                disabled={state === 'thinking' || ending}
+                className="flex-1 px-3 py-2 text-sm rounded-lg resize-none outline-none disabled:opacity-50"
+                style={{ background: 'rgba(255,255,255,.07)', color: 'rgba(255,255,255,.9)' }}
+              />
+              <button onClick={send} disabled={!answer.trim() || state === 'thinking' || ending}
+                className="w-12 h-12 self-end rounded-full bg-brand text-white flex items-center justify-center disabled:opacity-40">
+                <Send size={17} />
+              </button>
             </div>
-          )}
+            <div className="max-w-[640px] mx-auto flex justify-between items-center mt-2">
+              <p className="text-[11px]" style={{ color: 'rgba(255,255,255,.35)' }}>
+                {transcript.filter(t => t.who === 'candidate').length} answers given
+              </p>
+              <button onClick={finish} disabled={ending}
+                className="text-xs font-semibold flex items-center gap-1.5 px-3 h-8 rounded-full"
+                style={{ color: '#F5836B', boxShadow: 'inset 0 0 0 1.5px #F5836B' }}>
+                <PhoneOff size={13} /> {ending ? 'Evaluating…' : 'End & evaluate'}
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* canvas */}
         {canvas && (
           <div className="flex-1 flex flex-col p-4 min-w-0">
-            <div className="rounded-lg p-4 mb-3 text-sm" style={{ background: '#1D2226' }}>
-              <span className="text-[11px] uppercase tracking-wide" style={{ color: 'rgba(255,255,255,.45)' }}>Current question</span>
-              <p className="mt-1">How would you handle the hot partition?</p>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="text-xs uppercase tracking-wide" style={{ color: 'rgba(255,255,255,.45)' }}>
+                {canvasMode.replace('-', ' ')}
+              </span>
+              <div className="flex-1" />
+              <button onClick={() => setCanvas(false)} className="opacity-50 hover:opacity-100"><PanelRightClose size={16} /></button>
             </div>
-            <div className="flex-1 rounded-lg border border-white/10 flex items-center justify-center"
-                 style={{ background: '#161B1F', backgroundImage: 'radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px)', backgroundSize: '20px 20px' }}>
-              <p className="text-sm" style={{ color: 'rgba(255,255,255,.35)' }}>
-                Whiteboard — draw your approach
-              </p>
-            </div>
-            <p className="text-[11px] mt-2" style={{ color: 'rgba(255,255,255,.4)' }}>Interviewer can see this</p>
+            <textarea
+              value={canvasText} onChange={e => setCanvasText(e.target.value)}
+              placeholder={canvasMode === 'code'
+                ? '// write your solution here'
+                : 'Describe your architecture — components, how they connect, where state lives.\n\nThis is sent with your next answer and evaluated alongside it.'}
+              className="flex-1 p-4 rounded-lg font-mono text-sm resize-none outline-none leading-relaxed"
+              style={{ background: '#161B1F', color: 'rgba(255,255,255,.85)', border: '1px solid rgba(255,255,255,.1)' }}
+            />
+            <p className="text-[11px] mt-2" style={{ color: 'rgba(255,255,255,.4)' }}>
+              Aria can see this · sent with your next answer
+            </p>
           </div>
         )}
       </div>
-
-      {/* controls */}
-      <div className="h-[72px] border-t border-white/10 flex items-center justify-center gap-2 px-4" style={{ background: '#1D2226' }}>
-        <Ctrl on={!muted} onClick={() => setMuted(m => !m)} icon={muted ? MicOff : Mic} label="Mic" danger={muted} />
-        <Ctrl on={cam} onClick={() => setCam(c => !c)} icon={cam ? VideoIcon : VideoOff} label="Camera" />
-        <Ctrl on={caps} onClick={() => setCaps(c => !c)} icon={Captions} label="Captions" />
-        <Ctrl on onClick={() => {}} icon={RotateCcw} label="Repeat that" />
-        <Ctrl on onClick={() => {}} icon={Coffee} label="I need a moment" />
-        <Ctrl on onClick={() => {}} icon={HelpCircle} label="Help" />
-        <div className="w-4" />
-        <button onClick={() => setEnded(true)}
-          className="h-12 px-5 rounded-full text-sm font-semibold flex items-center gap-2 text-bad ring-[1.5px] ring-inset ring-bad hover:bg-bad/10">
-          <PhoneOff size={16} /> End
-        </button>
-      </div>
-
-      {muted && (
-        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-sm font-medium"
-             style={{ background: 'var(--color-bad)', color: '#fff' }}>
-          You're muted — the interviewer can't hear you
-        </div>
-      )}
     </div>
-  )
-}
-
-function Ctrl({ icon: Icon, label, on, onClick, danger }: any) {
-  return (
-    <button onClick={onClick} title={label} aria-label={label}
-      className={cx('w-12 h-12 rounded-full flex items-center justify-center transition-colors',
-        danger ? 'bg-bad text-white' : on ? 'bg-white/10 hover:bg-white/20' : 'bg-white/5 hover:bg-white/10')}>
-      <Icon size={18} />
-    </button>
   )
 }

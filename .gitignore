@@ -39,3 +39,6 @@ npm-debug.log*
 
 # Office lock files
 ~$*
+
+# Local database
+server/auralis.db*

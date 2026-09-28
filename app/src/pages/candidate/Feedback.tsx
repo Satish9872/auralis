@@ -1,101 +1,100 @@
-import { useState } from 'react'
-import { Card, Button, Chip, cx } from '../../ui'
+import { Link, useSearchParams } from 'react-router-dom'
+import { Card, Button, Chip, Empty, Score } from '../../ui'
+import { api } from '../../api'
+import { useAsync } from '../../hooks'
 
 export default function Feedback() {
-  const [tab, setTab] = useState<'advance' | 'decline'>('advance')
+  const [params] = useSearchParams()
+  const interviewId = params.get('interview') || ''
+  const { data: iv, loading, error } = useAsync(() => api.interview(interviewId), [interviewId])
+
+  if (!interviewId) return <Empty title="No interview specified" />
+  if (loading) return <Empty title="Loading your result…" />
+  if (error || !iv) return <Empty title="Not found" body={error || undefined} />
+  if (!iv.scorecard) return (
+    <Empty title="Still being evaluated"
+      body="Your interview has finished and is being scored. Check back shortly."
+      action={<Link to="/status"><Button variant="secondary">Back to my application</Button></Link>} />
+  )
+
+  const sc = iv.scorecard
+  const advanced = sc.recommendation === 'Advance'
 
   return (
     <div>
-      {/* demo toggle — not part of the product */}
-      <div className="flex gap-1 p-1 rounded-full bg-subtle mb-8 text-sm w-fit">
-        {(['advance', 'decline'] as const).map(t => (
-          <button key={t} onClick={() => setTab(t)}
-            className={cx('px-4 h-8 rounded-full font-medium capitalize',
-              tab === t ? 'bg-surface shadow-sm' : 'text-ink-2')}>
-            {t === 'advance' ? 'Passed' : 'Not advancing'}
-          </button>
-        ))}
+      <p className="text-xs text-ink-3 mb-2">Round {iv.round} · {iv.round_name}</p>
+
+      <Card className={`p-6 mb-4 ${advanced ? 'bg-ok-subtle border-ok/30' : ''}`}>
+        <Chip tone={advanced ? 'ok' : sc.recommendation === 'Borderline' ? 'warn' : 'neutral'}>
+          {sc.recommendation}
+        </Chip>
+        <h1 className="text-2xl font-semibold mt-3 mb-2">
+          {advanced ? "You're through to the next round"
+            : sc.recommendation === 'Borderline' ? 'Your interview is under review'
+            : "We're not moving forward after this round"}
+        </h1>
+        <p className="text-ink-2 leading-relaxed">{sc.feedback}</p>
+      </Card>
+
+      <Card className="p-6 mb-4">
+        <h2 className="font-semibold mb-4">How you were scored</h2>
+        <div className="space-y-4">
+          {sc.scores.map(s => (
+            <div key={s.competency}>
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-sm font-medium">{s.competency}</span>
+                <Score value={s.score} />
+              </div>
+              {s.score != null && (
+                <div className="h-2 rounded-full bg-subtle overflow-hidden mb-2">
+                  <div className="h-full rounded-full bg-brand" style={{ width: `${(s.score / 5) * 100}%` }} />
+                </div>
+              )}
+              <p className="text-xs text-ink-2 leading-relaxed">{s.evidence}</p>
+            </div>
+          ))}
+        </div>
+      </Card>
+
+      <div className="grid sm:grid-cols-2 gap-4 mb-6">
+        <Card className="p-6">
+          <h3 className="font-semibold mb-3">What was strong</h3>
+          <ul className="space-y-2">
+            {sc.strengths.map((s, i) => (
+              <li key={i} className="text-sm text-ink-2 leading-relaxed flex gap-2"><span className="text-ok">·</span>{s}</li>
+            ))}
+          </ul>
+        </Card>
+        <Card className="p-6">
+          <h3 className="font-semibold mb-3">Where the gaps were</h3>
+          <ul className="space-y-2">
+            {sc.concerns.map((s, i) => (
+              <li key={i} className="text-sm text-ink-2 leading-relaxed flex gap-2"><span className="text-warn">·</span>{s}</li>
+            ))}
+          </ul>
+        </Card>
       </div>
 
-      {tab === 'advance' ? (
-        <>
-          <Card className="p-6 mb-4 bg-ok-subtle border-ok/30">
-            <Chip tone="ok">Moving forward</Chip>
-            <h1 className="text-2xl font-semibold mt-3">You're through to Round 2</h1>
-          </Card>
-
-          <Card className="p-6 mb-4">
-            <h2 className="font-semibold mb-3">What went well</h2>
-            <p className="text-ink-2 leading-relaxed">
-              Your walkthrough of the sharding tradeoffs was clear, and you caught the hot-partition
-              risk before it was raised. When asked about the cost of consistent hashing, you named
-              the cross-shard reporting penalty and explained why it was an acceptable trade — that
-              kind of reasoning is exactly what this round looks for.
-            </p>
-          </Card>
-
-          <Card className="p-6 mb-6">
-            <h2 className="font-semibold mb-3">What's next</h2>
-            <p className="text-sm text-ink-2 mb-1"><strong className="text-ink">Round 2 · Deep dive</strong> · 60 minutes · AI-conducted</p>
-            <p className="text-sm text-ink-2">Covers system design in more depth, debugging, and ownership.</p>
-          </Card>
-
-          <Button size="xl" className="w-full">Choose your time for Round 2</Button>
-        </>
-      ) : (
-        <>
-          <h1 className="text-2xl font-semibold mb-3">We're not moving forward after this round</h1>
-          <p className="text-ink-2 leading-relaxed mb-6">
-            We reviewed your interview against what this role needs. Here's what we found — we hope it's useful.
-          </p>
-
-          <Card className="p-6 mb-4">
-            <h2 className="font-semibold mb-2">What was strong</h2>
-            <ul className="text-ink-2 space-y-2 text-sm leading-relaxed mb-6">
-              <li>· You reasoned clearly about consistency tradeoffs and asked good clarifying questions before designing anything.</li>
-              <li>· Your explanations were easy to follow, and you were honest when you weren't sure.</li>
-            </ul>
-
-            <h2 className="font-semibold mb-2">Where the gap was</h2>
-            <p className="text-ink-2 text-sm leading-relaxed mb-6">
-              The role needs someone who has scaled a system past a single database. When asked what
-              happens at ten times the load, the design stayed on one instance and didn't get revisited.
-              That's the specific thing this round was testing for.
-            </p>
-
-            <h2 className="font-semibold mb-2">What would strengthen a future application</h2>
-            <p className="text-ink-2 text-sm leading-relaxed">
-              Hands-on experience with partitioning or replication — even on a side project you can
-              talk through in detail. Being able to describe a specific scaling decision you made,
-              and what it cost you, would change this conversation.
-            </p>
-          </Card>
-
-          <Card className="p-6 mb-4">
-            <h2 className="font-semibold mb-1">Your interview</h2>
-            <p className="text-sm text-ink-2 mb-4">You can replay your own recording and download your whiteboard work.</p>
-            <div className="flex gap-2">
-              <Button variant="secondary">Play recording</Button>
-              <Button variant="tertiary">Download my work</Button>
+      <Card className="p-6 mb-6">
+        <h3 className="font-semibold mb-3">Your transcript</h3>
+        <div className="space-y-3 max-h-80 overflow-y-auto">
+          {iv.transcript.map((t, i) => (
+            <div key={i} className="text-sm">
+              <span className="text-xs font-semibold text-ink-3">{t.who === 'ai' ? 'Aria' : 'You'}</span>
+              <p className={t.who === 'ai' ? 'text-ink-2' : 'text-ink'}>{t.text}</p>
             </div>
-          </Card>
+          ))}
+        </div>
+      </Card>
 
-          <Card className="p-6 mb-6">
-            <h2 className="font-semibold mb-3">Other roles that may fit better</h2>
-            <div className="space-y-2">
-              {['Backend Engineer II · Mumbai', 'Platform Engineer · Remote'].map(r => (
-                <div key={r} className="flex items-center justify-between p-3 rounded border border-line">
-                  <span className="text-sm">{r}</span>
-                  <Button size="sm" variant="secondary">View</Button>
-                </div>
-              ))}
-            </div>
-          </Card>
+      <div className="flex flex-wrap gap-2 mb-6">
+        <Button variant="secondary">Request a human review</Button>
+        <Link to="/status"><Button variant="tertiary">Back to my application</Button></Link>
+      </div>
 
-          <Button variant="secondary" size="lg" className="w-full mb-4">Request a human review of this decision</Button>
-          <p className="text-sm text-ink-2">Thank you for the time you put into this.</p>
-        </>
-      )}
+      <p className="text-xs text-ink-3">
+        Scored by {sc.model} · {sc.generated_by} · {new Date(sc.created_at).toLocaleString()}
+      </p>
     </div>
   )
 }

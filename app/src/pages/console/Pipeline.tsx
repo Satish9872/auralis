@@ -1,24 +1,45 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Card, Button, Chip, PageHead, Table, Tr, Td, Avatar, Score, cx } from '../../ui'
-import { candidates, stageTone } from '../../data'
-import type { Stage } from '../../data'
-import { LayoutGrid, List } from 'lucide-react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Card, Button, Chip, PageHead, Table, Tr, Td, Avatar, Score, Empty, cx } from '../../ui'
+import { api } from '../../api'
+import { useAsync } from '../../hooks'
+import { LayoutGrid, List, RefreshCw } from 'lucide-react'
+import type { Tone } from '../../ui'
 
-const stages: Stage[] = ['Applied', 'Screened', 'Scheduled', 'Interviewing', 'Reviewed', 'Shortlisted']
+const STAGES = ['Applied', 'Screened', 'Scheduled', 'Interviewing', 'Reviewed', 'Shortlisted', 'Declined']
+const tone: Record<string, Tone> = {
+  Applied: 'neutral', Screened: 'brand', Scheduled: 'brand', Interviewing: 'live',
+  Reviewed: 'eval', Shortlisted: 'ok', Declined: 'neutral',
+}
 
 export default function Pipeline() {
   const nav = useNavigate()
+  const [params] = useSearchParams()
+  const jobId = params.get('job') || undefined
   const [view, setView] = useState<'board' | 'table'>('board')
-  const [sel, setSel] = useState<string[]>([])
+  const { data: rows, loading, error, reload } = useAsync(() => api.applications({ job_id: jobId }), [jobId])
 
-  const toggle = (id: string) =>
-    setSel(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id])
+  if (loading) return <Empty title="Loading candidates…" />
+  if (error) return <Empty title="Couldn't load candidates" body={error} />
+
+  if (!rows!.length) return (
+    <>
+      <PageHead crumb="Candidates" title="Pipeline" />
+      <Card>
+        <Empty
+          title="No applications yet"
+          body="Nothing has come through this job. Submit one through the candidate flow and it appears here immediately — parsed, scored and staged."
+          action={<Button onClick={() => nav('/apply')}>Open the candidate flow</Button>}
+        />
+      </Card>
+    </>
+  )
 
   return (
     <>
-      <PageHead crumb="Jobs · Senior Backend Engineer" title="Pipeline" count={candidates.length}
-        actions={
+      <PageHead crumb="Candidates" title="Pipeline" count={rows!.length}
+        actions={<>
+          <Button variant="tertiary" onClick={reload}><RefreshCw size={14} /> Refresh</Button>
           <div className="flex gap-1 p-1 rounded-full bg-subtle">
             {([['board', LayoutGrid], ['table', List]] as const).map(([v, Icon]) => (
               <button key={v} onClick={() => setView(v)}
@@ -28,12 +49,12 @@ export default function Pipeline() {
               </button>
             ))}
           </div>
-        } />
+        </>} />
 
       {view === 'board' ? (
         <div className="flex gap-3 overflow-x-auto pb-4">
-          {stages.map(st => {
-            const items = candidates.filter(c => c.stage === st)
+          {STAGES.map(st => {
+            const items = rows!.filter(r => r.stage === st)
             return (
               <div key={st} className="w-[280px] shrink-0">
                 <div className="flex items-center gap-2 h-10 px-1">
@@ -41,24 +62,26 @@ export default function Pipeline() {
                   <span className="text-xs text-ink-3">{items.length}</span>
                 </div>
                 <div className="space-y-2">
-                  {items.map(c => (
-                    <Card key={c.id} className="p-3 cursor-pointer hover:border-line-strong relative overflow-hidden"
-                      onClick={() => nav(`/console/candidate/${c.id}`)}>
-                      <span className="absolute left-0 top-0 bottom-0 w-[3px]"
-                        style={{ background: st === 'Shortlisted' ? 'var(--color-ok)' : st === 'Interviewing' ? 'var(--color-live)' : 'var(--color-brand)' }} />
+                  {items.map(r => (
+                    <Card key={r.id} className="p-3 relative overflow-hidden hover:border-line-strong"
+                      onClick={() => nav(`/console/candidate/${r.id}`)}>
+                      <span className="absolute left-0 top-0 bottom-0 w-[3px]" style={{
+                        background: st === 'Shortlisted' ? 'var(--color-ok)'
+                          : st === 'Interviewing' ? 'var(--color-live)'
+                          : st === 'Declined' ? 'var(--color-neutral)' : 'var(--color-brand)',
+                      }} />
                       <div className="flex gap-2.5 mb-2">
-                        <Avatar name={c.name} />
+                        <Avatar name={r.name} />
                         <div className="min-w-0">
-                          <p className="text-sm font-semibold truncate">{c.name}</p>
-                          <p className="text-xs text-ink-3 truncate">{c.title}</p>
+                          <p className="text-sm font-semibold truncate">{r.name}</p>
+                          <p className="text-xs text-ink-3 truncate">{r.current_title}</p>
                         </div>
                       </div>
                       <div className="flex flex-wrap gap-1.5 mb-2">
-                        <Chip tone="neutral">ATS {c.ats}</Chip>
-                        {c.r1 != null && <Score value={c.r1} label="R1" />}
-                        {c.flagged && <Chip tone="bad">Flagged</Chip>}
+                        <Chip tone="neutral">ATS {r.ats_score}</Chip>
+                        {r.scores.map(s => <Score key={s.round} value={s.overall} label={`R${s.round}`} />)}
                       </div>
-                      <p className="text-[11px] text-ink-3">{c.applied} · {c.location}</p>
+                      <p className="text-[11px] text-ink-3">{r.location || '—'} · {r.job_title}</p>
                     </Card>
                   ))}
                   {!items.length && <p className="text-xs text-ink-3 px-1 py-4">Nothing here yet</p>}
@@ -69,40 +92,25 @@ export default function Pipeline() {
         </div>
       ) : (
         <Card>
-          <Table head={['', 'Candidate', 'Stage', 'ATS', 'R1', 'R2', 'Integrity', 'Source', 'Applied']}>
-            {candidates.map(c => (
-              <Tr key={c.id} onClick={() => nav(`/console/candidate/${c.id}`)}>
-                <Td className="w-8">
-                  <input type="checkbox" checked={sel.includes(c.id)}
-                    onClick={e => e.stopPropagation()}
-                    onChange={() => toggle(c.id)} />
-                </Td>
+          <Table head={['Candidate', 'Job', 'Stage', 'ATS', 'Rounds', 'Source', 'Applied']}>
+            {rows!.map(r => (
+              <Tr key={r.id} onClick={() => nav(`/console/candidate/${r.id}`)}>
                 <Td>
                   <div className="flex items-center gap-2.5">
-                    <Avatar name={c.name} size={28} />
-                    <div><p className="font-semibold">{c.name}</p><p className="text-xs text-ink-3">{c.title}</p></div>
+                    <Avatar name={r.name} size={28} />
+                    <div><p className="font-semibold">{r.name}</p><p className="text-xs text-ink-3">{r.current_title}</p></div>
                   </div>
                 </Td>
-                <Td><Chip tone={stageTone[c.stage]}>{c.stage}</Chip></Td>
-                <Td className="tabular-nums font-semibold">{c.ats}</Td>
-                <Td><Score value={c.r1} /></Td>
-                <Td><Score value={c.r2} /></Td>
-                <Td>{c.flagged ? <Chip tone="bad">{c.flagged}</Chip> : <span className="text-ink-3 text-xs">Clean</span>}</Td>
-                <Td className="text-xs text-ink-2">{c.source}</Td>
-                <Td className="text-xs text-ink-3">{c.applied}</Td>
+                <Td className="text-xs">{r.job_title}</Td>
+                <Td><Chip tone={tone[r.stage] || 'neutral'}>{r.stage}</Chip></Td>
+                <Td className="tabular-nums font-semibold">{r.ats_score}</Td>
+                <Td><div className="flex gap-1">{r.scores.map(s => <Score key={s.round} value={s.overall} />)}</div></Td>
+                <Td className="text-xs text-ink-2">{r.source}</Td>
+                <Td className="text-xs text-ink-3">{new Date(r.created_at).toLocaleDateString()}</Td>
               </Tr>
             ))}
           </Table>
         </Card>
-      )}
-
-      {sel.length > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-surface border border-line rounded-full shadow-lg px-4 h-12 flex items-center gap-3 z-30">
-          <span className="text-sm font-semibold">{sel.length} selected</span>
-          <Button size="sm" variant="secondary">Advance</Button>
-          <Button size="sm" variant="tertiary">Decline with feedback</Button>
-          <button onClick={() => setSel([])} className="text-xs text-ink-3 ml-1">Clear</button>
-        </div>
       )}
     </>
   )

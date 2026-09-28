@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Card, Button, Waveform, cx } from '../../ui'
 import { Check, AlertTriangle, Camera, Mic, Volume2, Wifi, Loader2 } from 'lucide-react'
 
@@ -12,6 +12,8 @@ const checks = [
 
 export default function Ready() {
   const nav = useNavigate()
+  const [params] = useSearchParams()
+  const interviewId = params.get('interview') || ''
   const [step, setStep] = useState(0)
   const [done, setDone] = useState<string[]>([])
 
@@ -86,7 +88,7 @@ export default function Ready() {
       <div className="p-3 rounded bg-brand-subtle text-sm mb-8">
         Tip: you can interrupt at any time — just start speaking.
       </div>
-      <Button size="xl" className="w-full mb-3" onClick={() => nav('/room')}>I'm ready to start</Button>
+      <Button size="xl" className="w-full mb-3" onClick={() => nav(`/room?interview=${interviewId}`)}>I'm ready to start</Button>
       <button className="text-sm text-brand hover:underline">Run that again</button>
     </div>
   )

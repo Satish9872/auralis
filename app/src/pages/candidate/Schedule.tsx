@@ -1,22 +1,51 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Card, Button, cx } from '../../ui'
-import { Globe, Check } from 'lucide-react'
+import { useSearchParams, Link } from 'react-router-dom'
+import { Card, Button, Empty, cx } from '../../ui'
+import { api } from '../../api'
+import { useAsync } from '../../hooks'
+import { Globe, Check, AlertTriangle } from 'lucide-react'
 
-const days = [
-  { d: 'Mon', n: 22, slots: 0 }, { d: 'Tue', n: 23, slots: 6 }, { d: 'Wed', n: 24, slots: 8 },
-  { d: 'Thu', n: 25, slots: 5 }, { d: 'Fri', n: 26, slots: 7 }, { d: 'Sat', n: 27, slots: 0 },
-  { d: 'Sun', n: 28, slots: 0 }, { d: 'Mon', n: 29, slots: 9 },
-]
-const times = ['09:00', '09:45', '10:30', '11:15', '14:00', '14:45', '15:30', '16:15']
+const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone
 
 export default function Schedule() {
-  const nav = useNavigate()
-  const [day, setDay] = useState(2)
-  const [slot, setSlot] = useState<string | null>(null)
-  const [done, setDone] = useState(false)
 
-  const sel = days[day]
+  const [params] = useSearchParams()
+  const interviewId = params.get('interview') || ''
+  const jobId = params.get('job') || ''
+
+  const { data: slots, loading, error, reload } = useAsync(() => api.slots(jobId), [jobId])
+  const [sel, setSel] = useState<string | null>(null)
+  const [dayKey, setDayKey] = useState<string | null>(null)
+  const [busy, setBusy] = useState(false)
+  const [err, setErr] = useState<string | null>(null)
+  const [done, setDone] = useState<string | null>(null)
+
+  if (loading) return <Empty title="Loading available times…" />
+  if (error) return <Empty title="Couldn't load slots" body={error} />
+  if (!slots?.length) return <Empty title="No slots available" body="All interview slots for this role are taken." />
+
+  const byDay = slots.reduce<Record<string, typeof slots>>((acc, s) => {
+    const k = new Date(s.starts_at).toDateString()
+    ;(acc[k] ||= []).push(s)
+    return acc
+  }, {})
+  const days = Object.keys(byDay)
+  const activeDay = dayKey && byDay[dayKey] ? dayKey : days[0]
+
+  async function confirm() {
+    if (!sel) return
+    setBusy(true); setErr(null)
+    try {
+      const r = await api.schedule(interviewId, sel)
+      setDone(r.scheduled_at)
+    } catch (e) {
+      setErr((e as Error).message)
+      setSel(null)
+      reload()
+    } finally {
+      setBusy(false)
+    }
+  }
 
   if (done) return (
     <div className="text-center py-8">
@@ -24,77 +53,77 @@ export default function Schedule() {
         <Check size={22} className="text-ok" />
       </span>
       <h1 className="text-2xl font-semibold mb-2">You're booked</h1>
-      <p className="text-ink-2 mb-1">Thursday, 24 September 2026</p>
-      <p className="text-ink-2 mb-8">{slot} – 15:15 IST · 45 minutes</p>
-      <Card className="p-5 text-left mb-6">
-        <p className="text-sm font-semibold mb-1">Test your camera and mic now</p>
-        <p className="text-sm text-ink-2 mb-4">
-          Two minutes today saves a scramble on the day. Most problems are device permissions,
-          and they're much easier to fix before the clock is running.
-        </p>
-        <Button size="lg" onClick={() => nav('/ready')}>Run the device check</Button>
-      </Card>
-      <div className="flex gap-2 justify-center text-sm">
-        <a href="#" className="text-brand hover:underline">Add to calendar</a>
-        <span className="text-ink-3">·</span>
-        <a href="#" className="text-brand hover:underline">Reschedule</a>
-      </div>
-      <p className="text-xs text-ink-3 mt-6">Reminders arrive 24 hours and 1 hour before.</p>
+      <p className="text-ink-2 mb-1">
+        {new Date(done).toLocaleString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}
+      </p>
+      <p className="text-ink-2 mb-8">
+        {new Date(done).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })} · 45 minutes · {TZ}
+      </p>
+      <Link to={`/ready?interview=${interviewId}`}>
+        <Button size="xl" className="w-full mb-3">Run the device check</Button>
+      </Link>
+      <Link to="/status" className="text-sm text-brand hover:underline">Back to my application</Link>
     </div>
   )
 
   return (
     <div>
       <h1 className="text-2xl font-semibold tracking-tight mb-1">Choose your interview time</h1>
-      <p className="text-ink-2 mb-6">Round 1 · Technical screen · 45 minutes</p>
+      <p className="text-ink-2 mb-6">45 minutes · conducted by Aria</p>
 
       <div className="flex items-center gap-2 p-3 rounded bg-subtle text-sm mb-5">
         <Globe size={15} className="text-ink-2 shrink-0" />
-        <span>Times shown in <strong>India Standard Time</strong> (IST, UTC+5:30)</span>
-        <button className="ml-auto text-brand font-semibold text-xs">Change</button>
+        <span>Times shown in <strong>{TZ}</strong> — your device timezone</span>
       </div>
 
       <div className="flex gap-2 overflow-x-auto pb-2 mb-6">
-        {days.map((d, i) => (
-          <button key={i} onClick={() => d.slots && setDay(i)} disabled={!d.slots}
-            className={cx(
-              'shrink-0 w-16 h-[72px] rounded-lg border flex flex-col items-center justify-center gap-0.5 transition-colors',
-              !d.slots ? 'opacity-35 cursor-not-allowed border-line'
-                : i === day ? 'bg-brand text-white border-brand'
-                : 'bg-surface border-line hover:border-line-strong',
-            )}>
-            <span className="text-[11px] opacity-70">{d.d}</span>
-            <span className="text-lg font-semibold leading-none">{d.n}</span>
-            {d.slots > 0 && <span className={cx('w-1 h-1 rounded-full', i === day ? 'bg-white' : 'bg-brand')} />}
-          </button>
-        ))}
+        {days.map(d => {
+          const date = new Date(d)
+          const on = d === activeDay
+          return (
+            <button key={d} onClick={() => { setDayKey(d); setSel(null) }}
+              className={cx('shrink-0 w-16 h-[72px] rounded-lg border flex flex-col items-center justify-center gap-0.5',
+                on ? 'bg-brand text-white border-brand' : 'bg-surface border-line hover:border-line-strong')}>
+              <span className="text-[11px] opacity-70">{date.toLocaleDateString(undefined, { weekday: 'short' })}</span>
+              <span className="text-lg font-semibold leading-none">{date.getDate()}</span>
+              <span className={cx('text-[10px]', on ? 'opacity-80' : 'text-ink-3')}>{byDay[d].length}</span>
+            </button>
+          )
+        })}
       </div>
 
-      <p className="text-sm font-semibold mb-3">{sel.d}, {sel.n} September · {sel.slots} slots</p>
+      <p className="text-sm font-semibold mb-3">
+        {new Date(activeDay).toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long' })}
+        <span className="font-normal text-ink-3"> · {byDay[activeDay].length} slots</span>
+      </p>
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6">
-        {times.map(t => (
-          <button key={t} onClick={() => setSlot(t)}
-            className={cx(
-              'h-12 rounded-full border text-sm font-semibold transition-colors',
-              slot === t ? 'bg-brand text-white border-brand' : 'bg-surface border-line-strong hover:border-brand',
-            )}>
-            {t}
+        {byDay[activeDay].map(s => (
+          <button key={s.id} onClick={() => setSel(s.id)}
+            className={cx('h-12 rounded-full border text-sm font-semibold transition-colors',
+              sel === s.id ? 'bg-brand text-white border-brand' : 'bg-surface border-line-strong hover:border-brand')}>
+            {new Date(s.starts_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
           </button>
         ))}
       </div>
 
-      {slot && (
-        <Card className="p-5 mb-4">
-          <p className="font-semibold mb-1">Thursday, 24 September 2026, {slot}–15:15 IST</p>
-          <p className="text-xs text-ink-3 mb-4">11:00–11:45 for the hiring team in London</p>
-          <Button size="lg" className="w-full" onClick={() => setDone(true)}>Confirm this time</Button>
-        </Card>
+      {err && (
+        <div className="flex gap-2 p-3 rounded bg-bad-subtle text-sm mb-4">
+          <AlertTriangle size={16} className="text-bad shrink-0 mt-0.5" />
+          <span>{err}</span>
+        </div>
       )}
 
-      <div className="flex gap-4 text-sm">
-        <a href="#" className="text-brand hover:underline">No times work for me</a>
-        <a href="#" className="text-brand hover:underline">I need an accommodation</a>
-      </div>
+      {sel && (
+        <Card className="p-5">
+          <p className="font-semibold mb-4">
+            {new Date(byDay[activeDay].find(s => s.id === sel)!.starts_at)
+              .toLocaleString(undefined, { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })}
+          </p>
+          <Button size="lg" className="w-full" disabled={busy} onClick={confirm}>
+            {busy ? 'Booking…' : 'Confirm this time'}
+          </Button>
+        </Card>
+      )}
     </div>
   )
 }

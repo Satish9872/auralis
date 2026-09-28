@@ -1,107 +1,141 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { Card, Button, Input, Field, Chip } from '../../ui'
-import { UploadCloud, Check, Sparkles } from 'lucide-react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { Card, Button, Chip, Empty } from '../../ui'
+import { api } from '../../api'
+import { useAsync } from '../../hooks'
+import { Sparkles, AlertTriangle } from 'lucide-react'
+
+const SAMPLE = `Priya Sharma
+priya.sharma@email.com | +91 98204 41027 | Mumbai, India
+
+Senior Backend Engineer with 7 years building production payment systems.
+
+Razorpay — Senior Backend Engineer, 2021-present
+Owned the payments ledger service handling 40k transactions per second at peak.
+Designed the sharding strategy by merchant ID using consistent hashing with virtual
+nodes to avoid hot partitions on high-volume merchants. Led three production
+incidents end to end, including the postmortems and follow-up work.
+
+Freecharge — Backend Engineer, 2019-2021
+Built reconciliation pipelines in Go over PostgreSQL and Kafka. Reduced settlement
+lag from 6 hours to 20 minutes.
+
+Skills: Go, PostgreSQL, Kafka, Kubernetes, Redis, Docker, AWS`
 
 export default function Apply() {
   const nav = useNavigate()
-  const [parsed, setParsed] = useState(false)
-  const [parsing, setParsing] = useState(false)
+  const [params] = useSearchParams()
+  const { data: jobs, loading, error } = useAsync(() => api.jobs(), [])
+
+  const [jobId, setJobId] = useState(params.get('job') || '')
+  const [resume, setResume] = useState('')
   const [consent, setConsent] = useState(false)
   const [privacy, setPrivacy] = useState(false)
+  const [busy, setBusy] = useState(false)
+  const [err, setErr] = useState<string | null>(null)
 
-  const drop = () => {
-    setParsing(true)
-    setTimeout(() => { setParsing(false); setParsed(true) }, 1400)
+  const job = jobs?.find(j => j.id === jobId) || jobs?.[0]
+  const activeId = jobId || job?.id || ''
+
+  async function submit() {
+    setBusy(true); setErr(null)
+    try {
+      const r = await api.apply({ job_id: activeId, resume_text: resume })
+      nav(`/status?token=${r.token}`)
+    } catch (e) {
+      setErr((e as Error).message)
+    } finally {
+      setBusy(false)
+    }
   }
+
+  if (loading) return <Empty title="Loading roles…" />
+  if (error) return (
+    <Card className="p-6">
+      <div className="flex gap-3">
+        <AlertTriangle size={18} className="text-bad shrink-0 mt-0.5" />
+        <div>
+          <p className="font-semibold mb-1">Can't reach the API</p>
+          <p className="text-sm text-ink-2 mb-2">{error}</p>
+          <p className="text-xs text-ink-3">Start the backend with <code className="bg-subtle px-1 rounded">npm run dev</code> from the repo root.</p>
+        </div>
+      </div>
+    </Card>
+  )
 
   return (
     <div>
-      <p className="text-xs text-ink-3 mb-2">Acme Technologies · Mumbai · Hybrid</p>
-      <h1 className="text-3xl font-semibold tracking-tight mb-2">Senior Backend Engineer</h1>
-      <p className="text-ink-2 mb-8">Typically 12 minutes. You'll hear back within the hour.</p>
+      <p className="text-xs text-ink-3 mb-2">Acme Technologies</p>
+      <h1 className="text-3xl font-semibold tracking-tight mb-2">Apply</h1>
+      <p className="text-ink-2 mb-8">
+        Your resume is parsed and scored against the role in real time. You'll see the result immediately.
+      </p>
 
       <Card className="p-6 mb-4">
-        <h2 className="font-semibold mb-1">Your resume</h2>
-        <p className="text-sm text-ink-2 mb-4">We'll read it and fill in the rest for you.</p>
-
-        {!parsed ? (
-          <button onClick={drop} disabled={parsing}
-            className="w-full border-2 border-dashed border-line-strong rounded-lg py-10 flex flex-col items-center gap-2 hover:border-brand hover:bg-brand-subtle/40 transition-colors disabled:opacity-60">
-            {parsing ? (
-              <><Sparkles size={22} className="text-brand animate-pulse" />
-                <span className="text-sm font-medium">Reading your resume…</span></>
-            ) : (
-              <><UploadCloud size={22} className="text-ink-3" />
-                <span className="text-sm font-medium">Drop a PDF or DOCX, or click to browse</span>
-                <span className="text-xs text-ink-3">Up to 10 MB</span></>
-            )}
-          </button>
-        ) : (
-          <div className="flex items-center gap-3 p-3 rounded bg-ok-subtle">
-            <Check size={16} className="text-ok shrink-0" />
-            <span className="text-sm flex-1">priya-sharma-resume.pdf</span>
-            <button onClick={() => setParsed(false)} className="text-xs text-brand font-semibold">Replace</button>
-          </div>
-        )}
+        <h2 className="font-semibold mb-3">Which role?</h2>
+        <div className="space-y-2">
+          {jobs!.map(j => (
+            <label key={j.id}
+              className={`flex gap-3 p-3 rounded border cursor-pointer transition-colors ${
+                activeId === j.id ? 'border-brand bg-brand-subtle' : 'border-line hover:border-line-strong'}`}>
+              <input type="radio" name="job" className="mt-1 shrink-0"
+                checked={activeId === j.id} onChange={() => setJobId(j.id)} />
+              <div className="min-w-0">
+                <p className="font-semibold text-sm">{j.title}</p>
+                <p className="text-xs text-ink-3">{j.dept} · {j.location}</p>
+                <div className="flex flex-wrap gap-1 mt-2">
+                  {j.must_haves.slice(0, 3).map(m => <Chip key={m} tone="neutral">{m}</Chip>)}
+                </div>
+              </div>
+            </label>
+          ))}
+        </div>
       </Card>
 
-      {parsed && (
-        <>
-          <div className="flex items-start gap-2 p-3 rounded bg-brand-subtle text-sm mb-4">
-            <Sparkles size={15} className="text-brand mt-0.5 shrink-0" />
-            <span>We filled these in from your resume. Please check them.</span>
-          </div>
+      <Card className="p-6 mb-4">
+        <div className="flex items-center justify-between mb-1">
+          <h2 className="font-semibold">Your resume</h2>
+          <button onClick={() => setResume(SAMPLE)} className="text-xs text-brand font-semibold">
+            Use a sample resume
+          </button>
+        </div>
+        <p className="text-sm text-ink-2 mb-3">
+          Paste the text. It gets parsed and scored server-side — no file upload needed for this build.
+        </p>
+        <textarea
+          value={resume} onChange={e => setResume(e.target.value)}
+          rows={12} placeholder="Paste your resume text here…"
+          className="w-full p-3 text-sm font-mono bg-surface text-ink rounded border border-line-strong
+                     placeholder:text-ink-3 focus:border-brand focus:outline-none resize-y leading-relaxed"
+        />
+        <p className="text-xs text-ink-3 mt-1">{resume.trim().length} characters · at least 40 required</p>
+      </Card>
 
-          <Card className="p-6 mb-4 space-y-4">
-            <h2 className="font-semibold">About you</h2>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <Field label="Full name"><Input defaultValue="Priya Sharma" /></Field>
-              <Field label="Email"><Input defaultValue="priya.sharma@email.com" type="email" /></Field>
-              <Field label="Phone"><Input defaultValue="+91 98204 41027" /></Field>
-              <Field label="Location"><Input defaultValue="Mumbai, India" /></Field>
-            </div>
-            <div>
-              <span className="block text-xs font-semibold text-ink-2 mb-2">Skills we found</span>
-              <div className="flex flex-wrap gap-1.5">
-                {['Go', 'PostgreSQL', 'Kafka', 'Kubernetes', 'System design', 'Payments'].map(s => (
-                  <Chip key={s} tone="brand">{s}</Chip>
-                ))}
-              </div>
-            </div>
-          </Card>
+      <Card className="p-6 mb-6 space-y-3">
+        <label className="flex gap-3 text-sm cursor-pointer">
+          <input type="checkbox" className="mt-0.5 shrink-0" checked={consent} onChange={e => setConsent(e.target.checked)} />
+          <span>I understand an AI system will evaluate this application and conduct my interview.</span>
+        </label>
+        <label className="flex gap-3 text-sm cursor-pointer">
+          <input type="checkbox" className="mt-0.5 shrink-0" checked={privacy} onChange={e => setPrivacy(e.target.checked)} />
+          <span>I agree to the privacy policy and data processing.</span>
+        </label>
+      </Card>
 
-          <Card className="p-6 mb-4">
-            <h2 className="font-semibold mb-4">A few questions</h2>
-            <Field label="What's your notice period?"><Input placeholder="e.g. 60 days" /></Field>
-            <div className="h-4" />
-            <Field label="Have you worked on payment systems at scale?">
-              <Input placeholder="A sentence is fine" />
-            </Field>
-          </Card>
+      {err && (
+        <div className="flex gap-2 p-3 rounded bg-bad-subtle text-sm mb-4">
+          <AlertTriangle size={16} className="text-bad shrink-0 mt-0.5" />
+          <span>{err}</span>
+        </div>
+      )}
 
-          <Card className="p-6 mb-6 space-y-3">
-            <label className="flex gap-3 text-sm cursor-pointer">
-              <input type="checkbox" className="mt-0.5 shrink-0" checked={consent} onChange={e => setConsent(e.target.checked)} />
-              <span>I understand an AI system will evaluate this application and conduct my interviews.{' '}
-                <a href="#" className="text-brand hover:underline">How this works</a></span>
-            </label>
-            <label className="flex gap-3 text-sm cursor-pointer">
-              <input type="checkbox" className="mt-0.5 shrink-0" checked={privacy} onChange={e => setPrivacy(e.target.checked)} />
-              <span>I agree to the <a href="#" className="text-brand hover:underline">privacy policy</a> and data processing.</span>
-            </label>
-            <div className="pt-1">
-              <a href="#" className="text-sm text-brand font-semibold hover:underline">Request an alternative selection process</a>
-            </div>
-          </Card>
-
-          <Button size="xl" className="w-full" disabled={!consent || !privacy} onClick={() => nav('/status')}>
-            Submit application
-          </Button>
-          {(!consent || !privacy) && (
-            <p className="text-xs text-ink-3 text-center mt-2">Both boxes above are required to continue.</p>
-          )}
-        </>
+      <Button size="xl" className="w-full"
+        disabled={!consent || !privacy || resume.trim().length < 40 || busy || !activeId}
+        onClick={submit}>
+        {busy ? <><Sparkles size={16} className="animate-pulse" /> Parsing and scoring…</> : 'Submit application'}
+      </Button>
+      {!busy && (!consent || !privacy) && (
+        <p className="text-xs text-ink-3 text-center mt-2">Both boxes above are required.</p>
       )}
     </div>
   )

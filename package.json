@@ -1,0 +1,17 @@
+{
+  "name": "auralis",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Auralis — the autonomous interview layer",
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix app install",
+    "dev": "concurrently -n api,web -c cyan,magenta \"npm --prefix server run dev\" \"npm --prefix app run dev\"",
+    "dev:api": "npm --prefix server run dev",
+    "dev:web": "npm --prefix app run dev",
+    "build": "npm --prefix app run build",
+    "reset": "node -e \"require('fs').rmSync('server/auralis.db',{force:true});require('fs').rmSync('server/auralis.db-wal',{force:true});require('fs').rmSync('server/auralis.db-shm',{force:true});console.log('database reset')\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

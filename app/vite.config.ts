@@ -5,5 +5,9 @@ import path from 'path'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  resolve: { alias: { '@': path.resolve(__dirname, './src') } },
+  resolve: { alias: { '@': path.resolve(import.meta.dirname, './src') } },
+  server: {
+    port: 5173,
+    proxy: { '/api': { target: 'http://localhost:8787', changeOrigin: true } },
+  },
 })
